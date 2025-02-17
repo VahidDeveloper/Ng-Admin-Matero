@@ -328,10 +328,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/material-date-fns-adapter@^19.0.5":
-  version "19.0.5"
-  resolved "https://registry.yarnpkg.com/@angular/material-date-fns-adapter/-/material-date-fns-adapter-19.0.5.tgz#4ca4f4c5de11c81216e8d126c2a664a50132273c"
-  integrity sha512-3AjV0/SguZeRheN8KWx/GabjaT07y4k3Pet/JFbjvbi0E0R49MAkahUUtJMaoXLAgIOg9oZ1apj4nqRDn/U+jg==
+"@angular/material-date-fns-adapter@^19.1.4":
+  version "19.1.4"
+  resolved "https://registry.yarnpkg.com/@angular/material-date-fns-adapter/-/material-date-fns-adapter-19.1.4.tgz#b123ab4013051e4e9425c7ffdf6478f6fb82c526"
+  integrity sha512-prSxnhrwnoBrb6v/Zdx2qY4lS+y4pLwIdAOEE6FMZ/HCG4Et/LR937OusOxpBYzBnlJPWO3pLb4y8CTrp1zx2g==
   dependencies:
     tslib "^2.3.0"
 
