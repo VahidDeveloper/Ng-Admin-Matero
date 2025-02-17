@@ -1,0 +1,86 @@
+<div class="player-root-container">
+  <video class="video-display-container" style="width: 100%" controls [hidden]="!videoUrl">
+    <source [src]="fullVideoUrl" type="video/mp4" />
+    Your browser does not support HTML video.
+  </video>
+  <!-- Player display -->
+  <div class="video-display-container" #displayContainer [hidden]="videoUrl">
+    <!-- the video player is put here -->
+  </div>
+  <div
+    class="video-display-container"
+    [hidden]="videoUrl"
+    #clonedCanvasContainer
+    style="display: none"
+  >
+    <!-- the video player is put here -->
+  </div>
+  <div class="controls" [hidden]="videoUrl">
+    <div
+      class="slider-display-class bg-red-500"
+      #sliderDisplay
+      aria-hidden="true"
+      (click)="sliderOnClick($event)"
+    ></div>
+    <div
+      class="slider-progress-class bg-gray-200"
+      #sliderProgress
+      aria-hidden="true"
+      (click)="sliderOnClick($event)"
+    ></div>
+    <div
+      class="slider-background-class bg-gray-100"
+      #sliderBackground
+      aria-hidden="true"
+      (click)="sliderOnClick($event)"
+    ></div>
+    <div class="loading-container" *ngIf="isJumping"></div>
+  </div>
+  <div class="playback-control-btns" [hidden]="videoUrl">
+    <div class="playback-times">
+      <span class="position">{{ currentPlaybackTime | readableVideoTime }}</span>
+      <span>/</span>
+      <span class="duration">{{ totalVideoDurationTillNow | readableVideoTime }}</span>
+    </div>
+    <div
+      class="playback-control-btn playback-stop-btn text-blue-700"
+      aria-hidden="true"
+      (click)="stopThePlayback()"
+    >
+      <span class="icon-Stop-00"></span>
+    </div>
+    <div
+      class="play-pause playback-control-btn playback-play-btn bg-blue-700"
+      aria-hidden="true"
+      (click)="pauseOrPlayTheVideo()"
+    >
+      <span class="icon-Play-00 play-icon" *ngIf="!isVideoPlaying"></span>
+      <span class="icon-Pause-00 pause-icon" *ngIf="isVideoPlaying"></span>
+    </div>
+    <div
+      class="playback-control-btn playback-speed-btn text-blue-700"
+      aria-hidden="true"
+      (click)="togglePlaybackSpeedMenu()"
+      (mouseleave)="hidePlaybackSpeedMenu()"
+    >
+      <span class="speed-label">
+        {{ currentPlaybackSpeed + 'x' }}
+      </span>
+      <div class="speed-menu-container" *ngIf="showPlaybackSpeedMenu">
+        <div class="playback-speed-options bg-blue-100">
+          <div *ngFor="let speed of playbackSpeedOptions" (click)="setPlaybackSpeed(speed)">
+            {{ speed + 'x' }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button mat-button color="primary" class="download-video-btn" [disabled]="!videoUrl" (click)="onDownloadVideoClick()">{{ 'Download' | translate }}
+     @if(_downloadLoading) {
+      <mat-icon>
+        <mat-spinner color="accent" diameter="20"/>
+    </mat-icon>
+    }
+    </button>
+  </div>
+</div>

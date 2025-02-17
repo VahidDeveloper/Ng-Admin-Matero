@@ -2,6 +2,9 @@
   "menu": {
     "dashboard": "Dashboard",
     "design": "Design",
+    "remoteMatchine": {
+      "title": "Remote Machines"
+    },
     "design.colors": "Color System",
     "design.icons": "Material Icons",
     "material": "Material",

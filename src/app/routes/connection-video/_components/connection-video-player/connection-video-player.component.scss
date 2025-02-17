@@ -1,0 +1,223 @@
+.player-root-container {
+  position: relative;
+  overflow: hidden;
+  direction: ltr;
+}
+
+.video-display-container {
+  position: relative;
+  height: 450px;
+}
+
+.player-root-container .controls {
+  /* W3C */
+  display: flex;
+  flex-direction: row;
+
+  /* Old WebKit */
+  align-items: center;
+  width: 100%;
+
+  /* IE10 */
+  -ms-flex-align: center;
+
+  /* Ancient Mozilla */
+  -moz-box-align: center;
+  -moz-box-orient: horizontal;
+
+  /* Ancient WebKit */
+  -webkit-box-align: center;
+  -webkit-box-orient: horizontal;
+}
+
+.player-root-container .controls > * {
+  margin: 0.25em;
+}
+
+.player-root-container .controls .play-pause {
+  min-width: 5em;
+  margin-left: 0;
+}
+
+.player-root-container .controls .position,
+.player-root-container .controls .duration {
+  font-family: monospace;
+}
+
+.player-root-container .controls .duration {
+  margin-right: 0;
+}
+
+.playback-control-btn > span {
+  display: inline-block;
+  margin-top: 7px;
+}
+
+.playback-play-btn > span {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 20px;
+  color: white;
+}
+
+.playback-play-btn > span.play-icon {
+  margin-left: 4px;
+}
+
+.playback-play-btn > span.pause-icon {
+  margin-left: 1px;
+}
+
+.playback-control-btn {
+  position: absolute;
+  z-index: 5;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.playback-stop-btn {
+  left: calc(50% - 60px);
+}
+
+.playback-play-btn {
+  top: -6px;
+  left: calc(50% - 25px);
+  width: 40px;
+  height: 40px;
+  background-color: #003e80;
+}
+
+.playback-speed-btn {
+  left: calc(50% + 20px);
+  padding-top: 7px;
+}
+
+.text-blue-700 {
+  color: #003e80;
+}
+
+.bg-blue-700 {
+  background-color: #003e80;
+}
+
+.bg-gray-200 {
+  background-color: #dadddf;
+}
+
+.bg-red-500 {
+  background-color: #dc3545;
+}
+
+.playback-speed-options {
+  position: absolute;
+  bottom: 25px;
+  z-index: 100;
+  width: 30px;
+  height: 125px;
+  font-size: 11px;
+  font-weight: bold;
+  border: thin solid #bfdeff;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px #bfdeff;
+}
+
+.playback-speed-options > div {
+  padding-top: 2px;
+}
+
+.playback-speed-options > div:hover {
+  background-color: #bfdeff;
+}
+
+.playback-control-btns {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 50px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.loading-for-seeking {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  z-index: 4;
+  width: 100%;
+  height: 5px;
+}
+
+.video-loading-for-seeking {
+  position: absolute;
+  top: calc(50% - 100px);
+  left: calc(50% - 80px);
+  z-index: 10;
+}
+
+.slider-display-class {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  z-index: 3;
+  width: 0;
+  height: 5px;
+  cursor: pointer;
+}
+
+.slider-progress-class {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  z-index: 2;
+  width: 0;
+  height: 5px;
+  cursor: pointer;
+}
+
+.slider-background-class {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+}
+
+.controls {
+  position: relative;
+  width: calc(100% - 10px);
+  height: 20px;
+}
+
+.playback-times {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  z-index: 1;
+  font-size: 13px;
+}
+
+.speed-label {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.speed-menu-container {
+  position: relative;
+}
+
+.loading-container {
+  position: relative;
+  top: 5px;
+  z-index: 1;
+  width: 100%;
+}
+
+.download-video-btn {
+  position: absolute;
+  right: 0;
+}
