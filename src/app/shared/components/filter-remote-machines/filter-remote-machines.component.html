@@ -1,0 +1,87 @@
+<!-- <lib-filter-panel
+  [filterChanged]="filterChanged"
+  (searchClicked)="doSearch()"
+  (closeFilter)="closeHandle()"
+  (clearFilter)="clearHandle()">
+  <div class="filter-container col col-sm-12 col-md-12 col-xl-12 row">
+    <div class="a-field col-6 col-sm-6 col-md-6 col-lg-4 col-xl" *ngIf="!hiddenFields.remoteCategories">
+      <div class="label-container">
+        <em class="icon-Th-01"></em>
+        <span>{{ 'RemoteCategories' | translate }}</span>
+      </div>
+      <div>
+        <app-selector-remote-categories
+          [(selectedCategories)]="filterClone.remoteCategories"
+          (selectedCategoriesChange)="changeHandle()">
+        </app-selector-remote-categories>
+      </div>
+    </div>
+
+    <div class="a-field col-6 col-sm-6 col-md-6 col-lg-4 col-xl" *ngIf="!hiddenFields.protocols">
+      <div class="label-container">
+        <em class="icon-Screen-00"></em>
+        <span>{{ 'ConnectionProtocol' | translate }}</span>
+      </div>
+      <div>
+        <lib-multi-selector
+          [list]="protocols"
+          [(ngModel)]="selectedProtocols"
+          [staticOpen]="true"
+          (selectedItemsChange)="changeHandle()">
+        </lib-multi-selector>
+      </div>
+    </div>
+
+    <div class="a-field col-6 col-sm-6 col-md-6 col-lg-4 col-xl" *ngIf="!hiddenFields.remoteApplications">
+      <div class="label-container">
+        <em class="icon-Th-01"></em>
+        <span>{{ 'ApplicationName' | translate }}</span>
+      </div>
+      <div>
+        <app-selector-remote-applications
+          [(selectedApplications)]="filterClone.remoteApplications"
+          (selectedApplicationsChange)="changeHandle()">
+        </app-selector-remote-applications>
+      </div>
+    </div>
+
+    <div class="a-field col-6 col-sm-6 col-md-6 col-lg-4 col-xl" *ngIf="!hiddenFields.operatingSystems">
+      <div class="label-container">
+        <em class="icon-Setting-00"></em>
+        <span>{{ 'OperatingSystems' | translate }}</span>
+      </div>
+      <div>
+        <lib-multi-selector
+          [list]="operatingSystems"
+          [(ngModel)]="selectedOperatingSystems"
+          [staticOpen]="true"
+          (selectedItemsChange)="changeHandle()">
+        </lib-multi-selector>
+      </div>
+    </div>
+
+    <div
+      class="a-field field-ip-address col-6 col-sm-6 col-md-6 col-lg-4 col-xl"
+      *ngIf="!hiddenFields.remoteId || !hiddenFields.remoteIp">
+      <div class="label-container" *ngIf="!hiddenFields.remoteId || !hiddenFields.remoteIp">
+        <span>{{ 'RemoteInformation' | translate }}</span>
+      </div>
+      <div class="d-flex flex-wrap">
+        <div class="input-container" *ngIf="!hiddenFields.remoteId">
+          <label for="user-ip">{{ 'Id' | translate }}</label>
+          <input id="user-ip" libTextBox type="number" [(ngModel)]="filterClone.remoteId" (change)="changeHandle()" />
+        </div>
+        <div class="input-container mt-1" *ngIf="!hiddenFields.remoteIp">
+          <label for="remote-machine-ip">{{ 'IPAddress' | translate }}</label>
+          <input
+            id="remote-machine-ip"
+            dir="ltr"
+            libTextBox
+            [class.is-invalid]="hasError"
+            [(ngModel)]="filterClone.remoteIp"
+            (change)="ipFieldChangeHandle()" />
+        </div>
+      </div>
+    </div>
+  </div>
+</lib-filter-panel> -->

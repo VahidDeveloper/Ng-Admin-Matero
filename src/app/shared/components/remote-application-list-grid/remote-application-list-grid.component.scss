@@ -1,0 +1,89 @@
+:host-context(.rtl) {
+  .application-icon {
+    .delete,
+    .edit {
+      right: unset;
+      left: 0.25rem;
+    }
+  }
+}
+
+.application-icon {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  width: 7.5rem;
+  height: 7.5rem;
+  margin: 0.25rem 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 0.35rem;
+
+  &.readonly {
+    cursor: pointer;
+
+    & .operation {
+      display: none !important;
+    }
+  }
+
+  &:hover {
+    background-color: #f1f1f1;
+    border: 1px solid rgb(0 0 0 / 0.125);
+
+    .delete,
+    .edit {
+      display: table;
+    }
+  }
+
+  .operation {
+    position: absolute;
+    top: 0.5rem;
+    font-size: medium;
+  }
+
+  .delete {
+    right: 0.25rem;
+    display: none;
+  }
+
+  .edit {
+    top: 2.25rem;
+    right: 0.25rem;
+    display: none;
+  }
+}
+
+.application-image {
+  width: 5rem;
+  height: 6rem;
+  border-radius: 1rem;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+  }
+}
+
+.application-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 0.5rem;
+  text-align: center;
+
+  span {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.clickable-icon {
+  cursor: pointer;
+}

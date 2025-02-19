@@ -7,14 +7,13 @@
 .matero-error-code {
   padding: 1.25rem 0;
   font-size: 10rem;
-  text-shadow:
-    long-shadow.long-shadow(
-      $direction: 45deg,
-      $length: 3.75rem,
-      $color: rgba(0, 0, 0, .03),
-      $fade: rgba(0, 0, 0, .0015),
-      $shadow-count: 20
-    );
+  text-shadow: long-shadow.long-shadow(
+    $direction: 45deg,
+    $length: 3.75rem,
+    $color: rgb(0 0 0 / 0.03),
+    $fade: rgb(0 0 0 / 0.0015),
+    $shadow-count: 20
+  );
 }
 
 .matero-error-title {

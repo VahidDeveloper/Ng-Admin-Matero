@@ -36,7 +36,6 @@ import { DisableControlDirective } from '@shared';
     MatSlideToggleModule,
     MatTooltipModule,
     MtxDrawerModule,
-    DisableControlDirective,
   ],
 })
 export class CustomizerComponent {

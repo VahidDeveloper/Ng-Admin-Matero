@@ -11,6 +11,18 @@
       }
     },
     {
+      "route": "video",
+      "name": "remoteMatchine.title",
+      "type": "link",
+      "icon": "computer",
+      "permissions": {
+        "only": [
+          "ADMIN",
+          "MANAGER"
+        ]
+      }
+    },
+    {
       "route": "design",
       "name": "design",
       "type": "sub",
@@ -297,19 +309,6 @@
           "permissions": {
             "only": "ADMIN"
           }
-        }
-      ]
-    },
-    {
-      "route": "media",
-      "name": "media",
-      "type": "sub",
-      "icon": "image",
-      "children": [
-        {
-          "route": "gallery",
-          "name": "gallery",
-          "type": "link"
         }
       ]
     },

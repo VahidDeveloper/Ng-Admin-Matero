@@ -1,0 +1,29 @@
+<div class="root-container h-100">
+  <div class="alert alert-warning" role="alert" *ngIf="_connectionVideoIsSaved === false">
+    <span>{{ 'connectionVideoIsSaved' | translate }}</span>
+  </div>
+
+  <app-connection-video-player
+    *ngIf="_videoId && _connectionVideoIsSaved"
+    [connectTime]="_connectTime"
+    [disconnectTime]="_disconnectTime"
+    [tunnelUuid]="_tunnelUuid"
+    [(forcedVideoPoint)]="_selectedSessionVideoTime"
+    [videoId]="_videoId"
+    [videoUrl]="_videoUrl"/>
+  <div class="form-group form-inline">
+    {{ 'TextSearch' | translate }}:
+    <input class="mx-2" libTextBox (keydown.enter)="findBySearchParam()" [(ngModel)]="_searchInput" />
+
+
+    <button mat-button (click)="findBySearchParam()">{{ 'Search' | translate }}
+      @if(_searchLoading) {
+       <mat-icon>
+         <mat-spinner color="accent" diameter="20"/>
+     </mat-icon>
+     }
+     </button>
+
+  </div>
+  <app-horizontal-timeline [videoDuration]="_videoTime" [items]="_results" (itemClick)="selectItem($event)"/>
+</div>

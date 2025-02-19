@@ -1,0 +1,35 @@
+<div class="root-container">
+  @if (_isLoading) {
+    <mat-spinner />
+    <ng-template [ngTemplateOutlet]="steps[currentStepIndex].template" />
+  }
+  <div class="advanced-filter" *ngIf="_showFilters">
+    <!-- <app-filter-remote-machine [filter]="_filter"
+                               (search)="_onFilter($event)"
+                               (closeFilter)="toggleFilter()" /> -->
+  </div>
+  <div class="grid-container">
+    <!-- <lib-grid-list [dataSource]="_remoteMachinesList"
+                   [rowCountInfo]="_rowCountInfo"
+                   [loadingIndicator]="_isLoading"
+                   [serverSideListHelper]="_serverSideListHelper"
+                   [keepSelectionOnPageChange]="true"
+                   [gridOption]="_gridOptions"
+                   [selectedRows]="_selectedRemotes"
+                   (selectChange)="_changeSelectedRemotes($event)"
+                   [gridItemTemplate]="gridItem"
+                   [actionList]="[]"
+                   (showFilterRequest)="toggleFilter()"
+                   size="sm"
+                   keyProp="id" /> -->
+  </div>
+
+  <ng-template let-row="row" #gridItem>
+    <div class="rm-os">
+      <img [src]="'assets/images/os/' + row?.os?.toLowerCase() + '.png'" alt="OS" />
+    </div>
+    <div class="rm-description">
+      <p class="rm-label" libTextEllipsis>{{ row?.hostname }}</p>
+    </div>
+  </ng-template>
+</div>

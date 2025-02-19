@@ -17,7 +17,7 @@ module.exports = tseslint.config(
       'max-len': [
         'warn',
         {
-          code: 100,
+          code: 160,
           ignoreComments: true,
           ignoreStrings: true,
           ignoreTemplateLiterals: true,

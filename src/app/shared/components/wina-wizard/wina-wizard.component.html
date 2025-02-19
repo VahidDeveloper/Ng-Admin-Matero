@@ -1,0 +1,60 @@
+<div class="stepper-body">
+  <ol class="step-indicator cd-multi-steps text-top count">
+    <li
+      aria-hidden="true"
+      [class.error]="item.error"
+      [class.met]="isEditing ? false : item.hasMet || i === 0"
+      [class.not-met]="isEditing ? false : !item.hasMet && i !== 0"
+      [class.current]="currentStepIndex === i"
+      (click)="!configs?.disableStepClick || isEditing ? onStepChange(i) : false"
+      *ngFor="let item of steps; index as i"
+    >
+      <em>
+        <em class="icon-Warn-02 error-icon"></em>
+        <span>{{ item.name }}</span>
+      </em>
+    </li>
+  </ol>
+  <hr />
+  <!-- steps template -->
+
+  @if (isLoading) {
+    <mat-spinner />
+    <ng-template [ngTemplateOutlet]="steps[currentStepIndex].template" />
+  }
+</div>
+
+<div class="stepper-footer">
+  <button mat-button id="cancel-button" outline="true" color="secondary" (click)="close()">
+    {{ configs?.cancelLabel }}
+  </button>
+  <button
+    mat-button
+    id="previous-button"
+    outline="true"
+    color="secondary"
+    [hidden]="currentStepIndex === 0 || !configs?.prevButtonVisibility"
+    (click)="onStepChange(currentStepIndex - 1)"
+  >
+    {{ 'Previous' | translate }}
+  </button>
+  <button
+    mat-button
+    id="next-button"
+    outline="true"
+    color="secondary"
+    [hidden]="!configs?.nextButtonVisibility || currentStepIndex === (steps && steps.length - 1)"
+    (click)="onStepChange(currentStepIndex + 1)"
+  >
+    {{ 'Next' | translate }}
+  </button>
+
+  <button mat-button id="submit-button" [class]="configs?.submitClass" (click)="ok()">
+    {{ configs?.submitLabel }}
+    @if (configs?.isLoading) {
+      <mat-icon>
+        <mat-spinner color="accent" diameter="20" />
+      </mat-icon>
+    }
+  </button>
+</div>

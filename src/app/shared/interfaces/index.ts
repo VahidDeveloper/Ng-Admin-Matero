@@ -1,18 +1,42 @@
-import { FormGroup, FormControl } from '@angular/forms';
+export * from './banner-setting';
+export * from './command-and-clipboard';
+export * from './command-setting';
+export * from './crud-operations';
+export * from './default-connection';
+export * from './forbidden-remote-command';
+export * from './generic-list-item';
+export * from './group';
+export * from './horizontal-timeline';
 
-export type ControlsOf<T extends Record<string, any>> = {
-  [K in keyof T]: T[K] extends Record<any, any> ? FormGroup<ControlsOf<T[K]>> : FormControl<T[K]>;
-};
-
-export interface IProfile {
-  username: string;
-  email: string;
-  gender: string;
-  city: string;
-  address: string;
-  company: string;
-  mobile: string;
-  tele: string;
-  website: string;
-  date: string;
-}
+export * from './interactive-info';
+export * from './list-server-response';
+export * from './live-connection-info';
+export * from './login-constraint';
+export * from './organizational-password';
+export * from './otp-destination';
+export * from './port-connection';
+export * from './profile';
+export * from './register-host-agent';
+export * from './remote-access-connection-details';
+export * from './remote-access-details';
+export * from './remote-access-files-details';
+export * from './remote-access-interactive-details';
+export * from './remote-access-recording-details';
+export * from './remote-application';
+export * from './remote-category';
+export * from './remote-machine-extended';
+export * from './remote-machine';
+export * from './saved-absolute-frame-info';
+export * from './section-download-complete-event';
+export * from './session-search-found-texts-details';
+export * from './session-timeout-policy';
+export * from './set-otp';
+export * from './template-id';
+export * from '../models/uploading-file';
+export * from './user-info-entity';
+export * from './user-otp';
+export * from './user-preferences';
+export * from './wina-rest-api-error-body';
+export * from './wina-rest-body';
+export * from './wina-rest-error';
+// Add more exports as needed
