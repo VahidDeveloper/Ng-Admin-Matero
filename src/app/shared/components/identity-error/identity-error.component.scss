@@ -1,0 +1,16 @@
+.certificate-value-container {
+  max-width: 340px;
+  padding: 0 5px;
+  font-size: 12px;
+  text-align: center;
+  word-break: break-all;
+  direction: ltr;
+}
+
+.key-value-container {
+  direction: ltr;
+}
+
+.certificate-value-container.both-have-values {
+  font-weight: bold;
+}

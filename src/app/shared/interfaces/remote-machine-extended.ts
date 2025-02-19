@@ -7,9 +7,9 @@ export interface RemoteMachineExtended extends RemoteMachine {
   /**
    * primary ip address extracted from ipAddresses field
    */
-  primaryIpAddress: string;
+  primaryIpAddress: string | undefined;
   /**
    * concatenated which is extracted from categories field
    */
-  concatenatedCategories: string;
+  concatenatedCategories: string | undefined;
 }

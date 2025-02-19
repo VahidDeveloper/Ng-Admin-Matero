@@ -32,7 +32,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   selector: 'app-connection-video-player',
   standalone: true,
   templateUrl: './connection-video-player.component.html',
-  styleUrls: ['./connection-video-player.component.scss'],
+  styleUrl: './connection-video-player.component.scss',
   imports: [
     CommonModule,
     MatIconModule,

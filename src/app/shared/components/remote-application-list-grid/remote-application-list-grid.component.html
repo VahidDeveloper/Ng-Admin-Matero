@@ -1,0 +1,31 @@
+<div class="container-root">
+  <div
+    class="application-icon"
+    [class.readonly]="isReadonly"
+    aria-hidden="true"
+    (click)="onSelect(app)"
+    *ngFor="let app of list; index as i"
+  >
+    <div
+      class="delete operation clickable-icon text-red-500"
+      [matTooltip]="'Remove' | translate"
+      (click)="onRemove(i)"
+    >
+      <em class="icon-Cross-00"></em>
+    </div>
+    <div
+      class="edit operation clickable-icon text-green-500"
+      [matTooltip]="'Edit' | translate"
+      (click)="onEdit(i)"
+    >
+      <em class="icon-Write-00"></em>
+    </div>
+    <div class="application-image">
+      <img *ngIf="!app.image" [src]="imageBaseUrl + '/' + app.imageId" alt="" />
+      <img *ngIf="app.image" [src]="app.image" alt="" />
+    </div>
+    <div class="application-name">
+      <span>{{ app.applicationLabel }}</span>
+    </div>
+  </div>
+</div>

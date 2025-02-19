@@ -28,7 +28,7 @@ import { VideoSearchHorizontalTimelineComponent } from '@shared/components';
   standalone: true,
   selector: 'app-connection-video-page',
   templateUrl: './connection-video-page.component.html',
-  styleUrls: ['./connection-video-page.component.scss'],
+  styleUrl: './connection-video-page.component.scss',
   imports: [
     CommonModule,
     FormsModule,

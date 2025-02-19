@@ -1,0 +1,245 @@
+.step-indicator {
+  display: flex;
+  margin-bottom: 0.5rem;
+
+  .error {
+    em {
+      color: red;
+    }
+
+    .error-icon {
+      display: block;
+    }
+  }
+
+  li {
+    width: 100%;
+
+    .error-icon {
+      display: none;
+    }
+
+    em {
+      height: 100%;
+    }
+  }
+}
+
+.template-container {
+  padding: 1rem 0.5rem;
+}
+
+.cd-breadcrumb,
+.cd-multi-steps {
+  max-width: 768px;
+  padding: 0.5em 1em;
+  background-color: #edeff0;
+  border-radius: 0.25em;
+}
+
+.cd-breadcrumb::after,
+.cd-multi-steps::after {
+  display: table;
+  clear: both;
+  content: '';
+}
+
+.cd-breadcrumb li,
+.cd-multi-steps li {
+  display: inline-block;
+  margin: 0.5em 0;
+}
+
+.cd-breadcrumb li::after,
+.cd-multi-steps li::after {
+  /* this is the separator between items */
+  display: inline-block;
+  margin: 0 0.6em;
+  color: #959fa5;
+  content: '\00bb';
+}
+
+.cd-breadcrumb li:last-of-type::after,
+.cd-multi-steps li:last-of-type::after {
+  /* hide separator after the last item */
+  display: none;
+}
+
+.cd-breadcrumb li > *,
+.cd-multi-steps li > * {
+  /* single step */
+  display: inline-block;
+  color: #2c3f4c;
+}
+
+.cd-breadcrumb li.met > *,
+.cd-multi-steps li.met > * {
+  /* selected step */
+  color: #28a745;
+}
+
+.cd-breadcrumb li.current > *,
+.cd-multi-steps li.current > * {
+  /* selected step */
+  color: #007bff;
+}
+
+@media only screen and (width >= 768px) {
+  .cd-breadcrumb,
+  .cd-multi-steps {
+    padding: 0 1.2em;
+  }
+
+  .cd-breadcrumb li,
+  .cd-multi-steps li {
+    margin: 1.2em 0;
+  }
+
+  .cd-breadcrumb li::after,
+  .cd-multi-steps li::after {
+    margin: 0 1em;
+  }
+}
+
+@media only screen and (width >= 768px) {
+  .cd-multi-steps {
+    padding: 0;
+    text-align: center;
+
+    /* reset style */
+    background-color: transparent;
+  }
+
+  .cd-multi-steps li {
+    position: relative;
+    float: none;
+    margin: 0.4em 0;
+    margin-inline-end: 1.5rem;
+  }
+
+  .cd-multi-steps li:last-of-type {
+    margin-right: 0;
+  }
+
+  .cd-multi-steps li::after {
+    /* this is the line connecting 2 adjacent items */
+    position: absolute;
+    height: 0.4rem;
+
+    /* reset style */
+    margin: 0;
+    content: '';
+    background: #edeff0;
+  }
+
+  .cd-multi-steps li > *,
+  .cd-multi-steps li.current > * {
+    position: relative;
+    color: #2c3f4c;
+  }
+
+  .cd-multi-steps li.error > * {
+    color: red;
+  }
+
+  .cd-multi-steps.custom-separator li::after {
+    /* reset style */
+    height: 0.25rem;
+    background: #edeff0;
+  }
+
+  .cd-multi-steps.text-top li {
+    text-align: center;
+  }
+
+  .cd-multi-steps.text-top li::after {
+    /* this is the line connecting 2 adjacent items */
+    position: absolute;
+    bottom: 0.25rem;
+    left: 50%;
+
+    /* 2.5rem is the <li> right margin value */
+    width: calc(100% + 1.5rem);
+  }
+
+  .cd-multi-steps.text-top li > *::before {
+    position: absolute;
+    right: auto;
+    bottom: 0;
+    left: 50%;
+    z-index: 1;
+    width: 0.75rem;
+    height: 0.75rem;
+
+    /* this is the spot indicator */
+    content: '';
+    background-color: #edeff0;
+    border-radius: 50%;
+    transform: translateX(-50%);
+  }
+
+  .cd-multi-steps.text-top li.visited > *::before,
+  .cd-multi-steps.text-top li.met > *::before {
+    background-color: #28a745;
+  }
+
+  .cd-multi-steps.text-top li.met em::before {
+    box-shadow: 0 0 0 0.2rem rgba(40 167 69 / 50%);
+  }
+
+  .cd-multi-steps.text-top li.visited > *::before,
+  .cd-multi-steps.text-top li.current > *::before {
+    background-color: #007bff;
+  }
+
+  .cd-multi-steps.text-top li.current em::before {
+    box-shadow: 0 0 0 0.2rem rgba(0 123 255 / 50%);
+  }
+
+  .cd-multi-steps.text-top li > * {
+    padding-bottom: 1.25rem;
+  }
+}
+
+.cd-multi-steps.count li {
+  counter-increment: steps;
+}
+
+.cd-multi-steps.count li > *::before {
+  content: counter(steps) ' - ';
+}
+
+@media only screen and (width >= 768px) {
+  .cd-multi-steps.text-top.count li > *::before {
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    color: #fff;
+
+    /* this is the spot indicator */
+    content: counter(steps);
+  }
+
+  .cd-multi-steps.text-top.count li:not(.met) em::before {
+    /* steps not visited yet - counter color */
+    color: #2c3f4c;
+  }
+
+  .cd-multi-steps.text-top.count li::after {
+    bottom: 0.688rem;
+  }
+
+  .cd-multi-steps.text-top.count li > * {
+    padding-bottom: 2.125rem;
+  }
+}
+
+:host-context(.rtl) {
+  .cd-multi-steps.text-top li::after {
+    left: -55%;
+  }
+}
+
+.not-met {
+  opacity: 0.6;
+}

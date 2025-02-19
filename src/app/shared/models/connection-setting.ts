@@ -28,7 +28,7 @@ export class ConnectionSetting {
   /**
    * remote-machine connections id
    */
-  id = 0;
+  id: number | undefined;
   /**
    * the connection belongs to which remote machine
    */

@@ -10,7 +10,7 @@ export interface RemoteMachine {
   /**
    * id of remote machine
    */
-  id: number;
+  id: number | undefined;
   /**
    * name of remote machine
    */

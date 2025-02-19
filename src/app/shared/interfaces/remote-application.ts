@@ -5,15 +5,15 @@ export interface RemoteApplication {
   /**
    * applications id
    */
-  id?: number;
+  id: number;
   /**
    * applications connection id
    */
-  connectionId?: number;
+  connectionId: number | undefined;
   /**
    * applications image id
    */
-  imageId?: number;
+  imageId: number;
   /**
    * application's image.
    * when choosing a new image, this member gets the original image's information but
@@ -21,7 +21,7 @@ export interface RemoteApplication {
    * So this field is only for those times when a new image is set for application but its imageId has not yet assigned
    * because the image has not sent to the server yet.
    */
-  image?: string;
+  image: string | undefined;
   /**
    * remote applications 'applicationLabel'
    */

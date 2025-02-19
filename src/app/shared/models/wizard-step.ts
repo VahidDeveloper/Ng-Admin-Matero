@@ -10,7 +10,7 @@ export class WizardStep {
     this.hasError = hasError;
   }
   /** template of the step */
-  template: TemplateRef<any>;
+  template: TemplateRef<any> | null;
   /** name of the step */
   name: string;
   /** key of the step */

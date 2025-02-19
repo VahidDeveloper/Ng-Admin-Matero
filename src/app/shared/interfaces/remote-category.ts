@@ -6,11 +6,11 @@ export interface RemoteCategory {
   /**
    * remote category 'description'
    */
-  description: string;
+  description: string | undefined;
   /**
    * remote category 'hosts'
    */
-  hosts: RemoteMachine[];
+  hosts: RemoteMachine[] | undefined;
   /**
    * remote category 'id'
    */
@@ -22,7 +22,7 @@ export interface RemoteCategory {
   /**
    * remote category 'imageId'
    */
-  imageId: number;
+  imageId: number | undefined;
   /**
    * remote category 'name'
    */
@@ -30,9 +30,9 @@ export interface RemoteCategory {
   /**
    * remote machines
    */
-  members?: number[];
+  members: number[] | undefined;
   /**
    * category id
    */
-  objectId?: number;
+  objectId: number | undefined;
 }
