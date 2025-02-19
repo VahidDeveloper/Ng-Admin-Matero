@@ -40,7 +40,7 @@
     "@angular/router": "^19.0.5",
     "@assistivlabs/guacamole-common-js": "^1.5.5-al-0.0.7",
     "@ng-matero/extensions": "^19.0.2",
-    "@ng-matero/extensions-date-fns-adapter": "^19.0.0",
+    "@ng-matero/extensions-date-fns-adapter": "^19.1.0",
     "@ngx-formly/core": "^6.3.10",
     "@ngx-formly/material": "^6.3.10",
     "@ngx-translate/core": "^16.0.0",

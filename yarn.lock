@@ -2112,10 +2112,10 @@
     "@napi-rs/nice-win32-ia32-msvc" "1.0.1"
     "@napi-rs/nice-win32-x64-msvc" "1.0.1"
 
-"@ng-matero/extensions-date-fns-adapter@^19.0.0":
-  version "19.0.0"
-  resolved "https://registry.yarnpkg.com/@ng-matero/extensions-date-fns-adapter/-/extensions-date-fns-adapter-19.0.0.tgz#f7bd31383767d98525c38f41ef08580cb6355fba"
-  integrity sha512-nj1EbG4s0E7/zp1cfDYIxgWBTmg5eC+OqFVyxgjrCElk9+X1f5R0zgvKOqY5+t89XfFwUJ5bOEgWHFsQufdfww==
+"@ng-matero/extensions-date-fns-adapter@^19.1.0":
+  version "19.1.0"
+  resolved "https://registry.yarnpkg.com/@ng-matero/extensions-date-fns-adapter/-/extensions-date-fns-adapter-19.1.0.tgz#d142ba216231920e9a6b1c07b8887234e49f56ab"
+  integrity sha512-SkhM299WjFN5qfTRAUvfgFelggCKnzA1WWUunhNh1iFgk0dJkxBcPgQ4cB3XdZVtS+FnErKQLhCKjKW5ErPXww==
   dependencies:
     tslib "^2.4.0"
 
