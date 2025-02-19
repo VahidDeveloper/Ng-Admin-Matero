@@ -1,3 +1,4 @@
+import { tr } from 'date-fns/locale';
 import { Injectable, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { SettingsService } from './settings.service';

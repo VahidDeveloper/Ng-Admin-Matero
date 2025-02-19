@@ -1,0 +1,24 @@
+.cover-count-down {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  background: white;
+
+  .count-down {
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: auto;
+  }
+}
+
+.content-container {
+  width: 100%;
+  min-height: 300px;
+}

@@ -1,3 +1,4 @@
+import { tr } from 'date-fns/locale';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,

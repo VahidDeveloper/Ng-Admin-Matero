@@ -1,0 +1,26 @@
+:host-context(.rtl) {
+  .edit-icon {
+    right: unset;
+    left: 2.71rem;
+  }
+}
+
+.edit-icon {
+  position: absolute;
+  top: 1.57rem;
+  right: 2.71rem;
+
+  .edit-mode {
+    color: #adb5bd;
+    cursor: pointer;
+  }
+}
+
+.otp-type-icon {
+  font-size: 1.5rem;
+  line-height: 0;
+}
+
+.sign-in {
+  margin: 0 1rem;
+}

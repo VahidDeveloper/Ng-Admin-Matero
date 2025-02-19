@@ -1,0 +1,8 @@
+.monitoring-list {
+  ::ng-deep {
+    .infinite-scroll-viewport {
+      height: calc(100% - 24rem);
+      min-height: 25rem !important;
+    }
+  }
+}

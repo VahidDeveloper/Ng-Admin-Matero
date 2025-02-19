@@ -1,0 +1,20 @@
+<lib-card
+  [headerTitle]="'LOCKED_USER_IN_CONNECTION_MENU' | translator"
+  headerIcon="icon-Menu-05"
+  class="lib-card-reset root-container"
+>
+  <div class="table-container">
+    <div *ngFor="let error of _allPossibleErrors | keyvalue">
+      <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
+    </div>
+    <lib-material-data-table
+      [columns]="columns"
+      [gridOption]="_gridOption"
+      [dataSource]="rows"
+      [actionList]="_operationList"
+      [loadingIndicator]="_isLoading"
+      [paginationLabels]="paginationLabels"
+      (refreshData)="reloadList()"
+    ></lib-material-data-table>
+  </div>
+</lib-card>

@@ -1,0 +1,41 @@
+<lib-card
+  class="lib-card-reset"
+  [headerTitle]="'ACCOUNT_LOCK_IN_CONNECTION_MENU' | translator"
+  headerIcon="icon-Setting-00"
+  [libLoading]="_fetchLoading"
+>
+  <div *ngFor="let error of _allPossibleErrors | keyvalue" class="my-2">
+    <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
+  </div>
+  <form [formGroup]="_form" class="my-2" libScrollableElement [topOffset]="50">
+    <lib-form-element-container
+      [label]="'EnableOrDisableAccountLockSettings' | translator"
+      [help]="'EnableOrDisableAccountLockSettingsHelp' | translator"
+    >
+      <lib-switch class="mx-2" isCircle="true" formControlName="active" #activePolicy></lib-switch>
+    </lib-form-element-container>
+    <ng-container *ngIf="activePolicy._value">
+      <lib-form-element-container
+        [label]="'LockTime' | translator"
+        [help]="'LockTimeHelp' | translator"
+      >
+        <input class="form-control" type="number" formControlName="lockTimeMinutes" />
+      </lib-form-element-container>
+      <lib-form-element-container
+        [label]="'MaximumNumberOfFailedAttempts' | translator"
+        [help]="'MaximumNumberOfFailedAttemptsHelp' | translator"
+      >
+        <input class="form-control" type="number" formControlName="maxFailedAttempts" />
+      </lib-form-element-container>
+      <lib-form-element-container
+        [label]="'TimeRequiredToRetry' | translator"
+        [help]="'TimeRequiredToRetryHelp' | translator"
+      >
+        <input class="form-control" type="number" formControlName="resetTimeMinutes" />
+      </lib-form-element-container>
+    </ng-container>
+    <lib-button [color]="_color.Success" [loading]="_isLoading" type="submit" (click)="submit()">
+      {{ 'ok' | translator }}
+    </lib-button>
+  </form>
+</lib-card>
