@@ -24,14 +24,8 @@ export class StoredPasswordService {
    * @param isPersonal whether it is personal or associated with connection
    */
   getAllStoredPasswords(isPersonal: boolean): Observable<StoredPassword[]> {
-    const address = isPersonal
-      ? WinaRestUrls.personalVaultURL()
-      : WinaRestUrls.connectionVaultURL();
-    return this.http.get<StoredPassword[]>(address, {}).pipe(
-      map(items => {
-        return items.map(sc => new StoredPassword(sc));
-      })
-    );
+    const address = isPersonal ? '/rest/users/vault/list' : WinaRestUrls.connectionVaultURL();
+    return this.http.get<StoredPassword[]>('/rest/users/vault/list');
   }
 
   /**

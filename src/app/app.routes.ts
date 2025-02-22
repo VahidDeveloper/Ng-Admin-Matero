@@ -22,9 +22,13 @@ export const routes: Routes = [
       { path: '404', component: Error404Component },
       { path: '500', component: Error500Component },
       {
-        path: 'video',
+        path: 'resources',
         loadChildren: () =>
           import('./routes/connection-video/connection-video.routes').then(m => m.routes),
+      },
+      {
+        path: 'setting',
+        loadChildren: () => import('./routes/setting/setting.routes').then(m => m.routes),
       },
       {
         path: 'design',

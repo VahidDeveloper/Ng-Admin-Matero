@@ -119,7 +119,7 @@ export class WinaRestUrls {
    * URL related to personal vault's list.
    */
   static personalVaultURL(): string {
-    return this.restNewBaseUrl + 'vaults/user';
+    return 'rest/users/vault/list';
   }
 
   /**

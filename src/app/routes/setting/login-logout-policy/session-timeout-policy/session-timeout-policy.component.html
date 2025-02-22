@@ -1,0 +1,41 @@
+<!-- <lib-card
+  [headerTitle]="'SESSION_TIMEOUT_MENU' | translator"
+  headerIcon="icon-User-11"
+  class="lib-card-reset"
+>
+  <div class="row px-2" libScrollableElement [topOffset]="50">
+    <div *ngFor="let error of _allPossibleErrors | keyvalue">
+      <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
+    </div>
+    <form class="col-md-12" [formGroup]="_form" [libLoading]="_isLoading">
+      <lib-form-element-container
+        [label]="'WebTimeout' | translator"
+        [help]="'WebTimeoutHelp' | translator"
+      >
+        <input libTextBox libOnlyNumber formControlName="webTimeoutMinutes" />
+      </lib-form-element-container>
+      <lib-form-element-container
+        [label]="'ConnectionTimeout' | translator"
+        [help]="'ConnectionTimeoutHelp' | translator"
+      >
+        <input libTextBox libOnlyNumber formControlName="connectionTimeoutMinutes" />
+      </lib-form-element-container>
+      <lib-form-element-container
+        [label]="'EnableConnectionTimeout' | translator"
+        [help]="'EnableConnectionTimeoutHelp' | translator"
+      >
+        <lib-checkbox formControlName="connectionTimeoutEnabled"></lib-checkbox>
+      </lib-form-element-container>
+
+      <lib-button
+        type="button"
+        [color]="_color.Success"
+        (click)="saveChanges()"
+        [disabled]="_form?.invalid"
+        [loading]="_updateLoading"
+      >
+        {{ 'SaveChanges' | translator }}
+      </lib-button>
+    </form>
+  </div>
+</lib-card> -->

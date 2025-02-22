@@ -1,0 +1,99 @@
+<!-- <div class="card">
+  <div class="card-body">
+    <h5 class="card-title d-flex justify-content-between align-items-center">
+      <span>
+        <em class="icon-Sign-in-00"></em>
+        <span>{{ 'LoginConstraintSetting' | translator }}</span>
+      </span>
+    </h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ 'AllFieldsAreRequired' | translator }}</h6>
+    <form [formGroup]="editForm">
+      <lib-form-element-container
+        [extraValidatorsDescription]="{
+          invalidMinMax: 'MaximumShouldBeMoreThanMinimum' | translator,
+        }"
+        [label]="'captchaSessionThreshold' | translator"
+        [help]="'captchaSessionThresholdHelp' | translator"
+      >
+        <input formControlName="captchaSessionThreshold" type="number" libTextBox />
+      </lib-form-element-container>
+      <lib-form-element-container
+        [extraValidatorsDescription]="{
+          invalidMinMax: 'MaximumShouldBeMoreThanMinimum' | translator,
+        }"
+        [label]="'captchaIpThreshold' | translator"
+        [help]="'captchaIpThresholdHelp' | translator"
+      >
+        <input formControlName="captchaIpThreshold" type="number" libTextBox />
+      </lib-form-element-container>
+      <lib-form-element-container
+        [extraValidatorsDescription]="{
+          invalidMinMax: 'MaximumShouldBeMoreThanMinimum' | translator,
+        }"
+        [label]="'lockThreshold' | translator"
+        [help]="'lockThresholdHelp' | translator"
+      >
+        <input formControlName="lockThreshold" id="lockThreshold" type="number" libTextBox />
+      </lib-form-element-container>
+      <lib-form-element-container
+        [extraValidatorsDescription]="{
+          invalidMinMax: 'MaximumShouldBeMoreThanMinimum' | translator,
+        }"
+        [label]="'lockMinutes' | translator"
+        [help]="'lockMinutesHelp' | translator"
+      >
+        <input formControlName="lockMinutes" id="lockTime" type="number" libTextBox />
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'defaultOtpMedia' | translator">
+        <div libRadioGroup formControlName="defaultOtpMedia">
+          <lib-radio-button value="sms" [label]="'Sms' | translator"></lib-radio-button>
+          <lib-radio-button value="email" [label]="'email' | translator"></lib-radio-button>
+        </div>
+      </lib-form-element-container>
+      <lib-form-element-container
+        [extraValidatorsDescription]="{
+          invalidMinMax: 'MaximumShouldBeMoreThanMinimum' | translator,
+        }"
+        [label]="'otpValidTimeSeconds' | translator"
+        [help]="'otpValidTimeSecondsHelp' | translator"
+      >
+        <input id="otpValid" formControlName="otpValidTimeSeconds" type="number" libTextBox />
+      </lib-form-element-container>
+      <lib-form-element-container
+        [extraValidatorsDescription]="{
+          invalidMinMax: 'MaximumShouldBeMoreThanMinimum' | translator,
+        }"
+        [label]="'otpRetryMax' | translator"
+        [help]="'otpRetryMaxHelp' | translator"
+      >
+        <input id="otpMax" formControlName="otpRetryMax" type="number" libTextBox />
+      </lib-form-element-container>
+      <lib-form-element-container
+        [extraValidatorsDescription]="{
+          invalidMinMax: 'MaximumShouldBeMoreThanMinimum' | translator,
+        }"
+        [label]="'otpResendMax' | translator"
+        [help]="'otpResendMaxHelp' | translator"
+      >
+        <input id="otpResendMax" formControlName="otpResendMax" type="number" libTextBox />
+      </lib-form-element-container>
+      <lib-form-element-container
+        [extraValidatorsDescription]="{
+          invalidMinMax: 'MaximumShouldBeMoreThanMinimum' | translator,
+        }"
+        [label]="'tokenRetryMax' | translator"
+        [help]="'tokenRetryMaxHelp' | translator"
+      >
+        <input id="tokenRetryMax" formControlName="tokenRetryMax" type="number" libTextBox />
+      </lib-form-element-container>
+      <lib-form-element-container
+        [extraValidatorsDescription]="{
+          invalidMinMax: 'MaximumShouldBeMoreThanMinimum' | translator,
+        }"
+        [label]="'minPassLength' | translator"
+      >
+        <input id="minPassLength" formControlName="minPassLength" type="number" libTextBox />
+      </lib-form-element-container>
+    </form>
+  </div>
+</div> -->

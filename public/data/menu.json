@@ -11,16 +11,66 @@
       }
     },
     {
-      "route": "video",
+      "route": "resources",
       "name": "remoteMatchine.title",
       "type": "link",
       "icon": "computer",
       "permissions": {
-        "only": [
-          "ADMIN",
-          "MANAGER"
-        ]
+        "only": ["ADMIN", "MANAGER"]
       }
+    },
+    {
+      "route": "setting",
+      "name": "setting",
+      "type": "sub",
+      "icon": "computer",
+      "permissions": {
+        "only": ["ADMIN", "MANAGER"]
+      },
+      "children": [
+        {
+          "route": "general",
+          "name": "general",
+          "type": "link",
+          "icon": "colorize"
+        },
+        {
+          "route": "login-policy",
+          "name": "login-policy",
+          "type": "link",
+          "icon": "colorize"
+        },
+        {
+          "route": "password",
+          "name": "password",
+          "type": "link",
+          "icon": "colorize"
+        },
+        {
+          "route": "command",
+          "name": "command",
+          "type": "link",
+          "icon": "colorize"
+        },
+        {
+          "route": "lock-account",
+          "name": "account",
+          "type": "link",
+          "icon": "colorize"
+        },
+        {
+          "route": "certificate",
+          "name": "certificate",
+          "type": "link",
+          "icon": "flag"
+        },
+        {
+          "route": "monitoring",
+          "name": "monitoring",
+          "type": "link",
+          "icon": "flag"
+        }
+      ]
     },
     {
       "route": "design",
@@ -46,10 +96,7 @@
         }
       ],
       "permissions": {
-        "only": [
-          "ADMIN",
-          "MANAGER"
-        ]
+        "only": ["ADMIN", "MANAGER"]
       }
     },
     {
@@ -277,10 +324,7 @@
         }
       ],
       "permissions": {
-        "except": [
-          "MANAGER",
-          "GUEST"
-        ]
+        "except": ["MANAGER", "GUEST"]
       }
     },
     {

@@ -17,6 +17,12 @@ const PROXY_CONFIG = {
     //   proxyReq.setHeader('cookie', cookie);
     // },
   },
+  '/rest/**': {
+    target: 'https://wina-develop.phoenix.mahsan.net',
+    changeOrigin: true,
+    secure: false,
+    logLevel: 'debug',
+  },
 };
 
 module.exports = PROXY_CONFIG;
