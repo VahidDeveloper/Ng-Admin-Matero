@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { PasswordSettingComponent } from './password-setting.component';
-import { PasswordListComponent } from './password-list/password-list.component';
-import { OrganizationalPasswordListComponent } from './organizational-password-list/organizational-password-list.component';
+import { PasswordListComponent } from './list/password-list.component';
+import { OrganizationalPasswordListComponent } from './organizational-list/organizational-password-list.component';
 import { UserRole } from '@shared';
 
 export const routes: Routes = [
