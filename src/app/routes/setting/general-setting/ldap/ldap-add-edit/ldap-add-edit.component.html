@@ -1,0 +1,63 @@
+<!-- <lib-card [headerTitle]="_panelTitle" class="lib-card-reset">
+  <div class="row px-1" libScrollableElement [topOffset]="50">
+    <div *ngFor="let error of _allPossibleErrors | keyvalue">
+      <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
+    </div>
+    <form [formGroup]="_form" class="w-100">
+      <lib-form-element-container [label]="'domain' | translator" [required]="true">
+        <input libTextBox formControlName="name" />
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'ServerAddress' | translator" [required]="true">
+        <input libTextBox formControlName="address" />
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'Port' | translator">
+        <input libTextBox type="number" formControlName="port" />
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'BaseDn' | translator" [required]="true">
+        <input libTextBox formControlName="baseDn" />
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'password' | translator" [required]="true">
+        <lib-password-input formControlName="password"> </lib-password-input>
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'UserDn' | translator" [required]="true">
+        <input libTextBox formControlName="userDn" />
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'ActiveDirectory' | translator">
+        <lib-checkbox formControlName="activeDirectory"></lib-checkbox>
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'Tls' | translator">
+        <lib-checkbox formControlName="tls"></lib-checkbox>
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'IgnoreCertificate' | translator">
+        <lib-checkbox formControlName="ignoreCert"></lib-checkbox>
+      </lib-form-element-container>
+    </form>
+    <footer libCardFooter>
+      <lib-button class="mx-2" [color]="_color.Dark" [routerLink]="_editMode ? '../..' : '..'">
+        {{ 'cancel' | translator }}
+      </lib-button>
+      <lib-button [color]="_color.Success" type="submit" [loading]="_updateLoading" (click)="_submitForm()">
+        <span *ngIf="_editMode">{{ 'Update' | translator }}</span>
+        <span *ngIf="!_editMode">{{ 'Save' | translator }}</span>
+      </lib-button>
+      <lib-button class="float-right" [loading]="_testConnectionLoading" (click)="_testConnection()">
+        {{ 'TestConnection' | translator }}
+      </lib-button>
+    </footer>
+  </div>
+</lib-card>
+
+<ng-template #certModal>
+  <lib-modal
+    [headerTitle]="'TestConnection' | translator"
+    [defaultFooter]="true"
+    [submitLoading]="_testConnectionLoading"
+    (submitModal)="_acceptCertificate()">
+    <app-identity-error
+      *ngIf="_certificateInfo"
+      [certificateInfo]="_certificateInfo"
+      [previousCertificateInfo]="_previousCertificate"
+      [isCertificateError]="true">
+    </app-identity-error>
+  </lib-modal>
+</ng-template> -->

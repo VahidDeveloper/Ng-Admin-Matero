@@ -1,6 +1,5 @@
-import { SettingComponent } from './setting.component';
 import { Routes } from '@angular/router';
-import { UserRole } from '@shared/enums';
+import { SettingComponent } from './setting.component';
 
 export const routes: Routes = [
   {
@@ -9,8 +8,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'general',
-        loadChildren: () =>
-          import('./agent-management/agent-management.routes').then(m => m.routes),
+        loadChildren: () => import('./general-setting/general-setting.routes').then(m => m.routes),
       },
       {
         path: 'login-policy',
@@ -19,8 +17,7 @@ export const routes: Routes = [
       },
       {
         path: 'password',
-        loadChildren: () =>
-          import('./password-setting/password-setting.routes').then(m => m.routes),
+        loadChildren: () => import('./password/password-setting.routes').then(m => m.routes),
       },
       {
         path: 'command',

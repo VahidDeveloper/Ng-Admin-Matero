@@ -1,0 +1,34 @@
+<!-- <div class="box">
+  <form class="connection__form" [formGroup]="_timeBaseEliminationForm">
+    <lib-form-element-container
+      [label]="'DeleteByFileCreationTime' | translator"
+      [help]="'DeleteByFileCreationTime' | translator">
+      <lib-switch isCircle="true" formControlName="enabled" (change)="checkTransfer($event, _timeBaseEliminationForm)">
+      </lib-switch>
+    </lib-form-element-container>
+    <lib-form-element-container
+      [label]="'NumberOfDaysFilesWillBeKept' | translator"
+      [help]="'NumberOfDaysFilesWillBeKeptHelp' | translator">
+      <input class="form-control" type="number" formControlName="elapsedInSeconds" />
+    </lib-form-element-container>
+    <div [formGroup]="warningForm">
+      <lib-form-element-container [label]="'Reminder' | translator" [help]="'ReminderHelp' | translator">
+        <lib-switch
+          isCircle="true"
+          formControlName="enabled"
+          (change)="checkTransfer($event, warningForm, 'startThreshold')">
+        </lib-switch>
+      </lib-form-element-container>
+      <lib-form-element-container
+        [extraValidatorsDescription]="extraValidatorsDescription"
+        [label]="'RemindingPeriodByDay' | translator"
+        [help]="'RemindingPeriodByDayHelp' | translator">
+        <input class="form-control" type="number" formControlName="startThreshold" />
+      </lib-form-element-container>
+
+      <lib-form-element-container [label]="'WarningInterval' | translator" [help]="'WarningIntervalHelp' | translator">
+        <input class="form-control" type="number" formControlName="step" />
+      </lib-form-element-container>
+    </div>
+  </form>
+</div> -->

@@ -1,0 +1,86 @@
+<!-- <lib-card [headerTitle]="'EMAIL_SETTING_MENU' | translator" headerIcon="icon-Mail-00" class="lib-card-reset">
+ <div class="row" libScrollableElement [topOffset]="50">
+   <div *ngFor="let error of _allPossibleErrors | keyvalue">
+     <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
+   </div>
+   <form [formGroup]="_form" [libLoading]="_getEmailConfigLoading" class="w-100">
+     <lib-form-element-container [label]="'ServerAddress' | translator">
+       <input libTextBox formControlName="address" />
+     </lib-form-element-container>
+     <lib-form-element-container [label]="'Port' | translator">
+       <input libTextBox formControlName="port" />
+     </lib-form-element-container>
+     <lib-form-element-container [label]="'username' | translator">
+       <input libTextBox formControlName="username" />
+     </lib-form-element-container>
+     <lib-form-element-container [label]="'password' | translator">
+       <lib-password-input class="form-control" formControlName="password"> </lib-password-input>
+     </lib-form-element-container>
+     <lib-form-element-container [label]="'AuthenticationMethod' | translator">
+       <lib-single-selector
+         class="form-control"
+         [list]="_authenticationValues"
+         isPrimitive="true"
+         formControlName="authenticationMethod">
+       </lib-single-selector>
+     </lib-form-element-container>
+     <lib-form-element-container [label]="'ConnectionSecurity' | translator">
+       <lib-single-selector
+         class="form-control"
+         isPrimitive="true"
+         [list]="_connectionSecurityValues"
+         formControlName="connectionSecurity">
+       </lib-single-selector>
+     </lib-form-element-container>
+     <lib-form-element-container [label]="'IgnoreCertificate' | translator">
+       <lib-checkbox class="mx-1" formControlName="ignoreCert"></lib-checkbox>
+     </lib-form-element-container>
+     <div class="d-flex align-items-center">
+       <lib-button
+         type="button"
+         [color]="_color.Success"
+         (click)="saveChanges()"
+         [disabled]="_form?.invalid"
+         [loading]="_updateLoading">
+         {{ 'SaveChanges' | translator }}
+       </lib-button>
+       <lib-button class="float-right mx-1" (click)="openTestMailModal(testMailModal)" [disabled]="_form?.invalid">
+         {{ 'TestSendEmail' | translator }}
+       </lib-button>
+     </div>
+   </form>
+ </div>
+</lib-card>
+
+<ng-template #testMailModal>
+  <lib-modal
+    [headerTitle]="'EmailConnectionTestForm' | translator"
+    [defaultFooter]="true"
+    [submitLoading]="_testEmailLoading"
+    (submitModal)="testEmail()">
+    <div *ngFor="let error of _allPossibleTestEmailErrors | keyvalue">
+      <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
+    </div>
+
+    <form [formGroup]="_testEmailForm" (ngSubmit)="testEmail()">
+      <lib-form-element-container [label]="'EmailConnectionTest' | translator">
+        <input type="email" libTextBox formControlName="email" />
+      </lib-form-element-container>
+    </form>
+  </lib-modal>
+</ng-template>
+
+<ng-template #certModal>
+  <lib-modal
+    [headerTitle]="'TestConnection' | translator"
+    [defaultFooter]="true"
+    [submitLoading]="_testEmailLoading"
+    (submitModal)="_acceptCertificate()">
+    <app-identity-error
+      *ngIf="_certificateInfo"
+      [certificateInfo]="_certificateInfo"
+      [previousCertificateInfo]="_previousCertificate"
+      [isCertificateError]="true">
+    </app-identity-error>
+  </lib-modal>
+</ng-template> -->

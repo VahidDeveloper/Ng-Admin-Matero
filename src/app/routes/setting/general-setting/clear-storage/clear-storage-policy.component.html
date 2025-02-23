@@ -1,0 +1,42 @@
+<!-- <div [libLoading]="_isLoading" class="policy-container h-100">
+  <lib-card [headerTitle]="'STORAGE_SETTING_MENU' | translator" headerIcon="icon-Big-data-00" libScrollableElement [topOffset]="50">
+    <header libCardHeader>
+      <div class="edit-icon">
+        <lib-button type="button" icon="icon-Write-00" [color]="color.Primary" (click)="goToEditPage()"
+          >{{ 'Edit' | translator }}
+        </lib-button>
+      </div>
+    </header>
+    <div *ngFor="let error of _allPossibleErrors | keyvalue">
+      <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
+    </div>
+    <div *ngIf="diskBaseElimination">
+      <lib-key-value-list [row]="diskBaseElimination" [listOfKeys]="listOfKeys"></lib-key-value-list>
+      <div class="list-group-item desc">
+        <span
+          >{{ 'AfterReaching' | translator }} {{ diskBaseElimination.warning.startThreshold }}
+          {{ 'percentFirstWarningWillBeSentAndForEvery' | translator }} {{ diskBaseElimination.warning.step }}
+          {{ 'NewAlarmBaseValueHelp' | translator }}
+        </span>
+      </div>
+      <lib-key-value-list [row]="timeBaseElimination" [listOfKeys]="listOfKeysNext"></lib-key-value-list>
+      <div class="list-group-item desc bottom-border">
+        <span>
+          {{ 'FilesAgeWillBeCheckedEvery' | translator }} {{ timeBaseElimination.elapsedInSeconds }}
+          {{ 'daysAndAfter' | translator }} {{ timeBaseElimination.warning.startThreshold }}
+          {{ 'daysOfStartOfPeriodReminderWillBeSend' | translator }}
+        </span>
+      </div>
+    </div>
+  </lib-card>
+</div>
+
+<ng-template #deleteFile let-value="value">
+  <span class="badge badge-light badge-pill description bg-warning">
+    <span *ngIf="value">
+      <em class="icon-Checkbox-00"></em>
+      <span>{{ 'Yes' | translator }}</span>
+    </span>
+    <span *ngIf="!value">{{ 'No' | translator }}</span>
+  </span>
+</ng-template> -->

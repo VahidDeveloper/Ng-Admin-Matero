@@ -1,0 +1,34 @@
+<!-- <lib-card [headerTitle]="'BANNER_SETTING_MENU' | translator" headerIcon="icon-User-11" class="lib-card-reset">
+ <div class="row" libScrollableElement [topOffset]="50">
+   <div *ngFor="let error of _allPossibleErrors | keyvalue" class="col-md-12">
+     <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
+   </div>
+   <form [formGroup]="_form" [libLoading]="_isLoading" class="col-md-12">
+     <lib-form-element-container [label]="'ShowBanner' | translator" [help]="'ShowBannerHelp' | translator">
+       <lib-checkbox formControlName="enabled"></lib-checkbox>
+     </lib-form-element-container>
+     <lib-form-element-container [label]="'title' | translator" [help]="'ItWouldBeShownOnBannerHeader' | translator">
+       <input libTextBox formControlName="title" />
+     </lib-form-element-container>
+     <lib-form-element-container [label]="'description' | translator" [help]="'ItWouldBeShownOnBannerBody' | translator">
+       <angular-editor formControlName="description"></angular-editor>
+     </lib-form-element-container>
+     <lib-form-element-container [label]="'ShowWebTimeout' | translator" [help]="'ShowWebTimeoutHelp' | translator">
+       <lib-checkbox formControlName="showWebTimeout"></lib-checkbox>
+     </lib-form-element-container>
+     <lib-form-element-container
+       [label]="'ShowConnectionTimeout' | translator"
+       [help]="'ShowConnectionTimeoutHelp' | translator">
+       <lib-checkbox formControlName="showConnectionTimeout"></lib-checkbox>
+     </lib-form-element-container>
+     <lib-form-element-container
+       [label]="'LoginWarningMessage' | translator"
+       [help]="'ItWouldBeShownOnLoginPage' | translator">
+       <input libTextBox formControlName="loginWarning" />
+     </lib-form-element-container>
+     <lib-button type="button" [color]="_Color.Success" (click)="saveChanges()" [loading]="_updateLoading"
+     >{{ 'SaveChanges' | translator }}
+     </lib-button>
+   </form>
+ </div>
+</lib-card> -->

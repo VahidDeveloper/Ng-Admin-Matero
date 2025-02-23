@@ -1,0 +1,95 @@
+<!-- <lib-card [headerTitle]="_panelTitle" class="lib-card-reset">
+  <div *ngFor="let error of _allPossibleErrors | keyvalue">
+    <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
+  </div>
+  <div class="w-100" libScrollableElement [topOffset]="50">
+    <form [formGroup]="_form">
+      <lib-form-element-container [label]="'ServerAddress' | translator" [required]="true">
+        <input libTextBox formControlName="address" />
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'Port' | translator" [required]="true">
+        <input libTextBox type="number" formControlName="port" />
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'Protocol' | translator">
+        <div libRadioGroup formControlName="protocol">
+          <lib-radio-button value="tcp" [label]="'TCP' | translator"> </lib-radio-button>
+          <lib-radio-button value="udp" [label]="'UDP' | translator"> </lib-radio-button>
+        </div>
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'SyslogRfc' | translator">
+        <lib-single-selector
+          class="form-control"
+          [list]="_logTypes"
+          isPrimitive="true"
+          formControlName="syslogRfc"></lib-single-selector>
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'SubCategories' | translator">
+        <lib-multi-selector
+          class="form-control"
+          [list]="_categories"
+          isPrimitive="true"
+          formControlName="subCategories"></lib-multi-selector>
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'IgnoreCertificate' | translator">
+        <lib-checkbox formControlName="ignoreCert"></lib-checkbox>
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'ActiveSsl' | translator">
+        <lib-checkbox formControlName="ssl"></lib-checkbox>
+      </lib-form-element-container>
+      <lib-alert
+        *ngIf="_testConnectionErrorAlert"
+        (click)="_testConnectionErrorAlert = false"
+        [type]="_color.Danger"
+        [closable]="true">
+        <span>{{ 'AnErrorOccurredDuringTestingSyslogServer' | translator }}</span>
+      </lib-alert>
+    </form>
+    <footer libCardFooter>
+      <lib-button class="mx-2" [color]="_color.Dark" [routerLink]="_editMode ? '../..' : '..'">
+        {{ 'cancel' | translator }}
+      </lib-button>
+      <lib-button [color]="_color.Success" type="submit" [loading]="_updateLoading" (click)="_submitForm()">
+        <span *ngIf="_editMode">{{ 'Update' | translator }}</span>
+        <span *ngIf="!_editMode">{{ 'Save' | translator }}</span>
+      </lib-button>
+      <lib-button class="float-right" [loading]="_testConnectionLoading" (click)="_testConnection()">
+        {{ 'TestConnection' | translator }}
+      </lib-button>
+    </footer>
+  </div>
+
+</lib-card>
+
+<ng-template #saveModal>
+  <lib-modal
+    [headerTitle]="'SyslogCertificate' | translator"
+    [defaultFooter]="true"
+    [submitLoading]="_updateLoading"
+    (submitModal)="_submitCert()">
+    <lib-alert class="m-3" *ngIf="_downRemoteError" [type]="_color.Danger" [closable]="false">
+      <div class="d-flex justify-content-between">
+        <p *ngIf="_downRemoteError">{{ 'downRemoteError' | translator }}</p>
+      </div>
+    </lib-alert>
+    <app-identity-error
+      *ngIf="_certificateInfo"
+      [certificateInfo]="_certificateInfo"
+      [previousCertificateInfo]="_previousCertificate"
+      [isCertificateError]="true">
+    </app-identity-error>
+  </lib-modal>
+</ng-template>
+
+<ng-template #testConnectionModal>
+  <lib-modal
+    [headerTitle]="'TestConnection' | translator"
+    [submitLoading]="_testConnectionLoading"
+    (submitModal)="_tryTestConnection()">
+    <app-identity-error
+      *ngIf="_certificateInfo"
+      [certificateInfo]="_certificateInfo"
+      [previousCertificateInfo]="_previousCertificate"
+      [isCertificateError]="true">
+    </app-identity-error>
+  </lib-modal>
+</ng-template> -->

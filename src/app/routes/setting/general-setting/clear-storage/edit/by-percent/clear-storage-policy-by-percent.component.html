@@ -1,0 +1,38 @@
+<!-- <div class="box">
+  <form class="connection__form" [formGroup]="_diskBaseElimination">
+    <lib-form-element-container [label]="'MountPoint' | translator" [help]="'MountPointHelp' | translator">
+      <input class="form-control" type="text" formControlName="mountPoint" />
+    </lib-form-element-container>
+    <lib-form-element-container [label]="'DeleteFile' | translator" [help]="'DeleteFileHelp' | translator">
+      <lib-switch isCircle="true" formControlName="enabled" (change)="checkTransfer($event)"> </lib-switch>
+    </lib-form-element-container>
+    <lib-form-element-container
+      [extraValidatorsDescription]="errorMessage"
+      [label]="'MinimumAcceptableStorageUsagePercent' | translator"
+      [help]="'MinimumAcceptableStorageUsagePercentHelp' | translator">
+      <input class="form-control" type="number" formControlName="lowerBound" />
+    </lib-form-element-container>
+    <lib-form-element-container
+      [extraValidatorsDescription]="errorMessage"
+      [label]="'MaximumAcceptableStorageUsagePercent' | translator"
+      [help]="'MaximumAcceptableStorageUsagePercentHelp' | translator">
+      <input class="form-control" type="number" formControlName="upperBound" />
+    </lib-form-element-container>
+    <div [formGroup]="warningForm">
+      <lib-form-element-container [label]="'SendWarning' | translator" [help]="'SendWarningHelp' | translator">
+        <lib-switch isCircle="true" formControlName="enabled"> </lib-switch>
+      </lib-form-element-container>
+      <lib-form-element-container
+        [extraValidatorsDescription]="errorMessage"
+        [label]="'MinPercentToAlarm' | translator"
+        [help]="'MinPercentToAlarmHelp' | translator">
+        <input class="form-control" type="number" formControlName="startThreshold" />
+      </lib-form-element-container>
+      <lib-form-element-container
+        [label]="'NewAlarmBaseValue' | translator"
+        [help]="'NewAlarmBaseValueHelp' | translator">
+        <input class="form-control" type="number" formControlName="step" />
+      </lib-form-element-container>
+    </div>
+  </form>
+</div> -->

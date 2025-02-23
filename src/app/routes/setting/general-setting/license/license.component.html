@@ -1,0 +1,36 @@
+<!-- <lib-card [headerTitle]="'LICENSE_SETTING_MENU' | translator" headerIcon="icon-User-08" class="lib-card-reset">
+  <div class="row" libScrollableElement [topOffset]="50">
+    <div *ngFor="let error of _allPossibleErrors | keyvalue">
+      <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
+    </div>
+    <form [formGroup]="form" class="card-body w-75 m-auto" [libLoading]="_isLoading">
+      <div *ngIf="hasActivationCode" #inputBox class="box mb-5 px-2">
+        <label class="d-block">{{ 'ActivationCode' | translator }}</label>
+        <input disabled class="code" tabindex="1" maxlength="4" />
+        <input disabled class="code" tabindex="2" maxlength="4" />
+        <input disabled class="code" tabindex="3" maxlength="4" />
+        <input disabled class="code" tabindex="4" maxlength="4" />
+        <input disabled class="code" tabindex="5" maxlength="4" />
+        <lib-button class="mt-3 d-block" outline="true" icon="icon-Copy-00" (click)="copyToClipboard('activationCode')"
+        >{{ 'CopyCode' | translator }}
+        </lib-button>
+      </div>
+      <lib-form-element-container [label]="'ApplicationId' | translator">
+        <p>{{ 'applicationHelp' | translator }}</p>
+        <textarea class="mb-2" dir="ltr" style="min-height: 6rem" libTextArea formControlName="machineId"> </textarea>
+      </lib-form-element-container>
+      <lib-button outline="true" icon="icon-Copy-00" (click)="copyToClipboard()">{{ 'CopyText' | translator }} </lib-button>
+      <hr />
+      <lib-form-element-container [label]="'LicenseCode' | translator" required="true">
+        <p>{{ 'LicenseCodeHelp' | translator }}</p>
+        <textarea class="mb-2" style="min-height: 15rem" dir="ltr" libTextArea formControlName="licenseText"> </textarea>
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'OrAddTheSubmittedFile' | translator" required="true">
+        <lib-file-reader formControlName="licenseFile" (changeValue)="onUploadFile($event)"> </lib-file-reader>
+      </lib-form-element-container>
+      <lib-button [loading]="_submitLoading" (click)="submitChanges()"
+      >{{ 'SaveChanges' | translator }}
+      </lib-button>
+    </form>
+  </div>
+</lib-card> -->

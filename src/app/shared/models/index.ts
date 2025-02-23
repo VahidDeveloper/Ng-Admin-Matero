@@ -12,6 +12,7 @@ export * from './connection-setting';
 export * from './connection-video-manager';
 export * from './connection-video-section';
 export * from './csrf-info';
+export * from './error-display';
 export * from './file-transfer-setting';
 export * from './filter-remote-machines';
 export * from './form-validators';

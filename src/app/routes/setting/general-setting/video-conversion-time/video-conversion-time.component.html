@@ -1,0 +1,19 @@
+<!-- <lib-card [headerTitle]="'VIDE0_CONVERSION_SETTING_MENU' | translator" headerIcon="icon-Setting-00" class="rira-card-reset">
+  <p libCardHeader>
+    {{ 'VIDE0_CONVERSION_SETTING_MENU_help' | translator }}
+  </p>
+  <div class="row" libScrollableElement [topOffset]="50">
+    <div *ngFor="let error of _allPossibleErrors | keyvalue">
+      <lib-rira-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-rira-error-alert>
+    </div>
+    <form class="p-4 col-sm-12" [formGroup]="_form" (ngSubmit)="submit()">
+      <lib-form-element-container [label]="'cronExpression' | translator">
+        <input class="form-control" type="text" formControlName="cronExpression" />
+      </lib-form-element-container>
+      <lib-form-element-container [label]="'maxDurationMinutes' | translator">
+        <input class="form-control" type="number" formControlName="maxDurationMinutes" />
+      </lib-form-element-container>
+      <lib-button type="submit" [color]="_color.Primary" [loading]="_isLoading">{{ 'Save' | translator }}</lib-button>
+    </form>
+  </div>
+</lib-card> -->

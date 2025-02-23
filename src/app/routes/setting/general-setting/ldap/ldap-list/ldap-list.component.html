@@ -1,0 +1,21 @@
+<!-- <lib-card [headerTitle]="'LDAP_SETTING_MENU' | translator" headerIcon="icon-Sign-out-00" class="root-container lib-card-reset">
+  <div class="table-container">
+    <div *ngFor="let error of _allPossibleErrors | keyvalue">
+      <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
+    </div>
+    <lib-material-data-table-client-side
+      [dataSource]="_data"
+      [gridOption]="_tableOption"
+      [loadingIndicator]="_isLoading"
+      [columns]="_columns"
+      (refreshData)="_getLdapServerListData()"
+      [paginationLabels]="paginationLabels"
+      [actionList]="_operationList">
+    </lib-material-data-table-client-side>
+  </div>
+</lib-card>
+
+<ng-template let-value="value" #booleanTemp>
+  <em *ngIf="value" class="icon-Tick-00 text-success"></em>
+  <em *ngIf="!value" class="icon-Cross-01 text-danger"></em>
+</ng-template> -->

@@ -1,0 +1,16 @@
+<!-- <lib-card [headerTitle]="'SMS_SETTING_MENU' | translator" headerIcon="icon-Chat-01" class="lib-card-reset">
+  <p libCardHeader>
+    {{ 'smsSettingsInfo' | translator }}
+  </p>
+  <div class="row" libScrollableElement [topOffset]="50">
+    <div *ngFor="let error of _allPossibleErrors | keyvalue">
+      <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
+    </div>
+    <form class="p-4 col-md-12" [formGroup]="_form" (ngSubmit)="submit()">
+      <lib-form-element-container [label]="'PhoneNumber' | translator">
+        <input class="form-control" type="text" formControlName="phoneNumber" placeholder="09111111111" />
+      </lib-form-element-container>
+      <lib-button [color]="_color.Primary" [loading]="_isLoading">{{ 'SendATestSMS' | translator }}</lib-button>
+    </form>
+  </div>
+</lib-card> -->

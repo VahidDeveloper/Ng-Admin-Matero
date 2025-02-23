@@ -1,0 +1,30 @@
+<h3>
+  {{ 'EditClearStorageSettings' | translate }}
+</h3>
+<br />
+<form [formGroup]="_form" *ngIf="diskBaseElimination" (ngSubmit)="submit()">
+  @if (_isLoading) {
+    <mat-spinner />
+  }
+  <app-clear-storage-policy-by-percent [storageSetting]="diskBaseElimination" />
+  <app-clear-storage-policy-by-time [storageSetting]="timeBaseElimination" />
+  <button
+    mat-button
+    type="button"
+    class="mr-2"
+    aria-hidden="true"
+    (click)="backToList()"
+    color="secondary"
+  >
+    {{ 'Back' | translate }}
+  </button>
+
+  <button mat-button type="submit">
+    {{ 'Submit' | translate }}
+    @if (_isLoading) {
+      <mat-icon>
+        <mat-spinner color="accent" diameter="20" />
+      </mat-icon>
+    }
+  </button>
+</form>

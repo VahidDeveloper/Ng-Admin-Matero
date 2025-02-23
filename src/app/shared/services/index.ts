@@ -4,6 +4,7 @@ export * from './connection/connection-setting.service';
 export * from './banner-setting.service';
 export * from './broadcast.service';
 export * from './clipboard-patterns.service';
+export * from './confirm-dialog.service';
 export * from './connection-frames.service';
 export * from './connection-video.service';
 export * from './directionality.service';

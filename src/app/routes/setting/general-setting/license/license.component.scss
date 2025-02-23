@@ -1,0 +1,21 @@
+.box {
+  background: white;
+  border-radius: 10px;
+
+  strong {
+    display: block;
+    margin-bottom: 30px;
+  }
+
+  .code {
+    width: 100px;
+    padding-bottom: 5px;
+    margin: 0 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    border: 0;
+    border-bottom: 3px solid #999;
+    outline: none;
+  }
+}
