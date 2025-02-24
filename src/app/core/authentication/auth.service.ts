@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, catchError, iif, map, merge, of, share, switchMap, tap } from 'rxjs';
-import { filterObject, isEmptyObject } from './helpers';
-import { User } from './interface';
 import { LoginService } from './login.service';
 import { TokenService } from './token.service';
-import { ErrorDisplay } from '@shared/models';
+import { LocalStorageService } from '@shared/services';
+import { filterObject, isEmptyObject } from './helpers';
+import { ErrorDisplay, UserBriefInfo } from '@shared/models';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +12,9 @@ import { ErrorDisplay } from '@shared/models';
 export class AuthService {
   private readonly loginService = inject(LoginService);
   private readonly tokenService = inject(TokenService);
+  private readonly store = inject(LocalStorageService);
 
-  private user$ = new BehaviorSubject<User>({});
+  private user$ = new BehaviorSubject<UserBriefInfo>({} as UserBriefInfo);
   private change$ = merge(
     this.tokenService.change(),
     this.tokenService.refresh().pipe(switchMap(() => this.refresh()))
@@ -36,6 +37,10 @@ export class AuthService {
 
   login(username: string, password: string) {
     return this.loginService.validate(username, password).pipe(
+      tap(response => {
+        this.user$.next(response.object.userInfo);
+        this.store.set('userinfo', response.object.userInfo);
+      }),
       switchMap(() => {
         return this.loginService.login(username, password);
       }),
@@ -76,13 +81,13 @@ export class AuthService {
 
   private assignUser() {
     if (!this.check()) {
-      return of({}).pipe(tap(user => this.user$.next(user)));
+      return of({} as UserBriefInfo).pipe(tap(user => this.user$.next(user)));
     }
 
     if (!isEmptyObject(this.user$.getValue())) {
       return of(this.user$.getValue());
     }
 
-    return this.loginService.user().pipe(tap(user => this.user$.next(user)));
+    return of(this.store.get('userinfo')).pipe(tap(value => this.user$.next(value)));
   }
 }

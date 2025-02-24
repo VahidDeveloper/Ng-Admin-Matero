@@ -1,14 +1,16 @@
-import { User } from './interface';
+import { UserRole } from '@shared/enums';
+import { UserBriefInfo } from '@shared/models';
 
-export const admin: User = {
-  id: 1,
-  name: 'Zongbin',
-  email: 'nzb329@163.com',
-  avatar: 'images/avatar.jpg',
+export const admin: UserBriefInfo = {
+  username: 'Zongbin',
+  displayName: 'nzb329@163.com',
+  userImage: 'images/avatar.jpg',
+  role: UserRole.RemoteAdmin,
 };
 
-export const guest: User = {
-  name: 'unknown',
-  email: 'unknown',
-  avatar: 'images/avatar-default.jpg',
+export const guest: UserBriefInfo = {
+  username: 'unknown',
+  displayName: 'unknown',
+  userImage: 'images/avatar-default.jpg',
+  role: UserRole.RemoteUser,
 };

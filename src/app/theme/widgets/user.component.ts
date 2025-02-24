@@ -1,18 +1,19 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
+import { debounceTime, tap } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { debounceTime, tap } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 
-import { AuthService, SettingsService, User } from '@core';
+import { UserBriefInfo } from '@shared';
+import { AuthService, SettingsService } from '@core';
 
 @Component({
   selector: 'app-user',
   template: `
     <button mat-icon-button [matMenuTriggerFor]="menu">
-      <img class="avatar" [src]="user.avatar" width="24" alt="avatar" />
+      <img class="avatar" [src]="user.userImage || 'images/avatar.jpg'" width="24" alt="avatar" />
     </button>
 
     <mat-menu #menu="matMenu">
@@ -49,7 +50,7 @@ export class UserComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly settings = inject(SettingsService);
 
-  user!: User;
+  user!: UserBriefInfo;
 
   ngOnInit(): void {
     this.auth

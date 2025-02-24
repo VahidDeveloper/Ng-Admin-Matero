@@ -6,9 +6,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
-import { AuthService, User } from '@core';
+import { AuthService } from '@core';
 import { TranslateModule } from '@ngx-translate/core';
-import { PageHeaderComponent } from '@shared';
+import { PageHeaderComponent, UserBriefInfo } from '@shared';
 
 @Component({
   selector: 'app-profile-layout',
@@ -30,7 +30,7 @@ export class ProfileLayoutComponent implements OnInit {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
 
-  user!: User;
+  user!: UserBriefInfo;
 
   ngOnInit(): void {
     this.auth.user().subscribe(user => (this.user = user));

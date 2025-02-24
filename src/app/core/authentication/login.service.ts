@@ -1,11 +1,16 @@
+import { ajax } from 'rxjs/ajax';
+import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { map, Observable } from 'rxjs';
 
-import { Menu } from '@core';
-import { Token, User } from './interface';
-import { WinaRestUrls } from '@shared';
+import { Token } from './interface';
 import { RestResponse } from '@shared/models/rest-response';
+import { UserBriefInfo, WinaRestUrls } from '@shared/models';
+
+interface ValidateRes {
+  loggedIn: boolean;
+  userInfo: UserBriefInfo;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +18,11 @@ import { RestResponse } from '@shared/models/rest-response';
 export class LoginService {
   protected readonly http = inject(HttpClient);
 
-  validate(username: string, password: string) {
-    return this.http.post<Token>('/rest/login/wina/validate', { username, password });
+  validate(username: string, password: string): Observable<RestResponse<ValidateRes>> {
+    return this.http.post<RestResponse<ValidateRes>>(WinaRestUrls.firstLevelLoginURL, {
+      username,
+      password,
+    });
   }
 
   login(username: string, password: string): Observable<RestResponse<Token>> {
@@ -25,18 +33,20 @@ export class LoginService {
   }
 
   refresh(params: Record<string, any>) {
-    return this.http.post<Token>('/auth/refresh', params);
+    return this.http.post<Token>(WinaRestUrls.resetJwtTokenURL(), params);
   }
 
   logout() {
-    return this.http.post<any>('/auth/logout', {});
+    return this.http.post<any>(WinaRestUrls.logoutURL(), {});
   }
 
   user() {
-    return this.http.get<User>('/user');
+    return this.http.get<UserBriefInfo>(WinaRestUrls.getUser());
   }
 
   menu() {
-    return this.http.get<{ menu: Menu[] }>('/user/menu').pipe(map(res => res.menu));
+    return ajax('data/menu.json?_t=' + Date.now()).pipe(
+      map((response: any) => response.response.menu)
+    );
   }
 }
