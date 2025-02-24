@@ -2,9 +2,18 @@
   "menu": {
     "dashboard": "Dashboard",
     "design": "Design",
-    "remoteMatchine": {
-      "title": "Remote Machines"
+    "remoteMatchine": "",
+    "setting": {
+      "title": "setting",
+      "general": "general",
+      "loginPolicy": "loginPolicy",
+      "password": "password",
+      "command": "command",
+      "lockAccount": "lockAccount",
+      "certificate": "certificate",
+      "monitoring": "monitoring"
     },
+
     "design.colors": "Color System",
     "design.icons": "Material Icons",
     "material": "Material",
@@ -81,6 +90,17 @@
     "permissions.role-switching": "Role Switching",
     "permissions.route-guard": "Route Guard",
     "permissions.test": "Permission Test"
+  },
+
+  "pages": {
+    "remoteMatchine": {
+      "title": "Remote Machines"
+    },
+    "setting": {
+      "title": "setting",
+      "copyToken": "copy token",
+      "totalCount": "count"
+    }
   },
   "validation": {
     "required": "This field is required",

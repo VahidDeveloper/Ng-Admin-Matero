@@ -12,7 +12,7 @@
     },
     {
       "route": "resources",
-      "name": "remoteMatchine.title",
+      "name": "remoteMatchine",
       "type": "link",
       "icon": "computer",
       "permissions": {
@@ -21,9 +21,9 @@
     },
     {
       "route": "setting",
-      "name": "setting",
+      "name": "menu.setting.title",
       "type": "sub",
-      "icon": "computer",
+      "icon": "settings",
       "permissions": {
         "only": ["ADMIN", "MANAGER"]
       },
@@ -36,7 +36,7 @@
         },
         {
           "route": "login-policy",
-          "name": "login-policy",
+          "name": "loginPolicy",
           "type": "link",
           "icon": "colorize"
         },
@@ -54,7 +54,7 @@
         },
         {
           "route": "lock-account",
-          "name": "account",
+          "name": "setting.account",
           "type": "link",
           "icon": "colorize"
         },

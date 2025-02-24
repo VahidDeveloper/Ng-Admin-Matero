@@ -1,7 +1,7 @@
-import { HttpEvent, HttpHandlerFn, HttpRequest, HttpResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { mergeMap, of, throwError } from 'rxjs';
+import { HttpEvent, HttpHandlerFn, HttpRequest, HttpResponse } from '@angular/common/http';
 
 export function apiInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   const toast = inject(ToastrService);
@@ -22,6 +22,11 @@ export function apiInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
           }
           return throwError(() => []);
         }
+        return of(
+          event.clone({
+            body: body.object,
+          })
+        );
       }
       // Pass down event if everything is OK
       return of(event);

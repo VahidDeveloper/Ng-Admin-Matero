@@ -1,4 +1,4 @@
-import { RestApiError } from './error-display';
+import { RestApiError } from '../models/error-display';
 
 export interface RestResponse<T = any> {
   /**

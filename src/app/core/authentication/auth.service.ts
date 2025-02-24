@@ -45,7 +45,7 @@ export class AuthService {
         return this.loginService.login(username, password);
       }),
       tap(response => {
-        this.tokenService.set(response.object);
+        this.tokenService.set(response);
       }),
       map(() => this.check()),
       catchError((data: ErrorDisplay) => {

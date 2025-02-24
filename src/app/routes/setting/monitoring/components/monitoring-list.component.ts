@@ -1,21 +1,17 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
-import { MonitoringService } from '../_services/monitoring.service';
-import { CommonModule, DOCUMENT } from '@angular/common';
-import { MonitoringTokenService } from '../_services/monitoring-token.service';
-import { MonitoringToken } from '../_models/monitoring-token';
-import { MonitoringRefreshTokenService } from '../_services/monitoring-refresh-token.service';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+
+import { MonitoringListStore } from '../_services/project-store.service';
+import { Observable, of } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { ScrollableElementDirective } from '@shared';
 /**
  * this component is created to show all monitoring,s apis
  */
@@ -24,25 +20,25 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './monitoring-list.component.html',
   styleUrls: ['./monitoring-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [MonitoringListStore],
   imports: [
     CommonModule,
+    FormsModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
     MatInputModule,
     MatFormFieldModule,
+    ScrollingModule,
     TranslatePipe,
   ],
 })
 export class MonitoringListComponent implements OnInit {
-  /**
-   * list of apis
-   */
-  _row: any[] = [];
-  /**
-   * current user token
-   */
-  _currentToken: string | undefined;
+  readonly filteredRow$ = this.store.filteredRow$;
+  count$: Observable<number | undefined> = of();
+  token$: Observable<string | undefined> = of();
+  searchTerm$: Observable<string> = of('');
+
   /**
    * list operation
    */
@@ -56,125 +52,30 @@ export class MonitoringListComponent implements OnInit {
       },
     },
   ];
-  /**
-   * a flag to show loading on get
-   */
-  _isLoading = false;
-  /**
-   * a flag to show loading on post request
-   */
-  _postLoading = false;
-  /**
-   * for showing alert for each possible error on this page
-   * the keys will be gotten from service
-   */
-  _allPossibleErrors = new Map<string, string>();
-  /**
-   * to get access to clipboard API.
-   */
-  private _navigator: Navigator | undefined;
-  /**
-   * base api url
-   */
-  private readonly baseUrl = 'https://192.168.112.121';
 
   constructor(
-    private _monitoringService: MonitoringService,
-    private _monitoringTokenService: MonitoringTokenService,
-    private _monitoringRefreshTokenService: MonitoringRefreshTokenService,
-    private _cdr: ChangeDetectorRef,
-    @Inject(DOCUMENT) private _document: Document,
+    private store: MonitoringListStore,
     private _translatorService: TranslateService
   ) {
-    this._navigator = this._document.defaultView?.navigator;
+    this.token$ = this.store.select(state => state.token);
+    this.count$ = this.store.select(state => state.count);
+    this.searchTerm$ = this.store.select(state => state.searchTerm);
   }
 
   ngOnInit(): void {
-    this._getToken();
+    // Trigger the effect to load token and then list.
+    this.store.loadTokenAndList();
   }
 
-  /**
-   * to refresh token
-   */
-  refreshToken() {
-    this._postLoading = true;
-    this._monitoringRefreshTokenService
-      .save({} as MonitoringToken)
-      .subscribe(
-        (res: MonitoringToken) => {
-          this._currentToken = res.token;
-          this._getList();
-        },
-        (err: any) => {
-          this._allPossibleErrors.set(
-            err.location,
-            this._translatorService.instant('refreshMonitoringTokenError')
-          );
-        }
-      )
-      .add(() => {
-        this._postLoading = false;
-        this._cdr.markForCheck();
-      });
+  updateSearch(query: string): void {
+    this.store.setSearchTerm(query);
   }
 
-  /**
-   * it would change the local clipboard to the specified clipboard via clipboard service
-   */
-  copyToClipboard(data: string | undefined): void {
-    this._navigator?.clipboard.writeText(data!).then();
+  refreshToken(): void {
+    this.store.refreshTokenEffect();
   }
 
-  /**
-   * to get all monitoring apis
-   */
-  private _getList() {
-    this._isLoading = true;
-    this._monitoringService
-      .getAll()
-      .subscribe(
-        (res: string[]) => {
-          this._row = res.map(item => {
-            return {
-              label: this.baseUrl + item,
-            };
-          });
-        },
-        (err: any) => {
-          this._allPossibleErrors.set(
-            err.location,
-            this._translatorService.instant('AnErrorOccurredDuringMonitoringApiList')
-          );
-        }
-      )
-      .add(() => {
-        this._isLoading = false;
-        this._cdr.markForCheck();
-      });
-  }
-
-  /**
-   * to get current user token
-   */
-  private _getToken() {
-    this._isLoading = true;
-    this._monitoringTokenService
-      .getData()
-      .subscribe(
-        (res: MonitoringToken) => {
-          this._currentToken = res.token;
-          this._getList();
-        },
-        (err: any) => {
-          this._allPossibleErrors.set(
-            err.location,
-            this._translatorService.instant('AnErrorOccurredDuringCurrentUserToken')
-          );
-        }
-      )
-      .add(() => {
-        this._isLoading = false;
-        this._cdr.markForCheck();
-      });
+  copyToClipboard(data?: string | undefined): void {
+    this.store.copyEffect(data);
   }
 }

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
 import { Token } from './interface';
-import { RestResponse } from '@shared/models/rest-response';
+import { RestResponse } from '@shared/interfaces';
 import { UserBriefInfo, WinaRestUrls } from '@shared/models';
 
 interface ValidateRes {
@@ -25,8 +25,8 @@ export class LoginService {
     });
   }
 
-  login(username: string, password: string): Observable<RestResponse<Token>> {
-    return this.http.post<RestResponse<Token>>(WinaRestUrls.jwtAuthenticateURL(), {
+  login(username: string, password: string): Observable<Token> {
+    return this.http.post<Token>(WinaRestUrls.jwtAuthenticateURL(), {
       username,
       password,
     });

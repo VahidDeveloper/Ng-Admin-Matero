@@ -22,7 +22,6 @@ export * from './key-with-custom-template';
 export * from './list-order';
 export * from './list-server-request';
 export * from './rest-api-error-codes';
-export * from './rest-response';
 export * from './row-count';
 export * from './server-side-list-helper';
 export * from './sort-info';

@@ -1,66 +1,44 @@
-<!-- <lib-card
-  [headerTitle]="'monitoring' | translator"
-  [libLoading]="_isLoading"
-  class="lib-card-reset"
->
-  <div class="row" libScrollableElement [topOffset]="50">
-    <div *ngFor="let error of _allPossibleErrors | keyvalue">
-      <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
-    </div>
-    <div class="col-md-12 no-gutters d-flex flex-column align-items-center w-100 my-5">
-      <div class="w-100">
-        <textarea
-          class="mb-2 w-100"
-          dir="ltr"
-          style="min-height: 6rem"
-          libTextArea
-          [disabled]="true"
-          [value]="_currentToken"
-        ></textarea>
-      </div>
-      <div class="w-100 d-flex align-items-center">
-        <lib-button [color]="_color.Success" [loading]="_postLoading" (click)="refreshToken()">
-          {{ 'refreshToken' | translator }}
-        </lib-button>
-        <lib-button [color]="_color.Success" (click)="copyToClipboard(_currentToken)" class="mx-2">
-          {{ 'copyToken' | translator }}
-        </lib-button>
-      </div>
-    </div>
-    <div class="col-md-12">
-      <app-simple-list
-        class="monitoring-list"
-        [dataSource]="_row"
-        [displayProperty]="'label'"
-        [operations]="_operations"
-        dir="ltr"
-        [headerActionVisibility]="false"
-      ></app-simple-list>
-    </div>
-  </div>
-</lib-card> -->
-<mat-card class="token-container">
-  <mat-card-header>
-    <mat-card-title>{{ 'monitoring' | translate }}</mat-card-title>
-  </mat-card-header>
-  <mat-form-field class="token-field">
-    <textarea matInput [value]="_currentToken" readonly></textarea>
-  </mat-form-field>
-  <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="copyToClipboard(_currentToken)">
-      کپی کردن توکن
-    </button>
-    <button mat-raised-button color="accent" (click)="refreshToken()">بازسازی توکن</button>
-  </mat-card-actions>
-  <mat-form-field class="search-field">
-    <input matInput placeholder="جستجو..." />
-  </mat-form-field>
+<mat-card class="page-container">
+  <mat-card-title>{{ 'monitoring' | translate }}</mat-card-title>
 
-  <p>تعداد کل: {{ _row.length }}</p>
   <mat-card-content>
-    <div *ngFor="let url of _row" class="url-item">
-      <span>{{ url }}</span>
-      <mat-icon (click)="copyToClipboard(url)" class="copy-icon">content_copy</mat-icon>
+    <div class="token-container">
+      <mat-form-field class="token-field" appearance="outline">
+        <mat-label>{{ 'token' | translate }}</mat-label>
+        <textarea matInput readonly [value]="token$ | async"></textarea>
+      </mat-form-field>
+
+      <div class="d-flex flex-col gap-4">
+        <button mat-flat-button (click)="copyToClipboard()">{{ 'copyToken' | translate }}</button>
+
+        <button mat-flat-button (click)="refreshToken()">{{ 'refreshToken' | translate }}</button>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <mat-form-field class="search-field" appearance="outline">
+        <input
+          matInput
+          [placeholder]="'search' | translate"
+          [ngModel]="searchTerm$ | async"
+          (ngModelChange)="updateSearch($event)"
+        />
+      </mat-form-field>
+
+      <div class="count">
+        <p>{{ 'totalCount' | translate }}: {{ count$ | async }}</p>
+      </div>
+    </div>
+
+    <div class="url-list">
+      <cdk-virtual-scroll-viewport itemSize="5" class="viewport">
+        <div class="url-item" *cdkVirtualFor="let item of filteredRow$ | async">
+          <span>{{ item.label }}</span>
+          <button mat-icon-button color="primary" (click)="copyToClipboard(item.label)">
+            <mat-icon>content_copy</mat-icon>
+          </button>
+        </div>
+      </cdk-virtual-scroll-viewport>
     </div>
   </mat-card-content>
 </mat-card>
