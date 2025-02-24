@@ -1,17 +1,16 @@
+import { Observable, of } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { CommonModule } from '@angular/common';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { MonitoringListStore } from '../_services/project-store.service';
-import { Observable, of } from 'rxjs';
-import { FormsModule } from '@angular/forms';
-import { ScrollableElementDirective } from '@shared';
 /**
  * this component is created to show all monitoring,s apis
  */
@@ -38,20 +37,6 @@ export class MonitoringListComponent implements OnInit {
   count$: Observable<number | undefined> = of();
   token$: Observable<string | undefined> = of();
   searchTerm$: Observable<string> = of('');
-
-  /**
-   * list operation
-   */
-  _operations: readonly any[] = [
-    {
-      description: this._translatorService.instant('Copy'),
-      icon: 'icon-Copy-00',
-      color: 'info',
-      actionFn: (item: any) => {
-        this.copyToClipboard(item.label);
-      },
-    },
-  ];
 
   constructor(
     private store: MonitoringListStore,

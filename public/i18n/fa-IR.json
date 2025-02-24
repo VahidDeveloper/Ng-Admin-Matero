@@ -19,7 +19,11 @@
     "setting": {
       "title": "تنظیمات",
       "copyToken": "کپی کردن توکن",
-      "totalCount": "تعداد کل :"
+      "monitoring": {
+        "title": "پایش",
+        "copyToken": "کپی کردن توکن",
+        "refreshToken": "بازنشانی توکن"
+      }
     }
   },
   "validation": {
@@ -42,5 +46,8 @@
   },
   "en_us": "انگلیسی",
   "fa_ir": "فارسی",
-  "zh_cn": "چینی"
+  "zh_cn": "چینی",
+  "totalCount": "تعداد کل",
+  "token": "توکن",
+  "search": "جستجو"
 }

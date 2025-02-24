@@ -96,9 +96,12 @@
       "title": "Remote Machines"
     },
     "setting": {
-      "title": "setting",
-      "copyToken": "copy token",
-      "totalCount": "count"
+      "title": "Setting",
+      "monitoring": {
+        "title": "Monitoring",
+        "copyToken": "Copy token",
+        "refreshToken": "Refrsh token"
+      }
     }
   },
   "validation": {
@@ -160,5 +163,6 @@
   "register_title": "It only takes a few seconds to create your account",
   "read_and_agree": "I have read and agree to the terms of service",
   "have_an_account": "Already have an account",
-  "restore_defaults": "Restore defaults"
+  "restore_defaults": "Restore defaults",
+  "totalCount": "count"
 }

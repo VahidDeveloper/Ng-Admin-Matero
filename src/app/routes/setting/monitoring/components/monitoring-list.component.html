@@ -1,5 +1,5 @@
 <mat-card class="page-container">
-  <mat-card-title>{{ 'monitoring' | translate }}</mat-card-title>
+  <mat-card-title>{{ 'pages.setting.monitoring.title' | translate }}</mat-card-title>
 
   <mat-card-content>
     <div class="token-container">
@@ -9,9 +9,13 @@
       </mat-form-field>
 
       <div class="d-flex flex-col gap-4">
-        <button mat-flat-button (click)="copyToClipboard()">{{ 'copyToken' | translate }}</button>
+        <button mat-flat-button (click)="copyToClipboard()">
+          {{ 'pages.setting.monitoring.copyToken' | translate }}
+        </button>
 
-        <button mat-flat-button (click)="refreshToken()">{{ 'refreshToken' | translate }}</button>
+        <button mat-flat-button (click)="refreshToken()">
+          {{ 'pages.setting.monitoring.refreshToken' | translate }}
+        </button>
       </div>
     </div>
 
