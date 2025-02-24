@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { Menu } from '@core';
 import { Token, User } from './interface';
+import { WinaRestUrls } from '@shared';
+import { RestResponse } from '@shared/models/rest-response';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +13,15 @@ import { Token, User } from './interface';
 export class LoginService {
   protected readonly http = inject(HttpClient);
 
-  login(username: string, password: string, rememberMe = false) {
-    return this.http.post<Token>('/auth/login', { username, password, rememberMe });
+  validate(username: string, password: string) {
+    return this.http.post<Token>('/rest/login/wina/validate', { username, password });
+  }
+
+  login(username: string, password: string): Observable<RestResponse<Token>> {
+    return this.http.post<RestResponse<Token>>(WinaRestUrls.jwtAuthenticateURL(), {
+      username,
+      password,
+    });
   }
 
   refresh(params: Record<string, any>) {

@@ -39,3 +39,28 @@
     </div>
   </div>
 </lib-card> -->
+<mat-card class="token-container">
+  <mat-card-header>
+    <mat-card-title>{{ 'monitoring' | translate }}</mat-card-title>
+  </mat-card-header>
+  <mat-form-field class="token-field">
+    <textarea matInput [value]="_currentToken" readonly></textarea>
+  </mat-form-field>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="copyToClipboard(_currentToken)">
+      کپی کردن توکن
+    </button>
+    <button mat-raised-button color="accent" (click)="refreshToken()">بازسازی توکن</button>
+  </mat-card-actions>
+  <mat-form-field class="search-field">
+    <input matInput placeholder="جستجو..." />
+  </mat-form-field>
+
+  <p>تعداد کل: {{ _row.length }}</p>
+  <mat-card-content>
+    <div *ngFor="let url of _row" class="url-item">
+      <span>{{ url }}</span>
+      <mat-icon (click)="copyToClipboard(url)" class="copy-icon">content_copy</mat-icon>
+    </div>
+  </mat-card-content>
+</mat-card>

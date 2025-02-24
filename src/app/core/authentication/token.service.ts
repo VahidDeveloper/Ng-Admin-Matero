@@ -11,7 +11,7 @@ import { TokenFactory } from './token-factory.service';
   providedIn: 'root',
 })
 export class TokenService implements OnDestroy {
-  private readonly key = 'ng-matero-token';
+  private readonly key = 'wina-token';
 
   private readonly store = inject(LocalStorageService);
   private readonly factory = inject(TokenFactory);
@@ -60,7 +60,7 @@ export class TokenService implements OnDestroy {
   }
 
   getRefreshToken() {
-    return this.token?.refresh_token;
+    return this.token?.refreshToken;
   }
 
   ngOnDestroy(): void {
@@ -69,16 +69,14 @@ export class TokenService implements OnDestroy {
 
   private save(token?: Token) {
     this._token = undefined;
-
     if (!token) {
       this.store.remove(this.key);
     } else {
-      const value = Object.assign({ access_token: '', token_type: 'Bearer' }, token, {
+      const value = Object.assign({ accessToken: '', token_type: 'Bearer' }, token, {
         exp: token.expires_in ? currentTimestamp() + token.expires_in : null,
       });
       this.store.set(this.key, filterObject(value));
     }
-
     this.change$.next(this.token);
     this.buildRefresh();
   }

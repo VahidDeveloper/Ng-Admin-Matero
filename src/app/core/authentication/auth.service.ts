@@ -4,6 +4,7 @@ import { filterObject, isEmptyObject } from './helpers';
 import { User } from './interface';
 import { LoginService } from './login.service';
 import { TokenService } from './token.service';
+import { ErrorDisplay } from '@shared/models';
 
 @Injectable({
   providedIn: 'root',
@@ -33,10 +34,18 @@ export class AuthService {
     return this.tokenService.valid();
   }
 
-  login(username: string, password: string, rememberMe = false) {
-    return this.loginService.login(username, password, rememberMe).pipe(
-      tap(token => this.tokenService.set(token)),
-      map(() => this.check())
+  login(username: string, password: string) {
+    return this.loginService.validate(username, password).pipe(
+      switchMap(() => {
+        return this.loginService.login(username, password);
+      }),
+      tap(response => {
+        this.tokenService.set(response.object);
+      }),
+      map(() => this.check()),
+      catchError((data: ErrorDisplay) => {
+        throw data;
+      })
     );
   }
 

@@ -6,12 +6,16 @@ import {
   OnInit,
 } from '@angular/core';
 import { MonitoringService } from '../_services/monitoring.service';
-import { DOCUMENT } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { MonitoringTokenService } from '../_services/monitoring-token.service';
 import { MonitoringToken } from '../_models/monitoring-token';
 import { MonitoringRefreshTokenService } from '../_services/monitoring-refresh-token.service';
-import { TranslateService } from '@ngx-translate/core';
-
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 /**
  * this component is created to show all monitoring,s apis
  */
@@ -20,6 +24,15 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './monitoring-list.component.html',
   styleUrls: ['./monitoring-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
+    TranslatePipe,
+  ],
 })
 export class MonitoringListComponent implements OnInit {
   /**
@@ -108,8 +121,8 @@ export class MonitoringListComponent implements OnInit {
   /**
    * it would change the local clipboard to the specified clipboard via clipboard service
    */
-  copyToClipboard(data: string): void {
-    this._navigator?.clipboard.writeText(data).then();
+  copyToClipboard(data: string | undefined): void {
+    this._navigator?.clipboard.writeText(data!).then();
   }
 
   /**

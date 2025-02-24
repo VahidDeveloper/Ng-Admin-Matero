@@ -74,15 +74,7 @@ export const appConfig: ApplicationConfig = {
         deps: [HttpClient],
       },
     }),
-    importProvidersFrom(
-      NgxPermissionsModule.forRoot(),
-      FormlyConfigModule.forRoot(),
-      // 👇 ❌ This is only used for demo purpose, remove it in the realworld application
-      InMemoryWebApiModule.forRoot(InMemDataService, {
-        dataEncapsulation: false,
-        passThruUnknownUrl: true,
-      })
-    ),
+    importProvidersFrom(NgxPermissionsModule.forRoot(), FormlyConfigModule.forRoot()),
     {
       provide: MatPaginatorIntl,
       useFactory: (paginatorI18nSrv: PaginatorI18nService) => paginatorI18nSrv.getPaginatorIntl(),

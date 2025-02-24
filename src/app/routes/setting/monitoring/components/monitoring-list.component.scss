@@ -1,8 +1,41 @@
-.monitoring-list {
-  ::ng-deep {
-    .infinite-scroll-viewport {
-      height: calc(100% - 24rem);
-      min-height: 25rem !important;
-    }
-  }
+.container {
+  max-width: 600px;
+  padding: 20px;
+  margin: auto;
+  text-align: right;
+}
+
+.token-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.token-field {
+  flex: 1;
+}
+
+.search-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.url-list {
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.url-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.copy-icon {
+  color: #007bff;
+  cursor: pointer;
 }

@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -6,12 +5,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { MtxButtonModule } from '@ng-matero/extensions/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter } from 'rxjs/operators';
 
 import { AuthService } from '@core/authentication';
+import { ErrorDisplay } from '@shared/models';
+import { ToastService } from '@shared/services';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,6 @@ import { AuthService } from '@core/authentication';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    RouterLink,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
@@ -34,12 +34,13 @@ export class LoginComponent {
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
   private readonly auth = inject(AuthService);
+  private readonly toast = inject(ToastService);
 
   isSubmitting = false;
 
   loginForm = this.fb.nonNullable.group({
-    username: ['ng-matero', [Validators.required]],
-    password: ['ng-matero', [Validators.required]],
+    username: ['adminwina', [Validators.required]],
+    password: ['123456A!', [Validators.required]],
     rememberMe: [false],
   });
 
@@ -59,21 +60,18 @@ export class LoginComponent {
     this.isSubmitting = true;
 
     this.auth
-      .login(this.username.value, this.password.value, this.rememberMe.value)
+      .login(this.username.value, this.password.value)
       .pipe(filter(authenticated => authenticated))
       .subscribe({
         next: () => {
           this.router.navigateByUrl('/');
         },
-        error: (errorRes: HttpErrorResponse) => {
-          if (errorRes.status === 422) {
+        error: (errorRes: ErrorDisplay) => {
+          console.log(errorRes);
+          if (errorRes.status === 'ERROR') {
             const form = this.loginForm;
-            const errors = errorRes.error.errors;
-            Object.keys(errors).forEach(key => {
-              form.get(key === 'email' ? 'username' : key)?.setErrors({
-                remote: errors[key][0],
-              });
-            });
+            const error = errorRes.errors && errorRes.errors[0]!;
+            this.toast.open(error?.error?.description ?? '', 'error');
           }
           this.isSubmitting = false;
         },
