@@ -21,7 +21,7 @@
     },
     {
       "route": "setting",
-      "name": "menu.setting.title",
+      "name": "setting",
       "type": "sub",
       "icon": "settings",
       "permissions": {
@@ -54,7 +54,7 @@
         },
         {
           "route": "lock-account",
-          "name": "setting.account",
+          "name": "lockAccount",
           "type": "link",
           "icon": "colorize"
         },

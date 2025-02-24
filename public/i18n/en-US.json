@@ -2,17 +2,16 @@
   "menu": {
     "dashboard": "Dashboard",
     "design": "Design",
-    "remoteMatchine": "",
-    "setting": {
-      "title": "setting",
-      "general": "general",
-      "loginPolicy": "loginPolicy",
-      "password": "password",
-      "command": "command",
-      "lockAccount": "lockAccount",
-      "certificate": "certificate",
-      "monitoring": "monitoring"
-    },
+    "remoteMatchine": "Remote Matchines",
+
+    "setting": "Setting",
+    "setting.general": "General",
+    "setting.loginPolicy": "Login Policy",
+    "setting.password": "Password",
+    "setting.command": "Command",
+    "setting.lockAccount": "LockAccount",
+    "setting.certificate": "Certificate",
+    "setting.monitoring": "Monitoring",
 
     "design.colors": "Color System",
     "design.icons": "Material Icons",

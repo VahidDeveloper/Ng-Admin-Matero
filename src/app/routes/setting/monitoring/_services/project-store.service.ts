@@ -1,14 +1,13 @@
-import { tr } from 'date-fns/locale';
-import { Inject, inject, Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { ComponentStore } from '@ngrx/component-store';
+import { TranslateService } from '@ngx-translate/core';
+import { Inject, inject, Injectable } from '@angular/core';
+import { MonitoringToken } from '../_models/monitoring-token';
+import { EMPTY, tap, switchMap, catchError, finalize, from } from 'rxjs';
+
 import { MonitoringService } from '../_services/monitoring.service';
 import { MonitoringTokenService } from '../_services/monitoring-token.service';
 import { MonitoringRefreshTokenService } from '../_services/monitoring-refresh-token.service';
-import { TranslateService } from '@ngx-translate/core';
-import { MonitoringToken } from '../_models/monitoring-token';
-import { EMPTY, tap, switchMap, catchError, finalize, from } from 'rxjs';
-import { ToastService } from '@shared';
-import { DOCUMENT } from '@angular/common';
 
 export interface MonitoringListState {
   row: { label: string }[];
@@ -26,7 +25,6 @@ export class MonitoringListStore extends ComponentStore<MonitoringListState> {
   monitoringTokenService = inject(MonitoringTokenService);
   monitoringRefreshTokenService = inject(MonitoringRefreshTokenService);
   translate = inject(TranslateService);
-  toast = inject(ToastService);
   constructor(@Inject(DOCUMENT) private _document: Document) {
     super({
       row: [],
@@ -61,10 +59,6 @@ export class MonitoringListStore extends ComponentStore<MonitoringListState> {
             next: (res: MonitoringToken) => {
               this.patchState({ token: res.token });
             },
-            error: (err: any) => {
-              const errorMsg = this.translate.instant('AnErrorOccurredDuringCurrentUserToken');
-              this.toast.open(errorMsg, 'error');
-            },
           }),
           switchMap(() =>
             this.monitoringService.getAll().pipe(
@@ -74,10 +68,6 @@ export class MonitoringListStore extends ComponentStore<MonitoringListState> {
                     label: this.baseUrl + item,
                   }));
                   this.patchState({ row, count: row.length });
-                },
-                error: (err: any) => {
-                  const errorMsg = this.translate.instant('AnErrorOccurredDuringMonitoringApiList');
-                  this.toast.open(errorMsg, 'error');
                 },
               }),
               catchError(() => EMPTY)
@@ -103,11 +93,6 @@ export class MonitoringListStore extends ComponentStore<MonitoringListState> {
               this.patchState({ token: res.token });
               // After refresh, reload the list.
               this.loadTokenAndList();
-            },
-            error: (err: any) => {
-              const errorMsg = this.translate.instant('refreshMonitoringTokenError');
-
-              this.toast.open(errorMsg, 'error');
             },
           }),
           catchError(() => EMPTY),

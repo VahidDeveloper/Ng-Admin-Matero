@@ -1,3 +1,4 @@
+import { TranslateComponent } from './../widgets/translate.component';
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,7 +16,14 @@ import { BrandingComponent } from '../widgets/branding.component';
     class: 'matero-header',
   },
   encapsulation: ViewEncapsulation.None,
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule, BrandingComponent, UserComponent],
+  imports: [
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    TranslateComponent,
+    BrandingComponent,
+    UserComponent,
+  ],
 })
 export class HeaderComponent {
   @Input() showToggle = true;
