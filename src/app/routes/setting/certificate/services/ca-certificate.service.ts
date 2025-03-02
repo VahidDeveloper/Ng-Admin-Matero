@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CACertificate } from '../_models/CA-certificate';
 import { WinaRestUrls } from '@shared/models';
+import { GenericCrudService } from '@shared';
 
 /**
  * this class is create to do some action to
@@ -11,7 +12,7 @@ import { WinaRestUrls } from '@shared/models';
 @Injectable({
   providedIn: 'root',
 })
-export class RemoteMachineCertificateService {
+export class CaCertificateService {
   constructor(private _http: HttpClient) {}
 
   /**

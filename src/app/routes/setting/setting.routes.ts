@@ -33,14 +33,15 @@ export const routes: Routes = [
       },
       {
         path: 'certificate',
-        loadChildren: () => import('./certificate/certificate.routes').then(m => m.certRoutes),
+        loadComponent: () =>
+          import('./certificate/components/certificate.component').then(
+            m => m.CertificateComponent
+          ),
       },
       {
         path: 'monitoring',
         loadComponent: () =>
-          import('./monitoring/components/monitoring-list.component').then(
-            m => m.MonitoringListComponent
-          ),
+          import('./monitoring/components/monitoring.component').then(m => m.MonitoringComponent),
       },
     ],
   },

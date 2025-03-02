@@ -101,6 +101,22 @@
         "title": "Monitoring",
         "copyToken": "Copy token",
         "refreshToken": "Refrsh token"
+      },
+      "certificate": {
+        "title": "گواهی",
+        "copyToken": "کپی کردن توکن",
+        "ca": "تنظیمات گواهیCA",
+        "self-signed": "تنظیمات TLS",
+        "ca-description": "در این قسمت شما میتوانید تنظیمات مربوط به گواهی CA ماشین های راه‌دور را مدیریت کنید",
+        "self-signed-description": "در این قسمت شما میتوانید تنظیمات مربوط به گواهی self signed ماشین های راه‌دور را مدیریت کنید.",
+        "rejec_self_signed_cert": "رد گواهی self-signed",
+        "strengthen_tLs_settings": "تقویت تنظیمات TLS",
+        "self_sign_confirm": "با فعال کردن گزینه ی رد گواهی ، تمام گواهی‌های self-signed تاییدشده توسط کاربر نامعتبر می‌شوند و امکان ارتباط با سرورهای مربوطه وجود نخواهد داشت. آیا از این کار اطمینان دارید؟",
+        "crl_update_interval_days": "زمان به روزرسانی فایل CRL (به روز)",
+        "rejec_self_signed_cert_help": "در صورت فعال کردن این فیلد، تمام گواهیهای self-signed تایید شده توسط کاربر نامعتبر می شوند و امکان ارتباط با سرورهای مربوطه وجود نخواهد داشت",
+        "strengthen_tLs_settings_help": "غیرفعال کردن الگوریتم های رمزنگاری ضعیف",
+        "crl_update_interval_days_help": "فاصله زمانی هر به روزرسانی فایل «لیست گواهی‌های باطل شده (CRL)» و دانلود از سرورهای صادرکننده گواهی",
+        "refreshToken": "بازنشانی توکن"
       }
     }
   },
@@ -124,8 +140,6 @@
     "range_page_label_2": "{{startIndex}} - {{endIndex}} of {{length}}"
   },
   "en_us": "English",
-  "zh_cn": "Simplified Chinese",
-  "zh_tw": "Traditional Chinese",
   "system": "System",
   "position": "Position",
   "name": "Name",
@@ -136,11 +150,13 @@
   "tele": "Telephone",
   "birthday": "Birthday",
   "city": "City",
+  "search": "Search",
   "address": "Address",
   "website": "Website",
   "company": "Company",
   "email": "Email",
   "operation": "Operation",
+  "add": "Add",
   "edit": "Edit",
   "delete": "Delete",
   "confirm_delete": "Confirm delete?",
@@ -164,5 +180,5 @@
   "read_and_agree": "I have read and agree to the terms of service",
   "have_an_account": "Already have an account",
   "restore_defaults": "Restore defaults",
-  "totalCount": "count"
+  "total": "total count"
 }

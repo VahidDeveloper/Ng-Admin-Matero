@@ -1,9 +1,11 @@
-import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+import { filter, startWith } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
+
+import { SettingsService } from '@core';
 import { MenuService } from '@core/bootstrap/menu.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { filter, startWith } from 'rxjs';
 
 @Component({
   selector: 'breadcrumb',
@@ -15,7 +17,9 @@ import { filter, startWith } from 'rxjs';
 export class BreadcrumbComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly menu = inject(MenuService);
-
+  private readonly tr = inject(TranslateService);
+  private readonly setting = inject(SettingsService);
+  isRTL = true;
   @Input() nav: string[] = [];
 
   navItems: string[] = [];
@@ -25,6 +29,7 @@ export class BreadcrumbComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isRTL = this.setting.options.dir === 'rtl';
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd),
@@ -41,7 +46,7 @@ export class BreadcrumbComponent implements OnInit {
       this.navItems = [...this.nav];
     } else {
       this.navItems = this.menu.getLevel(routes);
-      this.navItems.unshift('home');
+      this.navItems.unshift(this.tr.instant('home'));
     }
   }
 }

@@ -10,14 +10,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import { MonitoringListStore } from '../_services/project-store.service';
+import { MonitoringListStore } from '../_services/monitoring-store.service';
 /**
  * this component is created to show all monitoring,s apis
  */
 @Component({
-  selector: 'app-monitoring-list',
-  templateUrl: './monitoring-list.component.html',
-  styleUrls: ['./monitoring-list.component.scss'],
+  selector: 'app-monitoring',
+  templateUrl: './monitoring.component.html',
+  styleUrls: ['./monitoring.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [MonitoringListStore],
   imports: [
@@ -32,7 +32,7 @@ import { MonitoringListStore } from '../_services/project-store.service';
     TranslatePipe,
   ],
 })
-export class MonitoringListComponent implements OnInit {
+export class MonitoringComponent implements OnInit {
   readonly filteredRow$ = this.store.filteredRow$;
   count$: Observable<number | undefined> = of();
   token$: Observable<string | undefined> = of();

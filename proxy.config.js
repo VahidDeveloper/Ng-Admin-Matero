@@ -18,13 +18,13 @@ const PROXY_CONFIG = {
     // },
   },
   '/rest/**': {
-    target: 'https://wina-develop.phoenix.mahsan.net',
+    target: 'https://wina-pentest.phoenix.mahsan.net',
     changeOrigin: true,
     secure: false,
     logLevel: 'debug',
   },
   '/api/**': {
-    target: 'https://wina-develop.phoenix.mahsan.net',
+    target: 'https://wina-pentest.phoenix.mahsan.net',
     changeOrigin: true,
     secure: false,
     logLevel: 'debug',

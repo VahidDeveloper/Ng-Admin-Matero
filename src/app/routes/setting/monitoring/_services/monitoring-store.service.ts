@@ -5,12 +5,12 @@ import { Inject, inject, Injectable } from '@angular/core';
 import { MonitoringToken } from '../_models/monitoring-token';
 import { EMPTY, tap, switchMap, catchError, finalize, from } from 'rxjs';
 
-import { MonitoringService } from '../_services/monitoring.service';
-import { MonitoringTokenService } from '../_services/monitoring-token.service';
-import { MonitoringRefreshTokenService } from '../_services/monitoring-refresh-token.service';
+import { MonitoringService } from './monitoring.service';
+import { MonitoringTokenService } from './monitoring-token.service';
+import { MonitoringRefreshTokenService } from './monitoring-refresh-token.service';
 
 export interface MonitoringListState {
-  row: { label: string }[];
+  list: { label: string }[];
   token?: string;
   count?: number;
   isLoading: boolean;
@@ -27,7 +27,7 @@ export class MonitoringListStore extends ComponentStore<MonitoringListState> {
   translate = inject(TranslateService);
   constructor(@Inject(DOCUMENT) private _document: Document) {
     super({
-      row: [],
+      list: [],
       count: 0,
       token: undefined,
       isLoading: false,
@@ -43,10 +43,10 @@ export class MonitoringListStore extends ComponentStore<MonitoringListState> {
 
   readonly filteredRow$ = this.select(this.state$, state => {
     if (!state.searchTerm) {
-      return state.row;
+      return state.list;
     }
     const lowerQuery = state.searchTerm.toLowerCase();
-    return state.row.filter(item => item.label.toLowerCase().includes(lowerQuery));
+    return state.list.filter(item => item.label.toLowerCase().includes(lowerQuery));
   });
 
   // Effect to load token and then list
@@ -64,10 +64,10 @@ export class MonitoringListStore extends ComponentStore<MonitoringListState> {
             this.monitoringService.getAll().pipe(
               tap({
                 next: (res: string[]) => {
-                  const row = res.map(item => ({
+                  const list = res.map(item => ({
                     label: this.baseUrl + item,
                   }));
-                  this.patchState({ row, count: row.length });
+                  this.patchState({ list, count: list.length });
                 },
               }),
               catchError(() => EMPTY)
