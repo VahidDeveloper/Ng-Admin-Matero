@@ -1,6 +1,6 @@
-import { RestApiError } from '../models/error-display';
+import { RestApiError } from './error-display';
 
-export interface RestResponse<T = any> {
+export class RestResponse<T = any> {
   /**
    * the error itself
    */
@@ -9,7 +9,7 @@ export interface RestResponse<T = any> {
   /**
    * mostly it is null. It is said that in rare cases, it might have some extra information.
    */
-  object: T;
+  object: T | undefined;
   /**
    * mostly it is ERROR.
    * But when isWinaLogicalError is false, it may be '404' and something like this.

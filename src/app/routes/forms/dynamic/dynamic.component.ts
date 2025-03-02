@@ -1,11 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
-import { ToastrService } from 'ngx-toastr';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
-import { PageHeaderComponent } from '@shared';
+import { PageHeaderComponent, ToastService } from '@shared';
 
 @Component({
   selector: 'app-forms-dynamic',
@@ -21,7 +20,7 @@ import { PageHeaderComponent } from '@shared';
   ],
 })
 export class FormsDynamicComponent {
-  private readonly toast = inject(ToastrService);
+  private readonly toast = inject(ToastService);
 
   form = new FormGroup({});
   model = { email: 'email@gmail.com' };
@@ -160,6 +159,6 @@ export class FormsDynamicComponent {
   }
 
   showToast(obj: any) {
-    this.toast.success(JSON.stringify(obj));
+    this.toast.open(JSON.stringify(obj), 'success');
   }
 }

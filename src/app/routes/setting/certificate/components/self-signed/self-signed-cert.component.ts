@@ -3,28 +3,31 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 
 import { ConfirmDialogService, ToastService } from '@shared';
 import { CertificateStore } from '../../services/certificate-store.service';
+
 /**
  * this component is create to set ssl certificate config
  */
-
 @Component({
   selector: 'app-self-signed-cert',
   templateUrl: './self-signed-cert.component.html',
   styleUrls: ['./self-signed-cert.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatTooltipModule,
     MatButtonModule,
     MatFormFieldModule,
     MatCheckboxModule,

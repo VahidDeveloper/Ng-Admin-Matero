@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
 import { Token } from './interface';
-import { RestResponse } from '@shared/interfaces';
 import { UserBriefInfo, WinaRestUrls } from '@shared/models';
 
 interface ValidateRes {
@@ -18,8 +17,8 @@ interface ValidateRes {
 export class LoginService {
   protected readonly http = inject(HttpClient);
 
-  validate(username: string, password: string): Observable<RestResponse<ValidateRes>> {
-    return this.http.post<RestResponse<ValidateRes>>(WinaRestUrls.firstLevelLoginURL, {
+  validate(username: string, password: string): Observable<ValidateRes> {
+    return this.http.post<ValidateRes>(WinaRestUrls.firstLevelLoginURL, {
       username,
       password,
     });

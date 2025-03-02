@@ -6,10 +6,10 @@ import { EMPTY, tap, switchMap, catchError, finalize, Observable, of } from 'rxj
 
 import { SslPolicy } from '../_models/ssl-policy';
 import { CACertificate } from '../_models/CA-certificate';
-import { ConfirmDialogComponent } from '@shared/components';
 import { ConfirmDialogService, ToastService } from '@shared';
 import { CaCertificateService } from './ca-certificate.service';
 import { SslCertificateService } from './ssl-certificate.service';
+import { AddCAComponent } from '../components/ca/add/add.component';
 
 export interface CACertificateState {
   list: CACertificate[];
@@ -28,7 +28,8 @@ export class CertificateStore extends ComponentStore<CACertificateState> {
   confirm = inject(ConfirmDialogService);
   toast = inject(ToastService);
   tr = inject(TranslateService);
-  constructor(private dialog: MatDialog) {
+  dialog = inject(MatDialog);
+  constructor() {
     super({
       list: [],
       sslConfig: undefined,
@@ -95,33 +96,62 @@ export class CertificateStore extends ComponentStore<CACertificateState> {
   );
 
   readonly deleteCert = this.effect((cert$: Observable<CACertificate>) => {
-    const openConfirmDialog = () => {
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        width: '300px',
-        data: {
-          title: 'Delete Project',
-          message: 'Are you sure you want to delete this project? This action cannot be undone.',
-        },
+    return cert$.pipe(
+      switchMap(cert =>
+        this.confirm
+          .confirm(
+            this.tr.instant('delete'),
+            this.tr.instant('pages.setting.certificate.ca_delete', { name: cert.name })
+          )
+          .pipe(
+            switchMap(confirmed => {
+              if (confirmed) {
+                this.patchState({ isLoading: true });
+                return this.caService.deleteCaCertificate(cert).pipe(
+                  tap(() => this.loadList()), // Reload the list after delete
+                  catchError(() => {
+                    this.patchState({ isLoading: false });
+                    return EMPTY;
+                  })
+                );
+              } else {
+                return EMPTY;
+              }
+            })
+          )
+      )
+    );
+  });
+
+  readonly addCa = this.effect(trigger$ => {
+    const openEditDialog = () => {
+      const dialogRef = this.dialog.open(AddCAComponent, {
+        minWidth: '600px',
+        disableClose: true,
       });
 
       return dialogRef.afterClosed();
     };
 
-    return cert$.pipe(
-      switchMap(cert =>
-        openConfirmDialog().pipe(
-          switchMap(confirmed => {
-            if (confirmed) {
-              this.patchState({ postLoading: true });
-              return this.caService.deleteCaCertificate(cert).pipe(
-                tap(() => this.loadList()), // Reload the list after delete
-                catchError(() => {
-                  this.patchState({ postLoading: false });
+    return trigger$.pipe(
+      switchMap(() =>
+        openEditDialog().pipe(
+          switchMap((newCert: CACertificate) => {
+            if (newCert) {
+              // If the user submits the form, proceed with the update
+              this.patchState({ isLoading: true });
+              return this.caService.addCaCertificate(newCert).pipe(
+                tap(() => {
+                  this.toast.open(`Certificate ${newCert.name} Created successfully`, 'success');
+                  this.loadList();
+                }),
+                catchError(e => {
+                  this.patchState({ isLoading: false });
                   return EMPTY;
                 })
               );
             } else {
-              return EMPTY;
+              return EMPTY; // If the user cancels the dialog, do nothing
             }
           })
         )

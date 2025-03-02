@@ -10,11 +10,11 @@
 
       <div class="d-flex flex-col gap-4">
         <button mat-flat-button (click)="copyToClipboard()">
-          {{ 'pages.setting.monitoring.copyToken' | translate }}
+          {{ 'pages.setting.monitoring.copy_token' | translate }}
         </button>
 
         <button mat-flat-button (click)="refreshToken()">
-          {{ 'pages.setting.monitoring.refreshToken' | translate }}
+          {{ 'pages.setting.monitoring.refresh_token' | translate }}
         </button>
       </div>
     </div>
@@ -30,7 +30,7 @@
       </mat-form-field>
 
       <div class="count">
-        <p>{{ 'totalCount' | translate }}: {{ count$ | async }}</p>
+        <p>{{ 'total' | translate }}: {{ count$ | async }}</p>
       </div>
     </div>
 

@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>{{ data.title }}</h1>
-<div mat-dialog-content>{{ data.message }}</div>
+<span mat-dialog-content>{{ data.message }}</span>
 <div mat-dialog-actions>
   <button mat-button color="primary" (click)="close(true)">{{ 'confirm' | translate }}</button>
   <button mat-button (click)="close(false)">{{ 'cancel' | translate }}</button>

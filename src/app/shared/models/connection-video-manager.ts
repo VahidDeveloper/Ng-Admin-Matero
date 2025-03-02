@@ -3,7 +3,7 @@ import { catchError, first, map, switchMap, takeLast, takeWhile, tap } from 'rxj
 
 import { ConnectionVideoSection } from './connection-video-section';
 import { SavedAbsoluteFrameInfo, SectionDownloadCompleteEvent } from '@shared/interfaces';
-import { WinaRestUrls } from './wina-rest-urls';
+import { WinaRestUrls } from './http/wina-rest-urls';
 import Guacamole from '@assistivlabs/guacamole-common-js';
 
 /**

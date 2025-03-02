@@ -41,11 +41,11 @@ class RestApiError {
   /**
    * The encountered error. it has value when isWinaLogicalError is true.
    */
-  error?: RestInnerError;
+  error: RestInnerError | undefined;
   /**
    * The encountered errorParams. it has value when isWinaLogicalError is true.
    */
-  errorParams?: any;
+  errorParams: any | undefined;
 }
 
 class RestInnerError {

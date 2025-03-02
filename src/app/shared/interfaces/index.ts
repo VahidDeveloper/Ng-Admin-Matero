@@ -26,7 +26,6 @@ export * from './remote-application';
 export * from './remote-category';
 export * from './remote-machine-extended';
 export * from './remote-machine';
-export * from './rest-response';
 export * from './saved-absolute-frame-info';
 export * from './section-download-complete-event';
 export * from './session-search-found-texts-details';
@@ -36,6 +35,5 @@ export * from './template-id';
 export * from './user-info-entity';
 export * from './user-otp';
 export * from './user-preferences';
-export * from './wina-rest-api-error-body';
-export * from './wina-rest-error';
+
 // Add more exports as needed

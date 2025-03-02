@@ -2,14 +2,14 @@ import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { provideToastr, ToastrService } from 'ngx-toastr';
 import { errorInterceptor } from './error-interceptor';
+import { ToastService } from '@shared/services';
 
 describe('ErrorInterceptor', () => {
   let httpMock: HttpTestingController;
   let http: HttpClient;
   let router: Router;
-  let toast: ToastrService;
+  let toast: ToastService;
   const emptyFn = () => {};
 
   function assertStatus(status: number, statusText: string) {
@@ -29,26 +29,25 @@ describe('ErrorInterceptor', () => {
       providers: [
         provideHttpClient(withInterceptors([errorInterceptor])),
         provideHttpClientTesting(),
-        provideToastr(),
       ],
     });
 
     httpMock = TestBed.inject(HttpTestingController);
     http = TestBed.inject(HttpClient);
     router = TestBed.inject(Router);
-    toast = TestBed.inject(ToastrService);
+    toast = TestBed.inject(ToastService);
   });
 
   afterEach(() => httpMock.verify());
 
   it('should handle status code 401', () => {
     spyOn(router, 'navigateByUrl');
-    spyOn(toast, 'error');
+    spyOn(toast, 'open');
 
     http.get('/user').subscribe({ next: emptyFn, error: emptyFn, complete: emptyFn });
     httpMock.expectOne('/user').flush({}, { status: 401, statusText: 'Unauthorized' });
 
-    expect(toast.error).toHaveBeenCalledWith('401 Unauthorized');
+    expect(toast.open).toHaveBeenCalledWith('401 Unauthorized', 'error');
     expect(router.navigateByUrl).toHaveBeenCalledWith('/auth/login');
   });
 
@@ -65,12 +64,12 @@ describe('ErrorInterceptor', () => {
   });
 
   it('should handle others status code', () => {
-    spyOn(toast, 'error');
+    spyOn(toast, 'open');
 
     http.get('/user').subscribe({ next: emptyFn, error: emptyFn, complete: emptyFn });
 
     httpMock.expectOne('/user').flush({}, { status: 504, statusText: 'Gateway Timeout' });
 
-    expect(toast.error).toHaveBeenCalledWith('504 Gateway Timeout');
+    expect(toast.open).toHaveBeenCalledWith('504 Gateway Timeout', 'error');
   });
 });

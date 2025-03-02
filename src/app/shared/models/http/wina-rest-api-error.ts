@@ -1,9 +1,9 @@
 /**
  * this class would be used to make difference between Wina and http errors
  */
+import { RestApiError } from './error-display';
 import { RestApiErrorCodes } from './rest-api-error-codes';
 import { WinaRestInnerError } from './wina-rest-inner-error';
-import { WinaRestError } from '../interfaces/wina-rest-error';
 import { TranslateService } from '@ngx-translate/core';
 
 export class WinaRestApiError extends Error {
@@ -36,13 +36,13 @@ export class WinaRestApiError extends Error {
   constructor(
     isWinaLogicalError: boolean,
     status: string,
-    errorObj: WinaRestError,
+    errorObj: RestApiError,
     object: any,
     _translatorService: TranslateService,
     location?: string
   ) {
-    super('Error: ' + (isWinaLogicalError ? errorObj.error.code : parseInt(status, 10)));
-    const code = isWinaLogicalError ? errorObj.error.code : parseInt(status, 10);
+    super('Error: ' + (isWinaLogicalError ? errorObj.error?.code : parseInt(status, 10)));
+    const code = isWinaLogicalError ? errorObj.error?.code : parseInt(status, 10);
     this.isWinaLogicalError = isWinaLogicalError;
     this.status = isFinite(Number(status)) ? status : '0';
     this.error = errorObj?.error ?? new WinaRestInnerError();

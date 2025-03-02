@@ -38,8 +38,8 @@ export class AuthService {
   login(username: string, password: string) {
     return this.loginService.validate(username, password).pipe(
       tap(response => {
-        this.user$.next(response.object.userInfo);
-        this.store.set('userinfo', response.object.userInfo);
+        this.user$.next(response.userInfo);
+        this.store.set('userinfo', response.userInfo);
       }),
       switchMap(() => {
         return this.loginService.login(username, password);

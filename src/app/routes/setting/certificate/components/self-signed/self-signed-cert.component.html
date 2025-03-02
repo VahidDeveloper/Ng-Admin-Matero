@@ -2,23 +2,32 @@
   <mat-progress-bar mode="indeterminate" />
 }
 <form class="tls-setting-form" [formGroup]="tlsForm" (ngSubmit)="submit()">
-  <mat-checkbox formControlName="rejectSelfSignedCert">
-    {{ 'pages.setting.certificate.rejec_self_signed_cert' | translate }}
-  </mat-checkbox>
-  <mat-hint align="start">
-    <strong>{{ 'pages.setting.certificate.rejec_self_signed_cert_help' | translate }}</strong>
-  </mat-hint>
-  <mat-checkbox formControlName="tlsParameterHardening">
-    {{ 'pages.setting.certificate.strengthen_tLs_settings' | translate }}
-  </mat-checkbox>
-  <mat-hint align="start">
-    <strong>{{ 'pages.setting.certificate.strengthen_tLs_settings_help' | translate }}</strong>
-  </mat-hint>
+  <div class="d-flex gap-12 align-items-center">
+    <mat-checkbox formControlName="rejectSelfSignedCert">
+      {{ 'pages.setting.certificate.rejec_self_signed_cert' | translate }}
+    </mat-checkbox>
+    <mat-icon [matTooltip]="'pages.setting.certificate.rejec_self_signed_cert_help' | translate">
+      help_outline
+    </mat-icon>
+  </div>
+  <div class="d-flex gap-12 align-items-center">
+    <mat-checkbox formControlName="tlsParameterHardening">
+      {{ 'pages.setting.certificate.strengthen_tLs_settings' | translate }}
+    </mat-checkbox>
+    <mat-icon
+      color="warning"
+      [matTooltip]="'pages.setting.certificate.strengthen_tLs_settings_help' | translate"
+    >
+      help_outline
+    </mat-icon>
+  </div>
   <mat-form-field [floatLabel]="'always'">
     <mat-label>{{ 'pages.setting.certificate.crl_update_interval_days' | translate }}</mat-label>
     <input matInput type="number" formControlName="crlUpdateIntervalDays" />
     <mat-hint align="start">
-      <strong>{{ 'pages.setting.certificate.crl_update_interval_days_help' | translate }}</strong>
+      <span [style.color]="'#3248bd'">
+        {{ 'pages.setting.certificate.crl_update_interval_days_help' | translate }}
+      </span>
     </mat-hint>
   </mat-form-field>
 

@@ -1,10 +1,11 @@
 import { inject } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { mergeMap, of, throwError } from 'rxjs';
 import { HttpEvent, HttpHandlerFn, HttpRequest, HttpResponse } from '@angular/common/http';
+import { RestResponse } from '@shared/models';
+import { ToastService } from '@shared/services';
 
 export function apiInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
-  const toast = inject(ToastrService);
+  const toast = inject(ToastService);
 
   if (!req.url.includes('/api/')) {
     return next(req);
@@ -13,14 +14,14 @@ export function apiInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   return next(req).pipe(
     mergeMap((event: HttpEvent<any>) => {
       if (event instanceof HttpResponse) {
-        const body: any = event.body;
+        const body: RestResponse = event.body;
         // failure: { code: **, msg: 'failure' }
         // success: { code: 0,  msg: 'success', data: {} }
-        if (body && 'code' in body && body.code !== 0) {
-          if (body.msg) {
-            toast.error(body.msg);
+        if (body.status === 'ERROR') {
+          if (body.errors?.length && body.errors[0].error?.description) {
+            toast.open(body.errors[0].error?.description, 'error');
           }
-          return throwError(() => []);
+          return throwError(() => body.errors);
         }
         return of(
           event.clone({

@@ -1,7 +1,8 @@
+@if (fetchLoading$ | async) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
 <div class="page-container">
-  @if (fetchLoading$ | async) {
-    <mat-progress-bar mode="indeterminate" />
-  }
   <div class="header-container">
     <mat-form-field class="search-field" appearance="outline">
       <input
@@ -26,7 +27,7 @@
       <div class="url-item" *cdkVirtualFor="let item of filteredRow$ | async">
         <span>{{ item.name }}</span>
         <button mat-icon-button color="primary" (click)="delete(item)">
-          <mat-icon color="#fff">delete</mat-icon>
+          <mat-icon [style.color]="'red'">delete</mat-icon>
         </button>
       </div>
     </cdk-virtual-scroll-viewport>

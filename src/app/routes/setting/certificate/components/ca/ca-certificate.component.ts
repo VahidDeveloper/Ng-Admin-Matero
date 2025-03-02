@@ -13,6 +13,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { CACertificate } from '../../_models/CA-certificate';
 import { CertificateStore } from '../../services/certificate-store.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 /**
  * this component is created to show list of remote machines CA certificate
@@ -28,6 +29,7 @@ import { CertificateStore } from '../../services/certificate-store.service';
     MatButtonModule,
     MatCardModule,
     MatIconModule,
+    MatDialogModule,
     MatInputModule,
     MatFormFieldModule,
     MatProgressBarModule,
@@ -56,6 +58,11 @@ export class CaCertificateComponent {
     this.store.setSearchTerm(query);
   }
 
-  add() {}
-  delete(item: CACertificate) {}
+  add() {
+    this.store.addCa();
+  }
+
+  delete(item: CACertificate) {
+    this.store.deleteCert(item);
+  }
 }
