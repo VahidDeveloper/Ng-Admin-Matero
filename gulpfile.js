@@ -87,7 +87,6 @@ function updateVersions(cb) {
           'date-fns',
           'ngx-permissions',
           'ngx-progressbar',
-          'ngx-toastr',
           'photoviewer',
           'screenfull',
           'angular-eslint',
