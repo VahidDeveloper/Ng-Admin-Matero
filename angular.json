@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ng-matero": {
+    "wina": {
       "root": "./src",
       "sourceRoot": "src",
       "projectType": "application",
@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "allowedCommonJsDependencies": ["base64-js", "moment"],
-            "outputPath": "dist/ng-matero",
+            "outputPath": "dist/wina",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -65,15 +65,15 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "ng-matero:build",
+            "buildTarget": "wina:build",
             "proxyConfig": "proxy.config.js"
           },
           "configurations": {
             "production": {
-              "buildTarget": "ng-matero:build:production"
+              "buildTarget": "wina:build:production"
             },
             "development": {
-              "buildTarget": "ng-matero:build:development"
+              "buildTarget": "wina:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -81,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "ng-matero:build"
+            "buildTarget": "wina:build"
           }
         },
         "test": {
@@ -105,11 +105,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ng-matero:serve"
+            "devServerTarget": "wina:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ng-matero:serve:production"
+              "devServerTarget": "wina:serve:production"
             }
           }
         },
@@ -122,7 +122,7 @@
         "deploy": {
           "builder": "angular-cli-ghpages:deploy",
           "options": {
-            "baseHref": "/ng-matero/",
+            "baseHref": "/",
             "remote": "origin"
           }
         }

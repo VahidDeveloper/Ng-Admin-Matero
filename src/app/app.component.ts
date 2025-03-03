@@ -14,8 +14,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   private readonly settings = inject(SettingsService);
 
   ngOnInit() {
-    this.settings.setLanguage('fa-IR');
-    this.settings.setDirection('rtl');
+    this.settings.setDirection();
     this.settings.setTheme();
   }
 

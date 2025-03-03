@@ -36,8 +36,6 @@ export class TranslateComponent {
   langs = [
     { value: 'en-US', name: 'en_us' },
     { value: 'fa-IR', name: 'fa_ir' },
-    { value: 'zh-CN', name: 'zh_cn' },
-    { value: 'auto', name: 'system' },
   ];
 
   changeLang(lang: string) {

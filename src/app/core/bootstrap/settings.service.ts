@@ -1,18 +1,19 @@
+import { BehaviorSubject } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 import { Direction } from '@angular/cdk/bidi';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
+import { enUS, Locale, faIR } from 'date-fns/locale';
 import { TranslateService } from '@ngx-translate/core';
-import { AppDirectionality, LocalStorageService } from '@shared';
-import { enUS, Locale, zhCN, zhTW } from 'date-fns/locale';
-import { BehaviorSubject } from 'rxjs';
+
 import { AppSettings, AppTheme, defaults } from '../settings';
+import { AppDirectionality, LocalStorageService } from '@shared';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
-  private readonly key = 'ng-matero-settings';
+  private readonly key = 'app-settings';
 
   private readonly document = inject(DOCUMENT);
   private readonly translate = inject(TranslateService);
@@ -32,9 +33,9 @@ export class SettingsService {
 
   options: AppSettings = Object.assign(defaults, this.storedOptions);
 
-  languages = ['en-US', 'zh-CN', 'fa-IR'];
+  languages = ['en-US', 'fa-IR'];
 
-  localeMap: Record<string, Locale> = { 'en-US': enUS, 'zh-CN': zhCN, 'zh-TW': zhTW };
+  localeMap: Record<string, Locale> = { 'en-US': enUS, 'fa-IR': faIR };
 
   constructor() {
     this.translate.addLangs(this.languages);

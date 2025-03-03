@@ -1,12 +1,14 @@
 import { Component, Input } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-branding',
+  imports: [TranslatePipe],
   template: `
     <a class="branding" href="/">
       <img src="images/matero.png" class="branding-logo" alt="logo" />
       @if (showName) {
-        <span class="branding-name">MATERO</span>
+        <span class="branding-name">{{ 'wina' | translate }}</span>
       }
     </a>
   `,
