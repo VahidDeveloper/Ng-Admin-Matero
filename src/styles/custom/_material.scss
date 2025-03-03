@@ -4,6 +4,14 @@ mat-card {
   margin-bottom: var(--gutter);
 }
 
+button[navAccordionToggle] {
+  font-family: iranyekan, sans-serif;
+}
+
+li {
+  font-family: iranyekan, sans-serif;
+}
+
 mat-card-header + mat-card-content {
   margin-top: var(--gutter);
 }

@@ -1,6 +1,6 @@
 :root {
-  --body-font-family: 'Roboto', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial,
-    'Lucida Grande', sans-serif;
+  --body-font-family: 'Roboto', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial;
+  --body-rtl-font-family: 'iranyekan', sans-serif;
   --code-font-family: 'Roboto Mono', monospace;
   --gutter: 1rem;
   --sidenav-width: 15rem;
@@ -33,6 +33,14 @@
   box-sizing: border-box;
 }
 
+html {
+  font-family: var(--body-font-family);
+}
+
+html[dir='rtl'] {
+  font-family: var(--body-rtl-font-family);
+}
+
 html,
 body {
   position: relative; // 1
@@ -43,7 +51,6 @@ body {
 
 body {
   margin: 0;
-  font-family: var(--body-font-family);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-size-adjust: 100%;

@@ -1,0 +1,56 @@
+@mixin define-fonts() {
+  @font-face {
+    font-family: iranyekan;
+    font-style: normal;
+    font-weight: normal;
+    src: url('/fonts/iranyekan/eot/iranyekanwebregular.eot');
+    src:
+      url('/fonts/iranyekan/eot/iranyekanwebregular.eot?#iefix') format('embedded-opentype'),
+      /* IE6-8 */ url('/fonts/iranyekan/woff/iranyekanwebregular.woff') format('woff'),
+      /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('/fonts/iranyekan/ttf/iranyekanwebregular.ttf')
+        format('truetype');
+  }
+
+  @font-face {
+    font-family: iranyekanLight;
+    font-style: normal;
+    font-weight: 300;
+    src: url('/fonts/iranyekan/eot/iranyekanweblight.eot');
+    src:
+      url('/fonts/iranyekan/eot/iranyekanweblight.eot?#iefix') format('embedded-opentype'),
+      /* IE6-8 */ url('/fonts/iranyekan/woff/iranyekanweblight.woff') format('woff'),
+      /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('/fonts/iranyekan/ttf/iranyekanweblight.ttf')
+        format('truetype');
+  }
+
+  @font-face {
+    font-family: iranyekanBold;
+    font-style: normal;
+    font-weight: bold;
+    src: url('/fonts/iranyekan/eot/iranyekanwebbold.eot');
+    src:
+      url('/fonts/iranyekan/eot/iranyekanwebbold.eot?#iefix') format('embedded-opentype'),
+      /* IE6-8 */ url('/fonts/iranyekan/woff/iranyekanwebbold.woff') format('woff'),
+      /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('/fonts/iranyekan/ttf/iranyekanwebbold.ttf')
+        format('truetype');
+  }
+
+  @font-face {
+    font-family: iranyekanNum;
+    font-style: normal;
+    font-weight: 300;
+    src: url('/fonts/iranyekan/eot/iranyekanwebregularfanum.eot');
+    src:
+      url('/fonts/iranyekan/eot/iranyekanwebregularfanum.eot?#iefix') format('embedded-opentype'),
+      /* IE6-8 */ url('/fonts/iranyekan/woff/iranyekanwebregularfanum.woff') format('woff'),
+      /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('/fonts/iranyekan/ttf/iranyekanwebregularfanum.ttf')
+        format('truetype');
+  }
+
+  @font-face {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    src: url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+  }
+}

@@ -1,18 +1,44 @@
 @use '@angular/material' as mat;
+@use './font' as font;
 
-html {
-  color-scheme: light;
+@mixin define-theme() {
+  // Set the default typography
+  html {
+    color-scheme: light;
 
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0
-  ));
-}
+    @include mat.theme(
+      (
+        color: (
+          primary: mat.$azure-palette,
+          tertiary: mat.$violet-palette,
+        ),
+        typography: (
+          plain-family: 'Roboto',
+          // Default LTR font
+          bold-weight: 900,
+          medium-weight: 500,
+          regular-weight: 300,
+        ),
+        density: 0,
+      )
+    );
+  }
 
-.theme-dark {
-  color-scheme: dark;
+  html[dir='rtl'] > * {
+    @include mat.theme(
+      (
+        typography: (
+          plain-family: 'iranyekan',
+          // Default LTR font
+          bold-weight: 900,
+          medium-weight: 500,
+          regular-weight: 300,
+        ),
+      )
+    );
+  }
+
+  .theme-dark {
+    color-scheme: dark;
+  }
 }
