@@ -50,6 +50,11 @@
     "exist": "{{value}} برابر",
     "invalid_email": "ایمیل نامعتبر میباشد"
   },
+  "toast": {
+    "create": "{{title}} {{name}} با موفقیت ایجاد شد",
+    "submit": "{{title}} {{name}} با موفقیت ثبت شد"
+  },
+
   "paginator": {
     "items_per_page_label": "تعداد در صفحه",
     "next_page_label": "بعدی",

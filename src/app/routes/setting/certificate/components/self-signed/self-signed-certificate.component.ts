@@ -20,8 +20,8 @@ import { CertificateStore } from '../../services/certificate-store.service';
  */
 @Component({
   selector: 'app-self-signed-cert',
-  templateUrl: './self-signed-cert.component.html',
-  styleUrls: ['./self-signed-cert.component.scss'],
+  templateUrl: './self-signed-certificate.component.html',
+  styleUrls: ['./self-signed-certificate.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
@@ -37,7 +37,7 @@ import { CertificateStore } from '../../services/certificate-store.service';
     TranslatePipe,
   ],
 })
-export class SelfSignedCertComponent implements OnInit, AfterViewInit {
+export class SelfSignedCertificateComponent implements OnInit, AfterViewInit {
   fb = inject(FormBuilder);
   confirm = inject(ConfirmDialogService);
   toast = inject(ToastService);
@@ -82,7 +82,7 @@ export class SelfSignedCertComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.store.submitForm({
+    this.store.setTLSConfig({
       formValue: this.tlsForm.value,
       confirm: this.tlsForm.value.rejectSelfSignedCert,
     });

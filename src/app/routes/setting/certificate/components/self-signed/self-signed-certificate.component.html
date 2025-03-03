@@ -21,16 +21,15 @@
       help_outline
     </mat-icon>
   </div>
-  <mat-form-field [floatLabel]="'always'">
-    <mat-label>{{ 'pages.setting.certificate.crl_update_interval_days' | translate }}</mat-label>
-    <input matInput type="number" formControlName="crlUpdateIntervalDays" />
-    <mat-hint align="start">
-      <span [style.color]="'#3248bd'">
-        {{ 'pages.setting.certificate.crl_update_interval_days_help' | translate }}
-      </span>
-    </mat-hint>
-  </mat-form-field>
-
+  <div class="d-flex gap-12 align-items-center">
+    <mat-form-field [floatLabel]="'always'" class="full-width">
+      <mat-label>{{ 'pages.setting.certificate.crl_update_interval_days' | translate }}</mat-label>
+      <input matInput type="number" formControlName="crlUpdateIntervalDays" />
+    </mat-form-field>
+    <mat-icon [matTooltip]="'pages.setting.certificate.crl_update_interval_days_help' | translate">
+      help_outline
+    </mat-icon>
+  </div>
   <button
     mat-fab
     extended

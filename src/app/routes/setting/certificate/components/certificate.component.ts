@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 
 import { CaCertificateComponent } from './ca/ca-certificate.component';
 import { CertificateStore } from '../services/certificate-store.service';
-import { SelfSignedCertComponent } from './self-signed/self-signed-cert.component';
+import { SelfSignedCertificateComponent } from './self-signed/self-signed-certificate.component';
 
 @Component({
   selector: 'app-certificate',
@@ -22,7 +22,7 @@ import { SelfSignedCertComponent } from './self-signed/self-signed-cert.componen
     TranslatePipe,
     MatTooltipModule,
     CaCertificateComponent,
-    SelfSignedCertComponent,
+    SelfSignedCertificateComponent,
   ],
 })
 export class CertificateComponent implements OnInit {
@@ -31,8 +31,7 @@ export class CertificateComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.store.state$.subscribe({ next: value => console.log(value) });
-    this.store.loadList();
+    this.store.getCa();
     this.store.getTLSConfig();
   }
 }

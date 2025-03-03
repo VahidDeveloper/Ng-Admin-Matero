@@ -54,8 +54,7 @@ export class CertificateStore extends ComponentStore<CACertificateState> {
     return state.list.filter(item => item.name.toLowerCase().includes(lowerQuery));
   });
 
-  // Effect to load token and then list
-  readonly loadList = this.effect<void>(trigger$ =>
+  readonly getCa = this.effect<void>(trigger$ =>
     trigger$.pipe(
       tap(() => this.patchState({ isLoading: true })),
       switchMap(() =>
@@ -74,6 +73,76 @@ export class CertificateStore extends ComponentStore<CACertificateState> {
       })
     )
   );
+
+  readonly addCa = this.effect(trigger$ => {
+    const openEditDialog = () => {
+      const dialogRef = this.dialog.open(AddCAComponent, {
+        minWidth: '600px',
+        disableClose: true,
+      });
+
+      return dialogRef.afterClosed();
+    };
+
+    return trigger$.pipe(
+      switchMap(() =>
+        openEditDialog().pipe(
+          switchMap((newCert: CACertificate) => {
+            if (newCert) {
+              // If the user submits the form, proceed with the update
+              this.patchState({ isLoading: true });
+              return this.caService.addCaCertificate(newCert).pipe(
+                tap(() => {
+                  this.toast.open(
+                    this.tr.instant('toast.create', {
+                      title: this.tr.instant('pages.settign.certificate.title'),
+                      name: newCert.name,
+                    }),
+                    'success'
+                  );
+                  this.getCa();
+                }),
+                catchError(e => {
+                  this.patchState({ isLoading: false });
+                  return EMPTY;
+                })
+              );
+            } else {
+              return EMPTY; // If the user cancels the dialog, do nothing
+            }
+          })
+        )
+      )
+    );
+  });
+
+  readonly deleteCa = this.effect((cert$: Observable<CACertificate>) => {
+    return cert$.pipe(
+      switchMap(cert =>
+        this.confirm
+          .confirm(
+            this.tr.instant('delete'),
+            this.tr.instant('pages.setting.certificate.ca_delete', { name: cert.name })
+          )
+          .pipe(
+            switchMap(confirmed => {
+              if (confirmed) {
+                this.patchState({ isLoading: true });
+                return this.caService.deleteCaCertificate(cert).pipe(
+                  tap(() => this.getCa()), // Reload the list after delete
+                  catchError(() => {
+                    this.patchState({ isLoading: false });
+                    return EMPTY;
+                  })
+                );
+              } else {
+                return EMPTY;
+              }
+            })
+          )
+      )
+    );
+  });
 
   readonly getTLSConfig = this.effect<void>(trigger$ =>
     trigger$.pipe(
@@ -95,71 +164,7 @@ export class CertificateStore extends ComponentStore<CACertificateState> {
     )
   );
 
-  readonly deleteCert = this.effect((cert$: Observable<CACertificate>) => {
-    return cert$.pipe(
-      switchMap(cert =>
-        this.confirm
-          .confirm(
-            this.tr.instant('delete'),
-            this.tr.instant('pages.setting.certificate.ca_delete', { name: cert.name })
-          )
-          .pipe(
-            switchMap(confirmed => {
-              if (confirmed) {
-                this.patchState({ isLoading: true });
-                return this.caService.deleteCaCertificate(cert).pipe(
-                  tap(() => this.loadList()), // Reload the list after delete
-                  catchError(() => {
-                    this.patchState({ isLoading: false });
-                    return EMPTY;
-                  })
-                );
-              } else {
-                return EMPTY;
-              }
-            })
-          )
-      )
-    );
-  });
-
-  readonly addCa = this.effect(trigger$ => {
-    const openEditDialog = () => {
-      const dialogRef = this.dialog.open(AddCAComponent, {
-        minWidth: '600px',
-        disableClose: true,
-      });
-
-      return dialogRef.afterClosed();
-    };
-
-    return trigger$.pipe(
-      switchMap(() =>
-        openEditDialog().pipe(
-          switchMap((newCert: CACertificate) => {
-            if (newCert) {
-              // If the user submits the form, proceed with the update
-              this.patchState({ isLoading: true });
-              return this.caService.addCaCertificate(newCert).pipe(
-                tap(() => {
-                  this.toast.open(`Certificate ${newCert.name} Created successfully`, 'success');
-                  this.loadList();
-                }),
-                catchError(e => {
-                  this.patchState({ isLoading: false });
-                  return EMPTY;
-                })
-              );
-            } else {
-              return EMPTY; // If the user cancels the dialog, do nothing
-            }
-          })
-        )
-      )
-    );
-  });
-
-  readonly submitForm = this.effect<any>((trigger$: Observable<any>) =>
+  readonly setTLSConfig = this.effect<any>((trigger$: Observable<any>) =>
     trigger$.pipe(
       // Only set loading state to true when the confirmation dialog is triggered
       switchMap(({ formValue, confirm }) => {
@@ -167,7 +172,7 @@ export class CertificateStore extends ComponentStore<CACertificateState> {
           // If confirm is true, show the confirmation dialog
           return this.confirm
             .confirm(
-              this.tr.instant('pages.setting.certificate.self-signed'),
+              this.tr.instant('pages.setting.certificate.self_signed'),
               this.tr.instant('pages.setting.certificate.self_sign_confirm')
             )
             .pipe(
@@ -181,7 +186,10 @@ export class CertificateStore extends ComponentStore<CACertificateState> {
                     tap({
                       next: () => {
                         this.toast.open(
-                          this.tr.instant('NewSSLConfigCreatedSuccessfully'),
+                          this.tr.instant('toast.submit', {
+                            title: this.tr.instant('pages.settign.certificate.self_signed'),
+                            name: formValue.name,
+                          }),
                           'success'
                         );
                       },
@@ -200,7 +208,13 @@ export class CertificateStore extends ComponentStore<CACertificateState> {
           return this.sslCertService.addSSlConfig(formValue).pipe(
             tap({
               next: () => {
-                this.toast.open(this.tr.instant('NewSSLConfigCreatedSuccessfully'), 'success');
+                this.toast.open(
+                  this.tr.instant('toast.submit', {
+                    title: this.tr.instant('pages.settign.certificate.self_signed'),
+                    name: formValue.name,
+                  }),
+                  'success'
+                );
               },
             }),
             finalize(() => {

@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogRef, MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CertificateStore } from '../../../services/certificate-store.service';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
+import { Component, inject } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-ca',
+  templateUrl: './add.component.html',
+  styleUrl: './add.component.scss',
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -20,8 +20,6 @@ import { TranslatePipe } from '@ngx-translate/core';
     MatDialogModule,
     TranslatePipe,
   ],
-  templateUrl: './add.component.html',
-  styleUrl: './add.component.scss',
 })
 export class AddCAComponent {
   fb = inject(FormBuilder);

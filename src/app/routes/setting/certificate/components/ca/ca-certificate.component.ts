@@ -7,13 +7,13 @@ import { MatCardModule } from '@angular/material/card';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { CACertificate } from '../../_models/CA-certificate';
 import { CertificateStore } from '../../services/certificate-store.service';
-import { MatDialogModule } from '@angular/material/dialog';
 
 /**
  * this component is created to show list of remote machines CA certificate
@@ -63,6 +63,6 @@ export class CaCertificateComponent {
   }
 
   delete(item: CACertificate) {
-    this.store.deleteCert(item);
+    this.store.deleteCa(item);
   }
 }
