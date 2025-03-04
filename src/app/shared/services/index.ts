@@ -1,4 +1,4 @@
-export * from './connection/command-setting.service';
+export * from '../../routes/setting/command/services/command-setting.service';
 export * from './connection/connection-application.service';
 export * from './connection/connection-setting.service';
 export * from './banner-setting.service';

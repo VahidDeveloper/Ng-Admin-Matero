@@ -1,4 +1,6 @@
-<h1 mat-dialog-title>{{ data.title }}</h1>
+@if (data.title) {
+  <h1 mat-dialog-title>{{ data.title }}</h1>
+}
 <span mat-dialog-content>{{ data.message }}</span>
 <div mat-dialog-actions>
   <button mat-button color="primary" (click)="close(true)">{{ 'confirm' | translate }}</button>

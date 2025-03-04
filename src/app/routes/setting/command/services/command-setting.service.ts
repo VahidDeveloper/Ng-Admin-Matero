@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommandSettingModel, TemplateId } from '@shared/interfaces';
+import { CommandSettingModel } from '@shared/interfaces';
 import { WinaRestUrls } from '@shared/models';
 
 /**
@@ -19,8 +19,8 @@ export class CommandSettingService {
   }
 
   /** delete selected command */
-  deleteCommand(templateIds: TemplateId[]): Observable<TemplateId> {
-    return this._http.post<TemplateId>(WinaRestUrls.deleteCommand(), templateIds);
+  deleteCommand(id: number) {
+    return this._http.post(WinaRestUrls.deleteCommand(), [{ templateIds: id }]);
   }
 
   /** update selected command*/

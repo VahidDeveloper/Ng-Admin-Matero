@@ -22,7 +22,7 @@ export const routes: Routes = [
       {
         path: 'command',
         loadComponent: () =>
-          import('./command-setting/command-list/command-list.component').then(
+          import('./command/components/list/command-list.component').then(
             m => m.CommandListComponent
           ),
       },

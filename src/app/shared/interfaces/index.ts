@@ -31,7 +31,6 @@ export * from './section-download-complete-event';
 export * from './session-search-found-texts-details';
 export * from './session-timeout-policy';
 export * from './set-otp';
-export * from './template-id';
 export * from './user-info-entity';
 export * from './user-otp';
 export * from './user-preferences';

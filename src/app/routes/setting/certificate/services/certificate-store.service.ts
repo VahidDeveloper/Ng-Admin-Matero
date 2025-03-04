@@ -122,7 +122,7 @@ export class CertificateStore extends ComponentStore<CACertificateState> {
         this.confirm
           .confirm(
             this.tr.instant('delete'),
-            this.tr.instant('pages.setting.certificate.ca_delete', { name: cert.name })
+            this.tr.instant('confirms.delete', { name: cert.name })
           )
           .pipe(
             switchMap(confirmed => {
@@ -187,7 +187,7 @@ export class CertificateStore extends ComponentStore<CACertificateState> {
                       next: () => {
                         this.toast.open(
                           this.tr.instant('toast.submit', {
-                            title: this.tr.instant('pages.settign.certificate.self_signed'),
+                            title: this.tr.instant('pages.setting.certificate.self_signed'),
                             name: formValue.name,
                           }),
                           'success'
@@ -210,7 +210,7 @@ export class CertificateStore extends ComponentStore<CACertificateState> {
               next: () => {
                 this.toast.open(
                   this.tr.instant('toast.submit', {
-                    title: this.tr.instant('pages.settign.certificate.self_signed'),
+                    title: this.tr.instant('pages.setting.certificate.self_signed'),
                     name: formValue.name,
                   }),
                   'success'

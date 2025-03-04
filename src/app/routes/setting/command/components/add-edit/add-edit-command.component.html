@@ -1,0 +1,31 @@
+<h3 mat-dialog-title>{{ 'pages.setting.certificate.add_ca' | translate }}</h3>
+
+<form mat-dialog-content class="d-flex flex-col p-16 gap-32" [formGroup]="form">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'name' | translate }}</mat-label>
+    <input matInput formControlName="name" required />
+    <mat-error *ngIf="form.controls.name.hasError('required')">
+      {{ 'validation.required' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'commands' | translate }}</mat-label>
+    <input matInput formControlName="commands" required />
+    <mat-error *ngIf="form.controls.commands.hasError('required')">
+      {{ 'validation.required' | translate }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>{{ 'description' | translate }}</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+</form>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="closeDialog(false)">{{ 'close' | translate }}</button>
+  <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="submitForm()">
+    {{ 'save' | translate }}
+  </button>
+</div>
