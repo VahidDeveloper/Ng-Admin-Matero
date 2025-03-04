@@ -1,17 +1,17 @@
 import { inject, Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ComponentStore } from '@ngrx/component-store';
 import { TranslateService } from '@ngx-translate/core';
-import { EMPTY, tap, switchMap, catchError, finalize, Observable } from 'rxjs';
+import { EMPTY, tap, switchMap, catchError, finalize } from 'rxjs';
 
+import { ToastService } from '@shared';
 import { LockPolicy } from '../_models/lock-policy';
 import { LockedUser } from '../_models/locked-user';
 import { AccountLockService } from './account-lock.service';
-import { ConfirmDialogService, ToastService } from '@shared';
 
 export interface AccountLockState {
   list: any[];
   policy: LockPolicy | undefined;
+  count: number;
   isLoading: boolean;
   postLoading: boolean;
   searchTerm: string;
@@ -19,15 +19,14 @@ export interface AccountLockState {
 
 @Injectable()
 export class AccountLockStore extends ComponentStore<AccountLockState> {
-  service = inject(AccountLockService);
-  confirm = inject(ConfirmDialogService);
-  toast = inject(ToastService);
-  tr = inject(TranslateService);
-  dialog = inject(MatDialog);
+  private readonly service = inject(AccountLockService);
+  private readonly toast = inject(ToastService);
+  private readonly tr = inject(TranslateService);
 
   constructor() {
     super({
       list: [],
+      count: 0,
       policy: undefined,
       isLoading: false,
       postLoading: false,
@@ -53,41 +52,33 @@ export class AccountLockStore extends ComponentStore<AccountLockState> {
       tap(() => this.patchState({ isLoading: true })),
       switchMap(() =>
         this.service.getDefaultLockPolicy().pipe(
-          tap({
-            next: (res: LockPolicy) => {
-              this.patchState({ policy: res });
-            },
-          }),
-          catchError(() => EMPTY)
+          tap((res: LockPolicy) => this.patchState({ policy: res, isLoading: false })),
+          catchError(() => {
+            this.patchState({ isLoading: false });
+            return EMPTY;
+          })
         )
-      ),
-      catchError(() => EMPTY),
-      finalize(() => {
-        this.patchState({ isLoading: false });
-      })
+      )
     )
   );
 
-  readonly setPolicy = this.effect<any>((trigger$: Observable<any>) =>
+  readonly setPolicy = this.effect<LockPolicy>(trigger$ =>
     trigger$.pipe(
-      switchMap(({ formValue }) => {
-        this.patchState({ postLoading: true });
-        return this.service.setLockPolicy(formValue).pipe(
-          tap({
-            next: () => {
-              this.toast.open(
-                this.tr.instant('toast.submit', {
-                  title: this.tr.instant('pages.setting.account_lock.self_signed'),
-                  name: formValue.name,
-                }),
-                'success'
-              );
-            },
-          }),
-          finalize(() => {
+      tap(() => this.patchState({ postLoading: true })),
+      switchMap(formValue =>
+        this.service.setLockPolicy(formValue).pipe(
+          tap(() => {
             this.patchState({ postLoading: false });
+            this.toast.open(
+              this.tr.instant('pages.setting.account_lock.update_policy_toast'),
+              'success'
+            );
           })
-        );
+        )
+      ),
+      catchError(() => {
+        this.patchState({ postLoading: false });
+        return EMPTY;
       })
     )
   );
@@ -97,46 +88,41 @@ export class AccountLockStore extends ComponentStore<AccountLockState> {
       tap(() => this.patchState({ isLoading: true })),
       switchMap(() =>
         this.service.getAll().pipe(
-          tap({
-            next: (res: LockedUser[]) => {
-              this.patchState({ list: res, isLoading: false });
-            },
-          }),
-          catchError(() => EMPTY)
+          tap((res: LockedUser[]) =>
+            this.patchState({
+              list: res,
+              count: res.length,
+              isLoading: false,
+            })
+          ),
+          catchError(() => {
+            this.patchState({ isLoading: false });
+            return EMPTY;
+          })
         )
-      ),
-      catchError(() => EMPTY),
-      finalize(() => {
-        this.patchState({ isLoading: false });
-      })
+      )
     )
   );
 
-  readonly unlockUser = this.effect((user$: Observable<LockedUser>) => {
-    return user$.pipe(
+  readonly unlockUser = this.effect<LockedUser>(trigger$ =>
+    trigger$.pipe(
+      tap(() => this.patchState({ postLoading: true })),
       switchMap(user =>
-        this.confirm
-          .confirm(
-            this.tr.instant('delete'),
-            this.tr.instant('pages.setting.account_lock.ca_delete', { name: user.displayName })
-          )
-          .pipe(
-            switchMap(confirmed => {
-              if (confirmed) {
-                this.patchState({ postLoading: true });
-                return this.service.unLockConnection(user).pipe(
-                  tap(() => this.getList()), // Reload the list after delete
-                  catchError(() => {
-                    this.patchState({ postLoading: false });
-                    return EMPTY;
-                  })
-                );
-              } else {
-                return EMPTY;
-              }
-            })
-          )
+        this.service.unLockConnection(user).pipe(
+          tap((res: LockedUser) => {
+            this.getList(); // Refresh list
+            this.toast.open(
+              this.tr.instant('toasts.submit', {
+                title: this.tr.instant('pages.setting.account_lock.policy'),
+                name: res.displayName,
+              }),
+              'success'
+            );
+          }),
+          catchError(() => EMPTY),
+          finalize(() => this.patchState({ postLoading: false }))
+        )
       )
-    );
-  });
+    )
+  );
 }

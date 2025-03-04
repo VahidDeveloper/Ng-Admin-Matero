@@ -24,8 +24,8 @@
         <input
           matInput
           [placeholder]="'search' | translate"
-          [ngModel]="searchTerm$ | async"
-          (ngModelChange)="updateSearch($event)"
+          [value]="searchTerm$ | async"
+          (input)="updateSearch($event)"
         />
       </mat-form-field>
 

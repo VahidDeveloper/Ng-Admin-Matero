@@ -1,5 +1,4 @@
 import { Observable, of } from 'rxjs';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,7 +21,6 @@ import { MonitoringListStore } from '../_services/monitoring-store.service';
   providers: [MonitoringListStore],
   imports: [
     CommonModule,
-    FormsModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -52,8 +50,8 @@ export class MonitoringComponent implements OnInit {
     this.store.loadTokenAndList();
   }
 
-  updateSearch(query: string): void {
-    this.store.setSearchTerm(query);
+  updateSearch(event: Event): void {
+    this.store.setSearchTerm((event.target as HTMLInputElement).value);
   }
 
   refreshToken(): void {

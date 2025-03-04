@@ -1,5 +1,4 @@
 import { Observable, of } from 'rxjs';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,7 +24,6 @@ import { CertificateStore } from '../../services/certificate-store.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
-    FormsModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -47,6 +45,7 @@ export class CaCertificateComponent {
    * a flag to show loading on get data
    */
   fetchLoading$: Observable<boolean> = of(false);
+
   constructor() {
     this.token$ = this.store.select(state => state.token);
     this.count$ = this.store.select(state => state.count);
@@ -54,8 +53,8 @@ export class CaCertificateComponent {
     this.fetchLoading$ = this.store.select(state => state.isLoading);
   }
 
-  updateSearch(query: string): void {
-    this.store.setSearchTerm(query);
+  updateSearch(query: Event): void {
+    this.store.setSearchTerm((query.target as HTMLInputElement).value);
   }
 
   add() {

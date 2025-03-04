@@ -57,18 +57,8 @@ import { AccountLockStore } from '../../_services/account-lock-store.service';
 export class AccountLockPolicyComponent implements OnInit {
   fb = inject(FormBuilder);
   store = inject(AccountLockStore);
-
-  /**
-   * create form for test sms
-   */
   form: FormGroup;
-  /**
-   * show loading on submit form
-   */
   submitLoading: Observable<boolean> = of(false);
-  /**
-   * a flag to show loading on get data
-   */
   fetchLoading$: Observable<boolean> = of(false);
 
   constructor() {
@@ -85,10 +75,8 @@ export class AccountLockPolicyComponent implements OnInit {
       .select(state => state.policy)
       .pipe(tap(res => this.form.patchValue(res!)))
       .subscribe();
-
     this.fetchLoading$ = this.store.select(state => state.isLoading);
     this.submitLoading = this.store.select(state => state.postLoading);
-    console.log(this.form.value);
   }
 
   submit() {
@@ -96,7 +84,6 @@ export class AccountLockPolicyComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-
     this.store.setPolicy(this.form.value);
   }
 }

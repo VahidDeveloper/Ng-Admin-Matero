@@ -23,8 +23,8 @@ export class AccountLockService extends GenericCrudService<LockedUser> {
   /**
    * to unLock user in a connection
    */
-  unLockConnection(blockUser: Partial<LockedUser>): Observable<Partial<LockedUser>> {
-    return this._http.post<Partial<LockedUser>>(WinaRestUrls.unLockConnection(), blockUser);
+  unLockConnection(blockUser: LockedUser): Observable<LockedUser> {
+    return this._http.post<LockedUser>(WinaRestUrls.unLockConnection(), blockUser);
   }
 
   /**

@@ -4,9 +4,9 @@
 <form class="tls-setting-form" [formGroup]="tlsForm" (ngSubmit)="submit()">
   <div class="d-flex gap-12 align-items-center">
     <mat-checkbox formControlName="rejectSelfSignedCert">
-      {{ 'pages.setting.certificate.rejec_self_signed_cert' | translate }}
+      {{ 'pages.setting.certificate.reject_self_signed_cert' | translate }}
     </mat-checkbox>
-    <mat-icon [matTooltip]="'pages.setting.certificate.rejec_self_signed_cert_help' | translate">
+    <mat-icon [matTooltip]="'pages.setting.certificate.reject_self_signed_cert_help' | translate">
       help_outline
     </mat-icon>
   </div>

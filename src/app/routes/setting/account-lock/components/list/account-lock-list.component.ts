@@ -1,176 +1,116 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { MatInput } from '@angular/material/input';
+import { MatFormField } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MtxGrid, MtxGridColumn } from '@ng-matero/extensions/grid';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { LockedUser } from '../../_models/locked-user';
-import { AccountLockService } from '../../_services/account-lock.service';
-import { TranslateService } from '@ngx-translate/core';
-import { ToastService } from '@shared/services';
+import { AccountLockStore } from '../../_services/account-lock-store.service';
+
 /**
  * this component is created to show list of blocked users
  */
 @Component({
   selector: 'app-account-lock-list',
   templateUrl: './account-lock-list.component.html',
-  styleUrls: ['./account-lock-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [],
+  imports: [
+    FormsModule,
+    FormsModule,
+    MtxGrid,
+    AsyncPipe,
+    MatFormField,
+    MatInput,
+    ReactiveFormsModule,
+    TranslatePipe,
+  ],
+  styles: `
+    .page-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px;
+    }
+  `,
 })
-export class AccountLockListComponent implements OnInit {
+export class AccountLockListComponent {
+  store = inject(AccountLockStore);
+  tr = inject(TranslateService);
+  readonly filteredRow$ = this.store.filteredRow$;
+  count$: Observable<number> = of(0);
+  searchTerm$: Observable<string> = of('');
   /**
-   * list of Blocked Users
+   * a flag to show loading on get data
    */
-  rows: LockedUser[] = [];
+  fetchLoading$: Observable<boolean> = of(false);
+
   /**
    * columns data needed for data-table
    */
-  columns: any[] = [
+  columns: MtxGridColumn<LockedUser>[] = [
     {
+      field: 'username',
+      header: this.tr.instant('username'),
       sortable: true,
-      prop: 'username',
-      name: this._translatorService.instant('username'),
+      disabled: true,
     },
     {
-      prop: 'connectionName',
-      name: this._translatorService.instant('ConnectionName'),
+      field: 'connectionName',
+      header: this.tr.instant('connection_name'),
     },
     {
-      sortable: true,
-      prop: 'ldapServer',
-      name: this._translatorService.instant('LdapServer'),
+      field: 'ldapServer',
+      header: this.tr.instant('ldap_server'),
     },
     {
-      prop: 'ipAddress',
-      name: this._translatorService.instant('IPAddress'),
+      field: 'ipAddress',
+      header: this.tr.instant('ip_address'),
     },
     {
-      prop: 'protocol',
-      name: this._translatorService.instant('Protocol'),
+      field: 'protocol',
+      header: this.tr.instant('protocol'),
     },
     {
-      prop: 'os',
-      name: this._translatorService.instant('OS'),
+      field: 'os',
+      header: this.tr.instant('os'),
     },
-  ];
-  /**
-   * for showing alert for each possible error on get blocked users
-   * the keys will be gotten from service
-   */
-  _allPossibleErrors = new Map<string, string>();
-  /**
-   * flag for indicating when component is busy with fetching data
-   */
-  _isLoading = false;
-  /**
-   * list of operations list.
-   */
-  _operationList: any[] = [
     {
-      id: 0,
-      description: this._translatorService.instant('UnlockUserAccount'),
-      color: 'error',
-      icon: 'icon-Lock-02',
-      actionFn: (row: LockedUser) => {
-        this._openUnBlockConfirmModal(row);
-      },
+      header: this.tr.instant('operation'),
+      field: 'operation',
+      minWidth: 140,
+      width: '140px',
+      pinned: 'right',
+      type: 'button',
+      buttons: [
+        {
+          type: 'icon',
+          icon: 'lock_open',
+          tooltip: this.tr.instant('unlock'),
+          pop: {
+            title: this.tr.instant('confirm_delete'),
+            closeText: this.tr.instant('close'),
+            okText: this.tr.instant('ok'),
+          },
+          click: row => this.unlock(row),
+        },
+      ],
     },
   ];
 
-  constructor(
-    private _blockedUsersService: AccountLockService,
-    private _cdr: ChangeDetectorRef,
-    private _toastService: ToastService,
-    private _translatorService: TranslateService
-  ) {}
-
-  ngOnInit(): void {
-    this._getBlockedUser();
+  constructor() {
+    this.searchTerm$ = this.store.select(state => state.searchTerm);
+    this.fetchLoading$ = this.store.select(state => state.isLoading);
+    this.count$ = this.store.select(state => state.count);
   }
 
-  /**
-   * reload command list
-   */
-  reloadList() {
-    this._getBlockedUser();
+  updateSearch(query: string): void {
+    this.store.setSearchTerm(query);
   }
 
-  /**
-   * get list of blocked users in a connection
-   */
-  private _getBlockedUser() {
-    this._isLoading = true;
-    this._blockedUsersService
-      .getAll()
-      .subscribe(
-        (res: LockedUser[]) => {
-          this.rows = res;
-        },
-        (err: any) => {
-          this._allPossibleErrors.set(
-            err.location,
-            this._translatorService.instant('AnErrorOccurredWhileGettingTheAccountLockSettings')
-          );
-        }
-      )
-      .add(() => {
-        this._isLoading = false;
-        this._cdr.markForCheck();
-      });
-  }
-
-  /**
-   * open confirmation modal to confirmed unblock user
-   */
-  private _openUnBlockConfirmModal(blockUser: LockedUser) {
-    // const configs: ConfirmationModalConfigs = {
-    //   cancelColor: ColorEnum.Warning,
-    //   submitLabel: this._translatorService.instant('YesUnlockIt'),
-    //   title: this._translatorService.instant('UnlockUserAccount'),
-    // };
-    // this._confirmationModalService
-    //   .openTextual(
-    //     `${this._translatorService.instant('AreYouSureYouWantToUnlockUserAccount')}
-    //     "${blockUser.username}"
-    //     ${this._translatorService.instant('inConnection')}
-    //     "${blockUser.connectionName}"
-    //     ${this._translatorService.instant('connection')}`,
-    //     configs
-    //   )
-    //   .subscribe(() => {
-    //     const user: Partial<LockedUser> = {
-    //       username: blockUser.username,
-    //       ldapServer: blockUser.ldapServer,
-    //       connectionId: blockUser.connectionId,
-    //     };
-    //     this._unBlockUser(user);
-    //   });
-  }
-
-  /**
-   * this method send a user to server to unblocked it
-   */
-  private _unBlockUser(user: Partial<LockedUser>) {
-    this._isLoading = true;
-    this._blockedUsersService
-      .unLockConnection(user)
-      .subscribe(
-        (res: Partial<LockedUser>) => {
-          this._toastService.open(
-            `${this._translatorService.instant('UserAccount')} "${res.username}" ${this._translatorService.instant(
-              'unlockedSuccessfully'
-            )}`,
-            'success'
-          );
-          this.reloadList();
-        },
-        (err: any) => {
-          this._allPossibleErrors.set(
-            err.location,
-            this._translatorService.instant('AnErrorOccurredWhileUnlockedUserAccount')
-          );
-        }
-      )
-      .add(() => {
-        this._isLoading = false;
-        this._cdr.markForCheck();
-      });
+  unlock(user: LockedUser) {
+    this.store.unlockUser(user);
   }
 }
