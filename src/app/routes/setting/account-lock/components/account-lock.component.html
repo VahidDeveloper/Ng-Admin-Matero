@@ -1,0 +1,43 @@
+<mat-card class="page-container">
+  <mat-card-title>{{ 'pages.setting.account_lock.title' | translate }}</mat-card-title>
+  <mat-card-content>
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="d-flex gap-4 align-items-center">
+            <h3 class="custom-tab-title m-0">
+              {{ 'pages.setting.account_lock.policy' | translate }}
+            </h3>
+            <mat-icon
+              class="custom-tab-description"
+              [matTooltip]="'pages.setting.account_lock.policy_description' | translate"
+            >
+              info
+            </mat-icon>
+          </div>
+        </ng-template>
+        <ng-template matTabContent>
+          <app-account-lock-policy />
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="d-flex gap-4 align-items-center">
+            <h3 class="m-0">
+              {{ 'pages.setting.account_lock.list' | translate }}
+            </h3>
+            <mat-icon
+              class="custom-tab-description"
+              [matTooltip]="'pages.setting.account_lock.list_description' | translate"
+            >
+              info
+            </mat-icon>
+          </div>
+        </ng-template>
+        <ng-template matTabContent>
+          <app-account-lock-list />
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

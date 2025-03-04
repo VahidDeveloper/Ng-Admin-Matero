@@ -15,7 +15,7 @@ import { GenericCrudService, WinaRestUrls } from '@shared';
 @Injectable({
   providedIn: 'root',
 })
-export class LockedUsersInConnectionService extends GenericCrudService<LockedUser> {
+export class AccountLockService extends GenericCrudService<LockedUser> {
   constructor(protected _http: HttpClient) {
     super(_http, WinaRestUrls.connectionLock());
   }

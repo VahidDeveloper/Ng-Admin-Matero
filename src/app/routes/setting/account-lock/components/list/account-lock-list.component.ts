@@ -1,19 +1,20 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
-import { LockedUser } from '../_models/locked-user';
-import { LockedUsersInConnectionService } from '../_services/locked-users-in-connection.service';
+import { LockedUser } from '../../_models/locked-user';
+import { AccountLockService } from '../../_services/account-lock.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '@shared/services';
 /**
  * this component is created to show list of blocked users
  */
 @Component({
-  selector: 'app-locked-users-in-connection-list',
-  templateUrl: './locked-users-in-connection-list.component.html',
-  styleUrls: ['./locked-users-in-connection-list.component.scss'],
+  selector: 'app-account-lock-list',
+  templateUrl: './account-lock-list.component.html',
+  styleUrls: ['./account-lock-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [],
 })
-export class LockedUsersInConnectionListComponent implements OnInit {
+export class AccountLockListComponent implements OnInit {
   /**
    * list of Blocked Users
    */
@@ -74,7 +75,7 @@ export class LockedUsersInConnectionListComponent implements OnInit {
   ];
 
   constructor(
-    private _blockedUsersService: LockedUsersInConnectionService,
+    private _blockedUsersService: AccountLockService,
     private _cdr: ChangeDetectorRef,
     private _toastService: ToastService,
     private _translatorService: TranslateService

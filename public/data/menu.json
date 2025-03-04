@@ -12,7 +12,7 @@
     },
     {
       "route": "resources",
-      "name": "remoteMatchine",
+      "name": "remoteMachine",
       "type": "link",
       "icon": "computer",
       "permissions": {
@@ -36,7 +36,7 @@
         },
         {
           "route": "login-policy",
-          "name": "loginPolicy",
+          "name": "login_policy",
           "type": "link",
           "icon": "colorize"
         },
@@ -53,8 +53,8 @@
           "icon": "colorize"
         },
         {
-          "route": "lock-account",
-          "name": "lockAccount",
+          "route": "account-lock",
+          "name": "account_lock",
           "type": "link",
           "icon": "colorize"
         },

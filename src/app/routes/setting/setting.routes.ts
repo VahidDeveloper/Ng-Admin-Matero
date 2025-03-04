@@ -27,9 +27,11 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'lock-account',
-        loadChildren: () =>
-          import('./lock-account/locked-users-in-connection-setting.routes').then(m => m.routes),
+        path: 'account-lock',
+        loadComponent: () =>
+          import('./account-lock/components/account-lock.component').then(
+            m => m.AccountLockComponent
+          ),
       },
       {
         path: 'certificate',
