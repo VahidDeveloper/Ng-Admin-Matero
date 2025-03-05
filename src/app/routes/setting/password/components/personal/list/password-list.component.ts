@@ -1,36 +1,22 @@
 import { Observable, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { MatInput } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormField } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MtxGrid, MtxGridColumn } from '@ng-matero/extensions/grid';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 
-import { CommandSettingModel } from '@shared';
-import { CommandStore } from '../../services/command-store.service';
+import { StoredPassword } from '@shared';
+import { PasswordStore } from '../../../services/password-store.service';
 
-/**
- * this component is created for show list of commands
- */
+/** a component for management user password history */
 @Component({
-  templateUrl: './command-list.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [CommandStore],
-  imports: [
-    CommonModule,
-    MatFormField,
-    MatInput,
-    MtxGrid,
-    TranslatePipe,
-    MatDialogModule,
-    MatButtonModule,
-    MatCard,
-    MatCardContent,
-    MatCardTitle,
-  ],
+  selector: 'app-password-list',
+  templateUrl: './password-list.component.html',
   styles: `
     .page-container {
       display: flex;
@@ -39,31 +25,43 @@ import { CommandStore } from '../../services/command-store.service';
       padding: 16px;
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatCardModule,
+    MtxGrid,
+    ReactiveFormsModule,
+    TranslatePipe,
+  ],
 })
-export class CommandListComponent implements OnInit {
-  store = inject(CommandStore);
+export class PasswordListComponent implements OnInit {
+  store = inject(PasswordStore);
   tr = inject(TranslateService);
-  readonly filteredRow$ = this.store.filteredRow$;
+  readonly filteredRow$ = this.store.filteredPersonalPass$;
   count$: Observable<number> = of(0);
   searchTerm$: Observable<string> = of('');
   fetchLoading$: Observable<boolean> = of(false);
-  columns: MtxGridColumn<CommandSettingModel>[] = [
+  columns: MtxGridColumn<StoredPassword>[] = [
     {
       field: 'id',
       header: this.tr.instant('id'),
       disabled: true,
     },
     {
-      field: 'name',
-      header: this.tr.instant('name'),
+      field: 'username',
+      header: this.tr.instant('username'),
     },
     {
-      field: 'commands',
-      header: this.tr.instant('commands'),
+      field: 'domain',
+      header: this.tr.instant('domain'),
     },
     {
-      field: 'description',
-      header: this.tr.instant('description'),
+      field: 'identifierKey',
+      header: this.tr.instant('identifierKey'),
     },
     {
       header: this.tr.instant('operation'),
@@ -77,13 +75,13 @@ export class CommandListComponent implements OnInit {
           type: 'icon',
           icon: 'edit',
           color: 'error' as any,
-          click: row => this.store.upsertCommand(row),
+          click: row => this.store.addPassword(),
         },
         {
           type: 'icon',
           icon: 'delete',
           color: 'error' as any,
-          click: row => this.store.deleteCommand(row.id),
+          click: row => this.store.deletePassword(row),
         },
       ],
     },
@@ -95,15 +93,13 @@ export class CommandListComponent implements OnInit {
     this.count$ = this.store.select(state => state.count);
   }
 
-  ngOnInit(): void {
-    this.store.getList();
-  }
+  ngOnInit(): void {}
 
   updateSearch(event: Event): void {
     this.store.setSearchTerm((event.target as HTMLInputElement).value);
   }
 
   add() {
-    this.store.upsertCommand();
+    this.store.addPassword();
   }
 }

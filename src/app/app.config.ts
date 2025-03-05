@@ -1,24 +1,22 @@
+import { NgxPermissionsModule } from 'ngx-permissions';
+import { MAT_CARD_CONFIG } from '@angular/material/card';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideDateFnsAdapter } from '@angular/material-date-fns-adapter';
+import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideDateFnsDatetimeAdapter } from '@ng-matero/extensions-date-fns-adapter';
+import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 import {
   ApplicationConfig,
   importProvidersFrom,
   inject,
   provideAppInitializer,
 } from '@angular/core';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
-
-import { provideDateFnsAdapter } from '@angular/material-date-fns-adapter';
-import { MAT_CARD_CONFIG } from '@angular/material/card';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatPaginatorIntl } from '@angular/material/paginator';
-import { provideDateFnsDatetimeAdapter } from '@ng-matero/extensions-date-fns-adapter';
-import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { NgxPermissionsModule } from 'ngx-permissions';
 
 import {
-  apiInterceptor,
   restInterceptor,
   BASE_URL,
   baseUrlInterceptor,
@@ -47,7 +45,6 @@ const interceptors = [
   baseUrlInterceptor,
   settingsInterceptor,
   tokenInterceptor,
-  apiInterceptor,
   restInterceptor,
   errorInterceptor,
   loggingInterceptor,

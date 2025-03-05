@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
 import { Token } from './interface';
-import { UserBriefInfo, WinaRestUrls } from '@shared/models';
+import { LoginStatus, UserBriefInfo, WinaRestUrls } from '@shared/models';
 
 interface ValidateRes {
   loggedIn: boolean;
@@ -29,6 +29,10 @@ export class LoginService {
       username,
       password,
     });
+  }
+
+  loginStatus(): Observable<LoginStatus> {
+    return this.http.get<LoginStatus>(WinaRestUrls.loginStateURL);
   }
 
   refresh(params: Record<string, any>) {

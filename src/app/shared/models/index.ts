@@ -1,4 +1,5 @@
 export * from './http/error-display';
+export * from './http/login-status';
 export * from './http/rest-api-error-codes';
 export * from './http/rest-response';
 export * from './http/wina-rest-api-error';

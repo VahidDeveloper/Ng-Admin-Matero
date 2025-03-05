@@ -17,7 +17,10 @@ export const routes: Routes = [
       },
       {
         path: 'password',
-        loadChildren: () => import('./password/password-setting.routes').then(m => m.routes),
+        loadComponent: () =>
+          import('./password/components/password-setting.component').then(
+            m => m.PasswordSettingComponent
+          ),
       },
       {
         path: 'command',

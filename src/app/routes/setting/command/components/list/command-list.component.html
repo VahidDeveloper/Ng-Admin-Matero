@@ -6,8 +6,8 @@
         <input
           matInput
           [placeholder]="'search' | translate"
-          [ngModel]="searchTerm$ | async"
-          (ngModelChange)="updateSearch($event)"
+          [value]="searchTerm$ | async"
+          (input)="updateSearch($event)"
         />
       </mat-form-field>
       <button mat-flat-button color="primary" (click)="add()">
@@ -15,15 +15,13 @@
       </button>
     </div>
 
-    <div class="url-list">
-      <mtx-grid
-        [data]="(filteredRow$ | async)!"
-        [columns]="columns"
-        [length]="(count$ | async)!"
-        [loading]="fetchLoading$ | async"
-        [pageOnFront]="false"
-        [rowHover]="true"
-      />
-    </div>
+    <mtx-grid
+      [data]="(filteredRow$ | async)!"
+      [columns]="columns"
+      [length]="(count$ | async)!"
+      [loading]="fetchLoading$ | async"
+      [pageOnFront]="false"
+      [rowHover]="true"
+    />
   </mat-card-content>
 </mat-card>

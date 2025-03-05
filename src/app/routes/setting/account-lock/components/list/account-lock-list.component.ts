@@ -2,7 +2,6 @@ import { Observable, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { MatInput } from '@angular/material/input';
 import { MatFormField } from '@angular/material/form-field';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MtxGrid, MtxGridColumn } from '@ng-matero/extensions/grid';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
@@ -17,16 +16,7 @@ import { AccountLockStore } from '../../_services/account-lock-store.service';
   selector: 'app-account-lock-list',
   templateUrl: './account-lock-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    FormsModule,
-    FormsModule,
-    MtxGrid,
-    AsyncPipe,
-    MatFormField,
-    MatInput,
-    ReactiveFormsModule,
-    TranslatePipe,
-  ],
+  imports: [MtxGrid, AsyncPipe, MatFormField, MatInput, TranslatePipe],
   styles: `
     .page-container {
       display: flex;
@@ -106,8 +96,8 @@ export class AccountLockListComponent {
     this.count$ = this.store.select(state => state.count);
   }
 
-  updateSearch(query: string): void {
-    this.store.setSearchTerm(query);
+  updateSearch(event: Event): void {
+    this.store.setSearchTerm((event.target as HTMLInputElement).value);
   }
 
   unlock(user: LockedUser) {

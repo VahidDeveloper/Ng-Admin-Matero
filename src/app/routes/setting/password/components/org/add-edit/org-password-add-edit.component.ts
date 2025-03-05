@@ -14,11 +14,11 @@ import { OrganizationalPassword, StoredPasswordService, ToastService } from '@sh
 
 @Component({
   selector: 'app-organizational-password-add-edit',
-  templateUrl: './organizational-password-add-edit.component.html',
-  styleUrls: ['./organizational-password-add-edit.component.scss'],
+  templateUrl: './org-password-add-edit.component.html',
+  styleUrls: ['./org-password-add-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrganizationalPasswordAddEditComponent implements OnInit, OnChanges {
+export class OrgPasswordAddEditComponent implements OnInit, OnChanges {
   /** selected password from list */
   @Input() selectedPassword: OrganizationalPassword | undefined;
   /** Password inputs form */

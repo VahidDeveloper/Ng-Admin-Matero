@@ -12,20 +12,18 @@ export class StoredPasswordService {
   constructor(private http: HttpClient) {}
 
   getConnectionStoredPasswords(): Observable<StoredPassword[]> {
-    return this.getAllStoredPasswords(false);
+    return this.http.get<StoredPassword[]>(WinaRestUrls.connectionVaultURL());
   }
 
   getPersonalStoredPasswords(): Observable<StoredPassword[]> {
-    return this.getAllStoredPasswords(true);
+    return this.http.get<StoredPassword[]>('/api/v1/vaults/user');
   }
 
   /**
-   * it would get all StoredPassword
-   * @param isPersonal whether it is personal or associated with connection
+   * it would get all organizational passwords
    */
-  getAllStoredPasswords(isPersonal: boolean): Observable<StoredPassword[]> {
-    const address = isPersonal ? '/rest/users/vault/list' : WinaRestUrls.connectionVaultURL();
-    return this.http.get<StoredPassword[]>('/rest/users/vault/list');
+  getOrganizationalPasswords(): Observable<OrganizationalPassword[]> {
+    return this.http.get<OrganizationalPassword[]>(`${WinaRestUrls.vaultsConfig()}`);
   }
 
   /**
@@ -62,13 +60,6 @@ export class StoredPasswordService {
     return isPersonal
       ? this.http.delete<boolean>(`${address}/${id}`)
       : this.http.post<boolean>(address, sendObj);
-  }
-
-  /**
-   * it would get all organizational passwords
-   */
-  getAllOrganizationalPasswords(): Observable<OrganizationalPassword[]> {
-    return this.http.get<OrganizationalPassword[]>(`${WinaRestUrls.vaultsConfig()}`);
   }
 
   /**

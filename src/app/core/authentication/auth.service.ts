@@ -1,10 +1,23 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, catchError, iif, map, merge, of, share, switchMap, tap } from 'rxjs';
-import { LoginService } from './login.service';
-import { TokenService } from './token.service';
 import { LocalStorageService } from '@shared/services';
 import { filterObject, isEmptyObject } from './helpers';
-import { ErrorDisplay, UserBriefInfo } from '@shared/models';
+import { LoginStatus } from '@shared/models/http/login-status';
+import { csrfInfo, ErrorDisplay, UserBriefInfo } from '@shared/models';
+import {
+  BehaviorSubject,
+  catchError,
+  iif,
+  map,
+  merge,
+  Observable,
+  of,
+  share,
+  switchMap,
+  tap,
+} from 'rxjs';
+
+import { LoginService } from './login.service';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
@@ -54,6 +67,12 @@ export class AuthService {
     );
   }
 
+  loginStatus(): Observable<LoginStatus> {
+    return this.loginService
+      .loginStatus()
+      .pipe(tap(loginInfo => this._setCsrf(loginInfo.csrfToken, loginInfo.csrfHeader)));
+  }
+
   refresh() {
     return this.loginService
       .refresh(filterObject({ refresh_token: this.tokenService.getRefreshToken() }))
@@ -90,4 +109,14 @@ export class AuthService {
 
     return of(this.store.get('userinfo')).pipe(tap(value => this.user$.next(value)));
   }
+
+  /**
+   * it would set csrf based on the specified arguments
+   */
+  private _setCsrf = (csrfToken: string, csrfHeader: string): void => {
+    csrfInfo.csrf = csrfToken;
+    csrfInfo.csrfHeader = csrfHeader;
+    localStorage.setItem('csrf_token', csrfToken);
+    localStorage.setItem('csrf_header', csrfHeader);
+  };
 }
