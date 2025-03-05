@@ -26,7 +26,6 @@ import { CommandSettingModel } from '@shared';
  */
 @Component({
   templateUrl: './add-edit-command.component.html',
-  styleUrls: ['./add-edit-command.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,

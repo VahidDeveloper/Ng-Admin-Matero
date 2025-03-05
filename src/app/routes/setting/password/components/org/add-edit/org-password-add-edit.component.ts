@@ -1,159 +1,87 @@
 import { InputRegex } from '@shared/models';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnInit,
-  SimpleChanges,
-  OnChanges,
-} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import { OrganizationalPassword, StoredPasswordService, ToastService } from '@shared';
+import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatButton } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { ChangeDetectionStrategy, Component, OnInit, inject, Inject } from '@angular/core';
+
+import { OrganizationalPassword } from '@shared';
 
 @Component({
   selector: 'app-organizational-password-add-edit',
   templateUrl: './org-password-add-edit.component.html',
-  styleUrls: ['./org-password-add-edit.component.scss'],
+  styles: `
+    :host {
+      direction: rtl;
+    }
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    MatButton,
+    MatInputModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
+    TranslatePipe,
+    MatCheckbox,
+  ],
 })
-export class OrgPasswordAddEditComponent implements OnInit, OnChanges {
-  /** selected password from list */
-  @Input() selectedPassword: OrganizationalPassword | undefined;
-  /** Password inputs form */
-  _form: FormGroup;
-  /**
-   * for showing alert for each possible error on this page
-   * the keys will be gotten from service
-   */
-  _allPossibleErrors: Record<string, string> = {};
-  /**
-   * loading indicator when submit modal
-   */
-  _isLoading = false;
+export class OrgPasswordAddEditComponent implements OnInit {
+  fb = inject(FormBuilder);
+  readonly dialogRef = inject(MatDialogRef<OrgPasswordAddEditComponent>);
+  form: FormGroup;
 
-  constructor(
-    private _fb: FormBuilder,
-    private _cdr: ChangeDetectorRef,
-    private _storedPasswordService: StoredPasswordService,
-    private _toast: ToastService,
-    private _translatorService: TranslateService
-  ) {
-    this._form = this._fb.group({
-      id: [null],
-      name: [null, [Validators.required]],
-      address: [null, [Validators.required, Validators.pattern(InputRegex.uriPattern)]],
-      token: [null, Validators.required],
-      readonly: [false],
-      ssl: [false],
-      certificate: [null],
+  constructor(@Inject(MAT_DIALOG_DATA) public data: OrganizationalPassword | undefined) {
+    this.form = this.fb.group({
+      id: [data?.id],
+      name: [data?.name, [Validators.required]],
+      address: [data?.address, [Validators.required, Validators.pattern(InputRegex.uriPattern)]],
+      token: [data?.token],
+      readonly: [data?.readonly],
+      ssl: [data?.ssl],
+      certificate: [{ value: data?.certificate, disabled: true }],
+    });
+    this.form.controls.ssl.valueChanges.subscribe((value: boolean) => {
+      this.onSslChange(value);
     });
   }
 
-  /**
-   * @param changes:SimpleChanges if is changed selectedPassword new value patch to form
-   */
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.selectedPassword.currentValue !== changes.selectedPassword.previousValue) {
-      this._form?.patchValue(changes.selectedPassword.currentValue);
-      this._form?.value.id && this._tokenValidation();
-      this._cdr.markForCheck();
+  ngOnInit() {
+    if (this.form.value.id) {
+      this.form.controls.password.clearValidators();
+      this.form.controls.repeatPassword.clearValidators();
     }
   }
 
-  ngOnInit() {}
+  onSslChange(value: boolean): void {
+    if (value) {
+      this.form?.get('certificate')?.setValidators([Validators.required]);
+      this.form?.get('certificate')?.enable();
+    } else {
+      this.form?.get('certificate')?.removeValidators([Validators.required]);
+      this.form?.get('certificate')?.disable();
+      this.form?.patchValue({ certificate: '' });
+    }
+    this.form?.get('certificate')?.updateValueAndValidity();
+  }
 
-  /**
-   * fire when click on modal submit button
-   */
-  onSaveModal(): void {
-    if (this._form?.invalid) {
-      this._form?.markAllAsTouched();
+  closeDialog(result: boolean) {
+    this.dialogRef.close(result);
+  }
+
+  submitForm(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
-    this._form?.value.id
-      ? this._updatePassword(this._form?.value)
-      : this._saveNewPassword(this._form?.value);
-  }
-
-  /**
-   * fire when ssl switch changes
-   * @param event:boolean
-   */
-  onSslChange(event: any): void {
-    if (event.target.checked) {
-      this._form?.get('certificate')?.setValidators([Validators.required]);
-      this._form?.get('certificate')?.enable();
-    } else {
-      this._form?.get('certificate')?.removeValidators([Validators.required]);
-      this._form?.get('certificate')?.disable();
-      this._form?.patchValue({ certificate: '' });
-    }
-    this._form?.get('certificate')?.updateValueAndValidity();
-    this._cdr.markForCheck();
-  }
-
-  /**
-   * it will save password
-   * @param data:OrganizationalPassword
-   */
-  private _saveNewPassword(data: OrganizationalPassword): void {
-    this._isLoading = true;
-    this._storedPasswordService
-      .addOrganizationalPassword(data)
-      .subscribe(
-        res => {
-          this._toast.open(
-            this._translatorService.instant('AddedNewPasswordSuccessfully'),
-            'success'
-          );
-          // this._modalService.closeActiveModal(res);
-        },
-        error => {
-          this._allPossibleErrors[error.location] = this._translatorService.instant(
-            'AnErrorOccurredDuringWhenSavePassword'
-          );
-        }
-      )
-      .add(() => {
-        this._isLoading = false;
-        this._cdr.markForCheck();
-      });
-  }
-
-  /**
-   * it will update selected password
-   * @param data:OrganizationalPassword
-   */
-  private _updatePassword(data: OrganizationalPassword): void {
-    this._storedPasswordService
-      .editOrganizationalPassword(data)
-      .subscribe(
-        res => {
-          this._toast.open(
-            this._translatorService.instant('UpdateSelectedPasswordSuccessfully'),
-            'success'
-          );
-          // this._modalService.closeActiveModal(res);
-        },
-        error => {
-          this._allPossibleErrors[error.location] = this._translatorService.instant(
-            'AnErrorOccurredDuringWhenSavePassword'
-          );
-        }
-      )
-      .add(() => {
-        this._isLoading = false;
-        this._cdr.markForCheck();
-      });
-  }
-
-  /**
-   * it will update token validation, active or di-active on add or edit mode
-   */
-  private _tokenValidation(): void {
-    this._form?.get('token')?.removeValidators([Validators.required]);
-    this._form?.get('token')?.updateValueAndValidity();
+    delete this.form.value.repeatPassword;
+    this.dialogRef.close(this.form.value); // Pass updated project back to the component
   }
 }

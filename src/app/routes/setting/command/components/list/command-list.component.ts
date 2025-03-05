@@ -31,14 +31,6 @@ import { CommandStore } from '../../services/command-store.service';
     MatCardContent,
     MatCardTitle,
   ],
-  styles: `
-    .page-container {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 16px;
-    }
-  `,
 })
 export class CommandListComponent implements OnInit {
   store = inject(CommandStore);

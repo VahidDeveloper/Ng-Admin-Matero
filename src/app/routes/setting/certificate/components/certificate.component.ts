@@ -12,7 +12,6 @@ import { SelfSignedCertificateComponent } from './self-signed/self-signed-certif
 @Component({
   selector: 'app-certificate',
   templateUrl: './certificate.component.html',
-  styleUrls: ['./certificate.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [CertificateStore],
   imports: [

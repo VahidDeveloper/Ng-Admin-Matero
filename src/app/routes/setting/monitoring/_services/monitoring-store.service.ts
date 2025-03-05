@@ -25,6 +25,7 @@ export class MonitoringListStore extends ComponentStore<MonitoringListState> {
   monitoringTokenService = inject(MonitoringTokenService);
   monitoringRefreshTokenService = inject(MonitoringRefreshTokenService);
   translate = inject(TranslateService);
+
   constructor(@Inject(DOCUMENT) private _document: Document) {
     super({
       list: [],
@@ -55,11 +56,7 @@ export class MonitoringListStore extends ComponentStore<MonitoringListState> {
       tap(() => this.patchState({ isLoading: true })),
       switchMap(() =>
         this.monitoringTokenService.getData().pipe(
-          tap({
-            next: (res: MonitoringToken) => {
-              this.patchState({ token: res.token });
-            },
-          }),
+          tap((res: MonitoringToken) => this.patchState({ token: res.token })),
           switchMap(() =>
             this.monitoringService.getAll().pipe(
               tap({
@@ -88,12 +85,10 @@ export class MonitoringListStore extends ComponentStore<MonitoringListState> {
       tap(() => this.patchState({ postLoading: true })),
       switchMap(() =>
         this.monitoringRefreshTokenService.save({} as MonitoringToken).pipe(
-          tap({
-            next: (res: MonitoringToken) => {
-              this.patchState({ token: res.token });
-              // After refresh, reload the list.
-              this.loadTokenAndList();
-            },
+          tap((res: MonitoringToken) => {
+            this.patchState({ token: res.token });
+            // After refresh, reload the list.
+            this.loadTokenAndList();
           }),
           catchError(() => EMPTY),
           finalize(() => {
@@ -120,7 +115,6 @@ export class MonitoringListStore extends ComponentStore<MonitoringListState> {
           return EMPTY;
         }
         return from(clipboardPromise).pipe(
-          tap(() => console.log('Text copied to clipboard successfully.', textToCopy)),
           catchError(err => {
             console.error('Error copying to clipboard:', err);
             return EMPTY;

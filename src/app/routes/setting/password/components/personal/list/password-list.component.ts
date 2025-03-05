@@ -10,21 +10,13 @@ import { MtxGrid, MtxGridColumn } from '@ng-matero/extensions/grid';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 
-import { StoredPassword } from '@shared';
 import { PasswordStore } from '../../../services/password-store.service';
+import { PersonalPassword } from '../../../types/personal-password';
 
 /** a component for management user password history */
 @Component({
   selector: 'app-password-list',
   templateUrl: './password-list.component.html',
-  styles: `
-    .page-container {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 16px;
-    }
-  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
@@ -45,7 +37,7 @@ export class PasswordListComponent implements OnInit {
   count$: Observable<number> = of(0);
   searchTerm$: Observable<string> = of('');
   fetchLoading$: Observable<boolean> = of(false);
-  columns: MtxGridColumn<StoredPassword>[] = [
+  columns: MtxGridColumn<PersonalPassword>[] = [
     {
       field: 'id',
       header: this.tr.instant('id'),
@@ -75,7 +67,7 @@ export class PasswordListComponent implements OnInit {
           type: 'icon',
           icon: 'edit',
           color: 'error' as any,
-          click: row => this.store.addPassword(),
+          click: row => this.store.upsertPersonalPassword(row),
         },
         {
           type: 'icon',
@@ -100,6 +92,6 @@ export class PasswordListComponent implements OnInit {
   }
 
   add() {
-    this.store.addPassword();
+    this.store.upsertPersonalPassword();
   }
 }

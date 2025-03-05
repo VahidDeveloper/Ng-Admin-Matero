@@ -6,16 +6,13 @@ import { EMPTY, tap, switchMap, catchError, finalize, Observable } from 'rxjs';
 
 import { PasswordAddEditComponent } from '../components/personal/add-edit/password-add-edit.component';
 import { OrgPasswordAddEditComponent } from '../components/org/add-edit/org-password-add-edit.component';
-import {
-  ConfirmDialogService,
-  OrganizationalPassword,
-  StoredPassword,
-  StoredPasswordService,
-  ToastService,
-} from '@shared';
+import { ConfirmDialogService, OrganizationalPassword, ToastService } from '@shared';
+import { PersonalPasswordService } from './personal-password.service';
+import { PersonalPassword } from '../types/personal-password';
+import { OrganizationPasswordService } from './org-password.service';
 
 export interface PasswordState {
-  list: StoredPassword[];
+  list: PersonalPassword[];
   orgList: OrganizationalPassword[];
   count: number;
   isLoading: boolean;
@@ -25,7 +22,8 @@ export interface PasswordState {
 
 @Injectable()
 export class PasswordStore extends ComponentStore<PasswordState> {
-  service = inject(StoredPasswordService);
+  personalPassService = inject(PersonalPasswordService);
+  orgPassService = inject(OrganizationPasswordService);
   confirm = inject(ConfirmDialogService);
   toast = inject(ToastService);
   tr = inject(TranslateService);
@@ -67,19 +65,17 @@ export class PasswordStore extends ComponentStore<PasswordState> {
     trigger$.pipe(
       tap(() => this.patchState({ isLoading: true })),
       switchMap(() =>
-        this.service.getPersonalStoredPasswords().pipe(
-          tap({
-            next: (res: StoredPassword[]) => {
-              this.patchState({ list: res, count: res.length, isLoading: false });
-            },
-          }),
-          catchError(() => EMPTY),
-          finalize(() => {
-            this.patchState({ isLoading: false });
-          })
-        )
+        this.personalPassService
+          .getAll()
+          .pipe(
+            tap((res: PersonalPassword[]) =>
+              this.patchState({ list: res, count: res.length, isLoading: false })
+            )
+          )
       ),
-      catchError(() => EMPTY)
+      finalize(() => {
+        this.patchState({ isLoading: false });
+      })
     )
   );
 
@@ -87,7 +83,7 @@ export class PasswordStore extends ComponentStore<PasswordState> {
     trigger$.pipe(
       tap(() => this.patchState({ isLoading: true })),
       switchMap(() =>
-        this.service.getOrganizationalPasswords().pipe(
+        this.orgPassService.getAll().pipe(
           tap({
             next: (res: OrganizationalPassword[]) => {
               this.patchState({ orgList: res, count: res.length, isLoading: false });
@@ -103,126 +99,137 @@ export class PasswordStore extends ComponentStore<PasswordState> {
     )
   );
 
-  readonly addPassword = this.effect(trigger$ => {
-    const openEditDialog = () => {
-      const dialogRef = this.dialog.open(PasswordAddEditComponent, {
-        minWidth: '600px',
-        disableClose: true,
-      });
+  readonly upsertPersonalPassword = this.effect<PersonalPassword | void>(
+    (trigger$: Observable<PersonalPassword | void>) => {
+      const dialog = (value: PersonalPassword | void) => {
+        const dialogRef = this.dialog.open(PasswordAddEditComponent, {
+          minWidth: '800px',
+          disableClose: true,
+          data: value,
+        });
 
-      return dialogRef.afterClosed();
-    };
+        return dialogRef.afterClosed();
+      };
+      return trigger$.pipe(
+        switchMap(value => dialog(value)),
+        switchMap((formValue: PersonalPassword) => {
+          if (formValue) {
+            this.patchState({ postLoading: true });
 
-    return trigger$.pipe(
-      switchMap(() =>
-        openEditDialog().pipe(
-          switchMap((newCert: StoredPassword) => {
-            if (newCert) {
-              // If the user submits the form, proceed with the update
-              this.patchState({ isLoading: true });
-              return this.service.addEditStoredPassword(true, newCert).pipe(
-                tap(() => {
-                  this.toast.open(
-                    this.tr.instant('toast.create', {
-                      title: this.tr.instant('pages.settign.certificate.title'),
-                      name: newCert.username,
-                    }),
-                    'success'
-                  );
-                  this.getPersonalPasswords();
-                }),
-                catchError(e => {
-                  this.patchState({ isLoading: false });
-                  return EMPTY;
-                })
-              );
-            } else {
-              return EMPTY; // If the user cancels the dialog, do nothing
-            }
-          })
-        )
-      )
-    );
-  });
+            // Check if formValue has an ID, indicating edit mode
+            const saveOrEdit$ = formValue.id
+              ? this.personalPassService.update(formValue) // Edit if ID is present
+              : this.personalPassService.save(formValue); // Save if no ID
 
-  readonly addOrgPassword = this.effect(trigger$ => {
-    const openEditDialog = () => {
-      const dialogRef = this.dialog.open(OrgPasswordAddEditComponent, {
-        minWidth: '600px',
-        disableClose: true,
-      });
+            const message = formValue.id
+              ? this.tr.instant('toast.update', {
+                  title: this.tr.instant('password'),
+                }) // Update message if editing
+              : this.tr.instant('toast.create', {
+                  title: this.tr.instant('password'),
+                });
 
-      return dialogRef.afterClosed();
-    };
-
-    return trigger$.pipe(
-      switchMap(() =>
-        openEditDialog().pipe(
-          switchMap((newCert: OrganizationalPassword) => {
-            if (newCert) {
-              // If the user submits the form, proceed with the update
-              this.patchState({ isLoading: true });
-              return this.service.addOrganizationalPassword(newCert).pipe(
-                tap(() => {
-                  this.toast.open(
-                    this.tr.instant('toast.create', {
-                      title: this.tr.instant('pages.setting.certificate.title'),
-                    }),
-                    'success'
-                  );
-                  this.getOrgPasswords();
-                }),
-                catchError(e => {
-                  this.patchState({ isLoading: false });
-                  return EMPTY;
-                })
-              );
-            } else {
-              return EMPTY; // If the user cancels the dialog, do nothing
-            }
-          })
-        )
-      )
-    );
-  });
-
-  readonly deletePassword = this.effect(
-    (cert$: Observable<StoredPassword | OrganizationalPassword>) => {
-      return cert$.pipe(
-        switchMap(cert =>
-          this.confirm
-            .confirm(this.tr.instant('delete'), this.tr.instant('confirms.delete', { name: cert }))
-            .pipe(
-              switchMap(confirmed => {
-                if (confirmed) {
-                  this.patchState({ isLoading: true });
-                  return this.service.deleteStoredPassword(true, cert.id!).pipe(
-                    tap(() => this.getPersonalPasswords()), // Reload the list after delete
-                    catchError(() => {
-                      this.patchState({ isLoading: false });
-                      return EMPTY;
-                    })
-                  );
-                } else {
-                  return EMPTY;
-                }
-              })
-            )
-        )
+            return saveOrEdit$.pipe(
+              tap(() => {
+                this.toast.open(this.tr.instant(message), 'success');
+                this.getPersonalPasswords(); // Reload the passwords
+              }),
+              catchError(() => EMPTY),
+              finalize(() => this.patchState({ isLoading: false }))
+            );
+          }
+          return EMPTY;
+        })
       );
     }
   );
+
+  readonly upsertOrgPassword = this.effect<OrganizationalPassword | void>(
+    (trigger$: Observable<OrganizationalPassword | void>) => {
+      const dialog = (value: OrganizationalPassword | void) => {
+        const dialogRef = this.dialog.open(OrgPasswordAddEditComponent, {
+          minWidth: '800px',
+          disableClose: true,
+          data: value,
+        });
+
+        return dialogRef.afterClosed();
+      };
+      return trigger$.pipe(
+        switchMap(value => dialog(value)),
+        switchMap((formValue: OrganizationalPassword) => {
+          if (formValue) {
+            this.patchState({ postLoading: true });
+
+            // Check if formValue has an ID, indicating edit mode
+            const saveOrEdit$ = formValue.id
+              ? this.orgPassService.update(formValue) // Edit if ID is present
+              : this.orgPassService.save(formValue); // Save if no ID
+
+            const message = formValue.id
+              ? this.tr.instant('toast.update', {
+                  title: this.tr.instant('password'),
+                }) // Update message if editing
+              : this.tr.instant('toast.create', {
+                  title: this.tr.instant('password'),
+                });
+
+            return saveOrEdit$.pipe(
+              tap(() => {
+                this.toast.open(this.tr.instant(message), 'success');
+                this.getOrgPasswords(); // Reload the passwords
+              }),
+              catchError(() => EMPTY),
+              finalize(() => this.patchState({ isLoading: false }))
+            );
+          }
+          return EMPTY;
+        })
+      );
+    }
+  );
+
+  readonly deletePassword = this.effect((cert$: Observable<PersonalPassword>) => {
+    return cert$.pipe(
+      switchMap(cert =>
+        this.confirm
+          .confirm(
+            this.tr.instant('delete'),
+            this.tr.instant('confirms.delete', { name: cert.username })
+          )
+          .pipe(
+            switchMap(confirmed => {
+              if (confirmed) {
+                this.patchState({ isLoading: true });
+                return this.personalPassService.delete(cert.id!).pipe(
+                  tap(() => this.getPersonalPasswords()), // Reload the list after delete
+                  catchError(() => {
+                    this.patchState({ isLoading: false });
+                    return EMPTY;
+                  })
+                );
+              } else {
+                return EMPTY;
+              }
+            })
+          )
+      )
+    );
+  });
 
   readonly deleteOrgPassword = this.effect((cert$: Observable<OrganizationalPassword>) => {
     return cert$.pipe(
       switchMap(cert =>
         this.confirm
-          .confirm(this.tr.instant('delete'), this.tr.instant('confirms.delete', { name: cert.id }))
+          .confirm(
+            this.tr.instant('delete'),
+            this.tr.instant('confirms.delete', { name: cert.address })
+          )
           .pipe(
             switchMap(confirmed => {
               if (confirmed) {
                 this.patchState({ isLoading: true });
-                return this.service.deleteOrganizationalPassword(cert.id!).pipe(
+                return this.orgPassService.delete(cert.id!).pipe(
                   tap(() => this.getOrgPasswords()), // Reload the list after delete
                   catchError(() => {
                     this.patchState({ isLoading: false });

@@ -23,14 +23,6 @@ import { AccountLockPolicyComponent } from './policy/account-lock-policy.compone
     AccountLockPolicyComponent,
     AccountLockListComponent,
   ],
-  styles: `
-    .page-container {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 16px;
-    }
-  `,
 })
 export class AccountLockComponent implements OnInit {
   store = inject(AccountLockStore);

@@ -4,6 +4,7 @@
 export interface OrganizationalPassword {
   id: number;
   address: string;
+  name: string;
   token: string;
   readonly: boolean;
   ssl: boolean;

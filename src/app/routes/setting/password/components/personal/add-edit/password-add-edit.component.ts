@@ -2,137 +2,90 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
+  inject,
   Input,
   OnChanges,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import { FormValidators, StoredPassword, StoredPasswordService, ToastService } from '@shared';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import {
+  CommandSettingModel,
+  FormValidators,
+  StoredPassword,
+  StoredPasswordService,
+  ToastService,
+} from '@shared';
+import { MatButton } from '@angular/material/button';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogActions,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-password-add-edit',
   templateUrl: './password-add-edit.component.html',
-  styleUrls: ['./password-add-edit.component.scss'],
+  styles: `
+    :host {
+      direction: rtl;
+    }
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MatButton,
+    MatDialogActions,
+    MatDialogContent,
+    MatDialogTitle,
+    MatError,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    NgIf,
+    ReactiveFormsModule,
+    TranslatePipe,
+  ],
 })
-export class PasswordAddEditComponent implements OnInit, OnChanges {
-  /** selected password from list */
-  @Input() selectedPassword: StoredPassword | undefined;
-  @Input() isPersonalPage: boolean | undefined;
-  /** Password inputs form */
-  _form: FormGroup;
-  /**
-   * for showing alert for each possible error on this page
-   * the keys will be gotten from service
-   */
-  _allPossibleErrors: Record<string, string> = {};
-  /**
-   * loading indicator when submit modal
-   */
-  _isLoading = false;
+export class PasswordAddEditComponent implements OnInit {
+  fb = inject(FormBuilder);
+  readonly dialogRef = inject(MatDialogRef<PasswordAddEditComponent>);
+  form: FormGroup;
 
-  constructor(
-    private _fb: FormBuilder,
-    private _cdr: ChangeDetectorRef,
-    private _storedPasswordService: StoredPasswordService,
-    private _toast: ToastService,
-    private _translatorService: TranslateService
-  ) {
-    this._form = this._fb.group({
-      id: [null],
-      username: [null, Validators.required],
+  constructor(@Inject(MAT_DIALOG_DATA) public data: StoredPassword | undefined) {
+    this.form = this.fb.group({
+      id: [data?.id],
+      username: [data?.username, Validators.required],
       password: [null, [Validators.required, FormValidators._passwordsEquality('repeatPassword')]],
       repeatPassword: [null, [Validators.required, FormValidators._passwordsEquality('password')]],
-      domain: [null],
-      identifierKey: [null],
+      domain: [data?.domain],
+      identifierKey: [data?.identifierKey],
     });
-    this._cdr.markForCheck();
-  }
-
-  /**
-   * @param changes:SimpleChanges if is changed selectedPassword new value patch to form
-   */
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.selectedPassword.currentValue !== changes.selectedPassword.previousValue) {
-      this._form.patchValue(changes.selectedPassword.currentValue);
-    }
   }
 
   ngOnInit() {
-    if (this._form.value.id) {
-      this._form.controls.password.clearValidators();
-      this._form.controls.repeatPassword.clearValidators();
+    if (this.form.value.id) {
+      this.form.controls.password.clearValidators();
+      this.form.controls.repeatPassword.clearValidators();
     }
   }
 
-  /**
-   * fire when click on modal submit button
-   */
-  onSaveModal(): void {
-    if (this._form.invalid) {
-      this._form.markAllAsTouched();
+  closeDialog(result: boolean) {
+    this.dialogRef.close(result);
+  }
+
+  submitForm(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
-    delete this._form.value.repeatPassword;
-    this._form.value.id
-      ? this._updatePassword(this._form.value)
-      : this._saveNewPassword(this._form.value);
-  }
-
-  /**
-   * it will update selected password
-   * @param data:PasswordSettingModel
-   */
-  private _saveNewPassword(data: StoredPassword): void {
-    this._isLoading = true;
-    this._storedPasswordService
-      .addEditStoredPassword(this.isPersonalPage!, data)
-      .subscribe(
-        res => {
-          this._toast.open(
-            this._translatorService.instant('AddedNewPasswordSuccessfully'),
-            'success'
-          );
-          // this._modalService.closeActiveModal(res);
-        },
-        error => {
-          this._allPossibleErrors[error.location] = this._translatorService.instant(
-            'AnErrorOccurredDuringWhenSavePassword'
-          );
-        }
-      )
-      .add(() => {
-        this._isLoading = false;
-        this._cdr.markForCheck();
-      });
-  }
-
-  /**
-   * it will update selected password
-   * @param data:PasswordSettingModel
-   */
-  private _updatePassword(data: StoredPassword): void {
-    this._storedPasswordService
-      .addEditStoredPassword(this.isPersonalPage!, data)
-      .subscribe(
-        res => {
-          this._toast.open(
-            this._translatorService.instant('UpdateSelectedPasswordSuccessfully'),
-            'success'
-          );
-          // this._modalService.closeActiveModal(res);
-        },
-        error => {
-          this._allPossibleErrors[error.location] = this._translatorService.instant(
-            'AnErrorOccurredDuringWhenSavePassword'
-          );
-        }
-      )
-      .add(() => {
-        this._isLoading = false;
-        this._cdr.markForCheck();
-      });
+    delete this.form.value.repeatPassword;
+    this.dialogRef.close(this.form.value); // Pass updated project back to the component
   }
 }

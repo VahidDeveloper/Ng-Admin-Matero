@@ -17,14 +17,6 @@ import { PasswordStore } from '../../../services/password-store.service';
   selector: 'app-org-password-list',
   templateUrl: './org-password-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: `
-    .page-container {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 16px;
-    }
-  `,
   imports: [
     CommonModule,
     MatButtonModule,
@@ -74,13 +66,13 @@ export class OrgPasswordListComponent implements OnInit {
           type: 'icon',
           icon: 'edit',
           color: 'error' as any,
-          click: row => this.store.addPassword(),
+          click: row => this.store.upsertOrgPassword(row),
         },
         {
           type: 'icon',
           icon: 'delete',
           color: 'error' as any,
-          click: row => this.store.deletePassword(row),
+          click: row => this.store.deleteOrgPassword(row),
         },
       ],
     },
@@ -99,6 +91,6 @@ export class OrgPasswordListComponent implements OnInit {
   }
 
   add() {
-    this.store.addPassword();
+    this.store.upsertOrgPassword();
   }
 }
