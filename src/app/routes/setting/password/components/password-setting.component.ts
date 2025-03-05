@@ -1,12 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, RouterModule } from '@angular/router';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { Component, inject } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CaCertificateComponent } from '../../certificate/components/ca/ca-certificate.component';
-import { SelfSignedCertificateComponent } from '../../certificate/components/self-signed/self-signed-certificate.component';
 import { PasswordStore } from '../services/password-store.service';
 import { PasswordListComponent } from './personal/list/password-list.component';
 import { OrgPasswordListComponent } from './org/list/org-password-list.component';
@@ -25,14 +22,11 @@ import { OrgPasswordListComponent } from './org/list/org-password-list.component
     OrgPasswordListComponent,
   ],
 })
-export class PasswordSettingComponent implements OnInit {
+export class PasswordSettingComponent {
   store = inject(PasswordStore);
-  constructor() {}
 
-  ngOnInit(): void {
+  constructor() {
     this.store.getPersonalPasswords();
     this.store.getOrgPasswords();
   }
-
-  /** it set active to current route */
 }
