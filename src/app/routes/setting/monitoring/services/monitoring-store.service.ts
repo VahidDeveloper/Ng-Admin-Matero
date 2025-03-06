@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { ComponentStore } from '@ngrx/component-store';
 import { TranslateService } from '@ngx-translate/core';
 import { Inject, inject, Injectable } from '@angular/core';
-import { MonitoringToken } from '../_models/monitoring-token';
+import { MonitoringToken } from '../types/monitoring-token';
 import { EMPTY, tap, switchMap, catchError, finalize, from } from 'rxjs';
 
 import { MonitoringService } from './monitoring.service';

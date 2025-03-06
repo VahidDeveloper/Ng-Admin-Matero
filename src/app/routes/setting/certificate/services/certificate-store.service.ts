@@ -4,8 +4,8 @@ import { ComponentStore } from '@ngrx/component-store';
 import { TranslateService } from '@ngx-translate/core';
 import { EMPTY, tap, switchMap, catchError, finalize, Observable, of } from 'rxjs';
 
-import { SslPolicy } from '../_models/ssl-policy';
-import { CACertificate } from '../_models/CA-certificate';
+import { SslPolicy } from '../types/ssl-policy';
+import { CACertificate } from '../types/CA-certificate';
 import { ConfirmDialogService, ToastService } from '@shared';
 import { CaCertificateService } from './ca-certificate.service';
 import { SslCertificateService } from './ssl-certificate.service';

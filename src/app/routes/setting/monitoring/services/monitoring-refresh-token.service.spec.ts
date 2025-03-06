@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { WinaRestUrls } from '@phoenix-front-apps/models';
-import { MonitoringToken } from '../_models/monitoring-token';
+import { MonitoringToken } from '../types/monitoring-token';
 import { MonitoringRefreshTokenService } from './monitoring-refresh-token.service';
 
 describe('RefreshMonitoringTokenService', () => {

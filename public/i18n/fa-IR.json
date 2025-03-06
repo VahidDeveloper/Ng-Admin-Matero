@@ -66,8 +66,6 @@
     "tables.kitchen-sink": "همه چیز",
     "tables.remote-data": "داده‌های راه دور",
     "profile": "پروفایل",
-    "profile.overview": "مرور کلی",
-    "profile.settings": "تنظیمات",
     "extensions": "افزونه‌ها",
     "sessions": "جلسات",
     "sessions.403": "403",
@@ -100,7 +98,7 @@
         "refresh_token": "بازنشانی توکن"
       },
       "password_vault": {
-        "title": "مدیریت سرویس گذرواژه",
+        "title": "سرویس گذرواژه",
         "add": " افزودن سرور",
         "edit": " ویرایش سرور"
       },

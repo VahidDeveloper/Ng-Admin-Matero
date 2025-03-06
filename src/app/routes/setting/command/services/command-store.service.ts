@@ -11,7 +11,7 @@ import {
   ConfirmDialogService,
   ToastService,
 } from '@shared';
-import { CACertificate } from '../../certificate/_models/CA-certificate';
+import { CACertificate } from '../../certificate/types/CA-certificate';
 
 export interface CommandState {
   list: CommandSettingModel[];

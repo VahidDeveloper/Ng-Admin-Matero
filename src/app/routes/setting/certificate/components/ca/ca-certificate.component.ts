@@ -11,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { CACertificate } from '../../_models/CA-certificate';
+import { CACertificate } from '../../types/CA-certificate';
 import { CertificateStore } from '../../services/certificate-store.service';
 
 /**

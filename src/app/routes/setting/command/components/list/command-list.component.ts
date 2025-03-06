@@ -29,7 +29,6 @@ import { CommandStore } from '../../services/command-store.service';
     MatButtonModule,
     MatCard,
     MatCardContent,
-    MatCardTitle,
   ],
 })
 export class CommandListComponent implements OnInit {

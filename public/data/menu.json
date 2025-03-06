@@ -411,20 +411,8 @@
     {
       "route": "profile",
       "name": "profile",
-      "type": "sub",
-      "icon": "person",
-      "children": [
-        {
-          "route": "overview",
-          "name": "overview",
-          "type": "link"
-        },
-        {
-          "route": "settings",
-          "name": "settings",
-          "type": "link"
-        }
-      ]
+      "type": "link",
+      "icon": "person"
     },
     {
       "route": "https://ng-matero.github.io/extensions/",

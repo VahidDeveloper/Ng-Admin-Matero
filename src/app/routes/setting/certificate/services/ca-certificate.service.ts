@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CACertificate } from '../_models/CA-certificate';
+import { CACertificate } from '../types/CA-certificate';
 import { WinaRestUrls } from '@shared/models';
 import { GenericCrudService } from '@shared';
 

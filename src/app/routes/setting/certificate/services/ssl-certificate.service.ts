@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { SslPolicy } from '../_models/ssl-policy';
+import { SslPolicy } from '../types/ssl-policy';
 import { WinaRestUrls } from '@shared/models';
 
 /**

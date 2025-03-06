@@ -9,7 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import { MonitoringListStore } from '../_services/monitoring-store.service';
+import { MonitoringListStore } from '../services/monitoring-store.service';
 /**
  * this component is created to show all monitoring,s apis
  */
