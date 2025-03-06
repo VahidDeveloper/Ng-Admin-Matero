@@ -1,13 +1,20 @@
 import { HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { SettingsService } from '@core';
+import { csrfInfo } from '@shared';
 
 export function settingsInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   const settings = inject(SettingsService);
 
-  return next(
-    req.clone({
-      headers: req.headers.append('Accept-Language', settings.getTranslateLang()),
-    })
-  );
+  let headers = req.headers;
+
+  if (csrfInfo.csrfHeader && csrfInfo.csrf) {
+    headers = headers.append(csrfInfo.csrfHeader, csrfInfo.csrf);
+  }
+  headers = headers.set('Accept-Language', settings.getTranslateLang());
+  headers = headers.set('Accept', 'application/json');
+
+  const alteredReq = req.clone({ headers });
+
+  return next(alteredReq);
 }

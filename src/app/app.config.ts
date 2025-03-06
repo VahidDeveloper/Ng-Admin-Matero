@@ -22,7 +22,6 @@ import {
   baseUrlInterceptor,
   errorInterceptor,
   loggingInterceptor,
-  noopInterceptor,
   settingsInterceptor,
   SettingsService,
   StartupService,
@@ -41,7 +40,6 @@ function TranslateHttpLoaderFactory(http: HttpClient) {
 
 // Http interceptor providers in outside-in order
 const interceptors = [
-  noopInterceptor,
   baseUrlInterceptor,
   settingsInterceptor,
   tokenInterceptor,

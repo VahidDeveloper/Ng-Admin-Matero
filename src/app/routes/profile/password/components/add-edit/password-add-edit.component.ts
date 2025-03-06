@@ -1,23 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  inject,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import {
-  CommandSettingModel,
-  FormValidators,
-  StoredPassword,
-  StoredPasswordService,
-  ToastService,
-} from '@shared';
+import { TranslatePipe } from '@ngx-translate/core';
+import { FormValidators, StoredPassword } from '@shared';
 import { MatButton } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,

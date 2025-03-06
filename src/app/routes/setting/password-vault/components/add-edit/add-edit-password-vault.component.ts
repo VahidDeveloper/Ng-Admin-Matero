@@ -10,11 +10,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ChangeDetectionStrategy, Component, OnInit, inject, Inject } from '@angular/core';
 
-import { OrganizationalPassword } from '@shared';
+import { PasswordVault } from '../../types/type';
 
 @Component({
-  selector: 'app-organizational-password-add-edit',
-  templateUrl: './org-password-add-edit.component.html',
+  templateUrl: './add-edit-password-vault.component.html',
   styles: `
     :host {
       direction: rtl;
@@ -33,12 +32,12 @@ import { OrganizationalPassword } from '@shared';
     MatCheckbox,
   ],
 })
-export class OrgPasswordAddEditComponent implements OnInit {
+export class AddEditPasswordVaultComponent implements OnInit {
   fb = inject(FormBuilder);
-  readonly dialogRef = inject(MatDialogRef<OrgPasswordAddEditComponent>);
+  readonly dialogRef = inject(MatDialogRef<AddEditPasswordVaultComponent>);
   form: FormGroup;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: OrganizationalPassword | undefined) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: PasswordVault | undefined) {
     this.form = this.fb.group({
       id: [data?.id],
       name: [data?.name, [Validators.required]],

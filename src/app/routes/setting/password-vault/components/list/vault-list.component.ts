@@ -10,13 +10,14 @@ import { MtxGrid, MtxGridColumn } from '@ng-matero/extensions/grid';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 
-import { OrganizationalPassword, StoredPassword } from '@shared';
-import { PasswordStore } from '../../../services/password-store.service';
+import { PasswordVault } from '../../types/type';
+import { PasswordVaultStore } from '../../services/password-store.service';
 
 @Component({
   selector: 'app-org-password-list',
-  templateUrl: './org-password-list.component.html',
+  templateUrl: './vault-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [PasswordVaultStore],
   imports: [
     CommonModule,
     MatButtonModule,
@@ -29,14 +30,14 @@ import { PasswordStore } from '../../../services/password-store.service';
     TranslatePipe,
   ],
 })
-export class OrgPasswordListComponent implements OnInit {
-  store = inject(PasswordStore);
+export class VaultListComponent implements OnInit {
+  store = inject(PasswordVaultStore);
   tr = inject(TranslateService);
-  readonly filteredRow$ = this.store.filteredOrgPass$;
+  readonly filteredRow$ = this.store.filteredVault$;
   count$: Observable<number> = of(0);
   searchTerm$: Observable<string> = of('');
   fetchLoading$: Observable<boolean> = of(false);
-  columns: MtxGridColumn<OrganizationalPassword>[] = [
+  columns: MtxGridColumn<PasswordVault>[] = [
     {
       field: 'id',
       header: this.tr.instant('id'),
@@ -66,31 +67,33 @@ export class OrgPasswordListComponent implements OnInit {
           type: 'icon',
           icon: 'edit',
           color: 'error' as any,
-          click: row => this.store.upsertOrgPassword(row),
+          click: row => this.store.upsertVault(row),
         },
         {
           type: 'icon',
           icon: 'delete',
           color: 'error' as any,
-          click: row => this.store.deleteOrgPassword(row),
+          click: row => this.store.deleteVault(row),
         },
       ],
     },
   ];
 
   constructor() {
+    this.store.getList();
+  }
+
+  ngOnInit(): void {
     this.searchTerm$ = this.store.select(state => state.searchTerm);
     this.fetchLoading$ = this.store.select(state => state.isLoading);
     this.count$ = this.store.select(state => state.count);
   }
-
-  ngOnInit(): void {}
 
   updateSearch(event: Event): void {
     this.store.setSearchTerm((event.target as HTMLInputElement).value);
   }
 
   add() {
-    this.store.upsertOrgPassword();
+    this.store.upsertVault();
   }
 }

@@ -18,8 +18,8 @@ export const routes: Routes = [
       {
         path: 'password',
         loadComponent: () =>
-          import('./password/components/password-setting.component').then(
-            m => m.PasswordSettingComponent
+          import('./password-vault/components/list/vault-list.component').then(
+            m => m.VaultListComponent
           ),
       },
       {

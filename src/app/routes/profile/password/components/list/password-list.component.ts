@@ -1,6 +1,5 @@
 import { Observable, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
@@ -8,16 +7,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MtxGrid, MtxGridColumn } from '@ng-matero/extensions/grid';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { PasswordStore } from '../../../services/password-store.service';
-import { PersonalPassword } from '../../../types/personal-password';
+import { PasswordStore } from '../../services/password-store.service';
+import { PersonalPassword } from '../../types/personal-password';
 
 /** a component for management user password history */
 @Component({
-  selector: 'app-password-list',
+  selector: 'password-list',
   templateUrl: './password-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [PasswordStore],
   imports: [
     CommonModule,
     MatButtonModule,
@@ -26,11 +26,10 @@ import { PersonalPassword } from '../../../types/personal-password';
     MatTableModule,
     MatCardModule,
     MtxGrid,
-    ReactiveFormsModule,
     TranslatePipe,
   ],
 })
-export class PasswordListComponent implements OnInit {
+export class PasswordListComponent {
   store = inject(PasswordStore);
   tr = inject(TranslateService);
   readonly filteredRow$ = this.store.filteredPersonalPass$;
@@ -67,7 +66,7 @@ export class PasswordListComponent implements OnInit {
           type: 'icon',
           icon: 'edit',
           color: 'error' as any,
-          click: row => this.store.upsertPersonalPassword(row),
+          click: row => this.store.upsertPassword(row),
         },
         {
           type: 'icon',
@@ -80,18 +79,17 @@ export class PasswordListComponent implements OnInit {
   ];
 
   constructor() {
+    this.store.getList();
     this.searchTerm$ = this.store.select(state => state.searchTerm);
     this.fetchLoading$ = this.store.select(state => state.isLoading);
     this.count$ = this.store.select(state => state.count);
   }
-
-  ngOnInit(): void {}
 
   updateSearch(event: Event): void {
     this.store.setSearchTerm((event.target as HTMLInputElement).value);
   }
 
   add() {
-    this.store.upsertPersonalPassword();
+    this.store.upsertPassword();
   }
 }
