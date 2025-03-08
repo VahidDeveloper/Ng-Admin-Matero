@@ -1,0 +1,189 @@
+<form class="d-flex p-32" [formGroup]="form">
+  <div class="d-flex flex-col gap-32 col-6">
+    <div>
+      <mat-form-field appearance="outline" class="w-50">
+        <mat-label>{{ 'pages.setting.session.captcha_session_threshold' | translate }}</mat-label>
+        <input matInput type="number" formControlName="captchaSessionThreshold" />
+        <mat-error *ngIf="form.controls.captchaSessionThreshold.hasError('required')">
+          {{ 'validation.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.captchaSessionThreshold.hasError('min')">
+          {{ 'validation.min' | translate: { value: 5 } }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.captchaSessionThreshold.hasError('max')">
+          {{ 'validation.max' | translate: { value: 100 } }}
+        </mat-error>
+      </mat-form-field>
+      <mat-icon [matTooltip]="'pages.setting.session.captcha_session_threshold_help' | translate">
+        help_outline
+      </mat-icon>
+    </div>
+
+    <div>
+      <mat-form-field appearance="outline" class="w-50">
+        <mat-label>{{ 'pages.setting.session.captcha_ip_threshold' | translate }}</mat-label>
+        <input matInput type="number" formControlName="captchaSessionThreshold" />
+        <mat-error *ngIf="form.controls.captchaIpThreshold.hasError('required')">
+          {{ 'validation.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.captchaIpThreshold.hasError('min')">
+          {{ 'validation.min' | translate: { value: 5 } }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.captchaIpThreshold.hasError('max')">
+          {{ 'validation.max' | translate: { value: 1000 } }}
+        </mat-error>
+      </mat-form-field>
+      <mat-icon [matTooltip]="'pages.setting.session.captcha_ip_threshold_help' | translate">
+        help_outline
+      </mat-icon>
+    </div>
+
+    <div>
+      <mat-form-field appearance="outline" class="w-50">
+        <mat-label>{{ 'pages.setting.session.lock_threshold' | translate }}</mat-label>
+        <input matInput formControlName="lockThreshold" />
+        <mat-error *ngIf="form.controls.lockThreshold.hasError('required')">
+          {{ 'validation.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.lockThreshold.hasError('min')">
+          {{ 'validation.min' | translate: { value: 5 } }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.lockThreshold.hasError('max')">
+          {{ 'validation.max' | translate: { value: 100 } }}
+        </mat-error>
+      </mat-form-field>
+      <mat-icon [matTooltip]="'pages.setting.session.lock_threshold_help' | translate">
+        help_outline
+      </mat-icon>
+    </div>
+
+    <div>
+      <mat-form-field appearance="outline" class="w-50">
+        <mat-label>{{ 'pages.setting.session.lock_minutes' | translate }}</mat-label>
+        <input matInput formControlName="lockMinutes" />
+        <mat-error *ngIf="form.controls.lockMinutes.hasError('required')">
+          {{ 'validation.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.lockMinutes.hasError('min')">
+          {{ 'validation.min' | translate: { value: 5 } }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.lockMinutes.hasError('max')">
+          {{ 'validation.max' | translate: { value: 365 * 24 * 60 } }}
+        </mat-error>
+      </mat-form-field>
+      <mat-icon [matTooltip]="'pages.setting.session.lock_minutes_help' | translate">
+        help_outline
+      </mat-icon>
+    </div>
+
+    <div class="d-flex gap-8 flex-col align-items-start">
+      <mat-label>{{ 'pages.setting.session.default_otp_media' | translate }}</mat-label>
+      <mat-button-toggle-group formControlName="defaultOtpMedia" aria-label="Font Style">
+        <mat-button-toggle value="sms">
+          {{ 'pages.setting.session.sms' | translate }}
+        </mat-button-toggle>
+        <mat-button-toggle value="email">{{ 'email' | translate }}</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+
+  <div class="d-flex flex-col gap-32 col-6">
+    <div>
+      <mat-form-field appearance="outline" class="w-50">
+        <mat-label>{{ 'pages.setting.session.otp_valid_time_seconds' | translate }}</mat-label>
+        <input matInput formControlName="otpValidTimeSeconds" />
+        <mat-error *ngIf="form.controls.otpValidTimeSeconds.hasError('required')">
+          {{ 'validation.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.otpValidTimeSeconds.hasError('min')">
+          {{ 'validation.min' | translate: { value: 5 } }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.otpValidTimeSeconds.hasError('max')">
+          {{ 'validation.max' | translate: { value: 100 } }}
+        </mat-error>
+      </mat-form-field>
+      <mat-icon [matTooltip]="'pages.setting.session.otp_valid_time_seconds_help' | translate">
+        help_outline
+      </mat-icon>
+    </div>
+
+    <div>
+      <mat-form-field appearance="outline" class="w-50">
+        <mat-label>{{ 'pages.setting.session.otp_retry_max' | translate }}</mat-label>
+        <input matInput formControlName="otpRetryMax" />
+        <mat-error *ngIf="form.controls.otpRetryMax.hasError('required')">
+          {{ 'validation.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.otpRetryMax.hasError('min')">
+          {{ 'validation.min' | translate: { value: 5 } }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.otpRetryMax.hasError('max')">
+          {{ 'validation.max' | translate: { value: 100 } }}
+        </mat-error>
+      </mat-form-field>
+      <mat-icon [matTooltip]="'pages.setting.session.otp_retry_max' | translate">
+        help_outline
+      </mat-icon>
+    </div>
+
+    <div>
+      <mat-form-field appearance="outline" class="w-50">
+        <mat-label>{{ 'pages.setting.session.otp_resend_max' | translate }}</mat-label>
+        <input matInput formControlName="otpResendMax" />
+        <mat-error *ngIf="form.controls.otpResendMax.hasError('required')">
+          {{ 'validation.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.otpResendMax.hasError('min')">
+          {{ 'validation.min' | translate: { value: 5 } }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.otpResendMax.hasError('max')">
+          {{ 'validation.max' | translate: { value: 100 } }}
+        </mat-error>
+      </mat-form-field>
+      <mat-icon [matTooltip]="'pages.setting.session.otp_resend_max_help' | translate">
+        help_outline
+      </mat-icon>
+    </div>
+
+    <div>
+      <mat-form-field appearance="outline" class="w-50">
+        <mat-label>{{ 'pages.setting.session.token_retry_max' | translate }}</mat-label>
+        <input matInput formControlName="tokenRetryMax" />
+        <mat-error *ngIf="form.controls.tokenRetryMax.hasError('required')">
+          {{ 'validation.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.tokenRetryMax.hasError('min')">
+          {{ 'validation.min' | translate: { value: 5 } }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.tokenRetryMax.hasError('max')">
+          {{ 'validation.max' | translate: { value: 100 } }}
+        </mat-error>
+      </mat-form-field>
+      <mat-icon [matTooltip]="'pages.setting.session.token_retry_max_help' | translate">
+        help_outline
+      </mat-icon>
+    </div>
+
+    <div>
+      <mat-form-field appearance="outline" class="w-50">
+        <mat-label>{{ 'pages.setting.session.min_pass_length' | translate }}</mat-label>
+        <input matInput formControlName="minPassLength" />
+        <mat-error *ngIf="form.controls.minPassLength.hasError('required')">
+          {{ 'validation.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.minPassLength.hasError('min')">
+          {{ 'validation.min' | translate: { value: 8 } }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.minPassLength.hasError('max')">
+          {{ 'validation.max' | translate: { value: 128 } }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+</form>
+
+<div mat-dialog-actions>
+  <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="submitForm()">
+    {{ 'save' | translate }}
+  </button>
+</div>

@@ -1,0 +1,42 @@
+<mat-card class="page-container">
+  <mat-card-content>
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="d-flex gap-4 align-items-center">
+            <h3 class="custom-tab-title m-0">
+              {{ 'pages.setting.session.login_constraint' | translate }}
+            </h3>
+            <mat-icon
+              class="custom-tab-description"
+              [matTooltip]="'pages.setting.session.login_constraint_description' | translate"
+            >
+              info
+            </mat-icon>
+          </div>
+        </ng-template>
+        <ng-template matTabContent>
+          <login-constraint />
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <div class="d-flex gap-4 align-items-center">
+            <h3 class="m-0">
+              {{ 'pages.setting.session.session_timeout' | translate }}
+            </h3>
+            <mat-icon
+              class="custom-tab-description"
+              [matTooltip]="'pages.setting.session.session_timeout_description' | translate"
+            >
+              info
+            </mat-icon>
+          </div>
+        </ng-template>
+        <ng-template matTabContent>
+          <session-timeout-policy />
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

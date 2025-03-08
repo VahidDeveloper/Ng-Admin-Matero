@@ -11,7 +11,6 @@ export * from './horizontal-timeline';
 export * from './interactive-info';
 export * from './list-server-response';
 export * from './live-connection-info';
-export * from './login-constraint';
 export * from './organizational-password';
 export * from './otp-destination';
 export * from './port-connection';

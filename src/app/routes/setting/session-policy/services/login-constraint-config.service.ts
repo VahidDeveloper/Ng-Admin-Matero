@@ -2,8 +2,9 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { shareReplay } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { LoginConstraint } from '@shared/interfaces';
+
 import { WinaRestUrls } from '@shared/models';
+import { LoginConstraint } from '../types/login-constraint';
 
 /**
  * login constraint config service

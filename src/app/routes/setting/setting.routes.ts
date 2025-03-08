@@ -12,8 +12,10 @@ export const routes: Routes = [
       },
       {
         path: 'login-policy',
-        loadChildren: () =>
-          import('./login-logout-policy/login-logout-policy.routes').then(m => m.routes),
+        loadComponent: () =>
+          import('./session-policy/components/session-policy.component').then(
+            m => m.SessionPolicyComponent
+          ),
       },
       {
         path: 'password',
