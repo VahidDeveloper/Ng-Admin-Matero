@@ -1,9 +1,8 @@
-import { tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
-import { MatButton } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { MatDialogActions } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -12,6 +11,8 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { SessionStore } from '../../services/session-store.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'login-constraint',
@@ -19,15 +20,16 @@ import { SessionStore } from '../../services/session-store.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
-    MatButton,
+    MatButtonModule,
     MatButtonToggleModule,
-    MatDialogActions,
+    MatProgressBarModule,
     MatFormFieldModule,
     MatInputModule,
     MatTooltipModule,
     ReactiveFormsModule,
     TranslatePipe,
     MatIcon,
+    MatProgressSpinner,
   ],
 })
 export class LoginConstraintComponent implements OnInit {
@@ -36,6 +38,8 @@ export class LoginConstraintComponent implements OnInit {
   tr = inject(TranslateService);
 
   form: FormGroup;
+  submitLoading: Observable<boolean> = of(false);
+  fetchLoading$: Observable<boolean> = of(false);
 
   constructor() {
     this.form = this.fb.group({
@@ -63,6 +67,8 @@ export class LoginConstraintComponent implements OnInit {
       .select(state => state.loginConfig)
       .pipe(tap(res => this.form?.patchValue(res!)))
       .subscribe();
+    this.fetchLoading$ = this.store.select(state => state.isLoading);
+    this.submitLoading = this.store.select(state => state.postLoading);
   }
 
   /**

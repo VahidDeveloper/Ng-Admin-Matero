@@ -1,4 +1,8 @@
-<form class="d-flex p-32" [formGroup]="form">
+@if (fetchLoading$ | async) {
+  <mat-progress-bar mode="indeterminate" />
+}
+
+<form class="d-flex p-32" [formGroup]="form" (ngSubmit)="submitForm()">
   <div class="d-flex flex-col gap-32 col-6">
     <div>
       <mat-form-field appearance="outline" class="w-50">
@@ -80,7 +84,7 @@
       <mat-label>{{ 'pages.setting.session.default_otp_media' | translate }}</mat-label>
       <mat-button-toggle-group formControlName="defaultOtpMedia" aria-label="Font Style">
         <mat-button-toggle value="sms">
-          {{ 'pages.setting.session.sms' | translate }}
+          {{ 'share.sms' | translate }}
         </mat-button-toggle>
         <mat-button-toggle value="email">{{ 'email' | translate }}</mat-button-toggle>
       </mat-button-toggle-group>
@@ -179,11 +183,19 @@
         </mat-error>
       </mat-form-field>
     </div>
+    <button
+      mat-fab
+      extended
+      class="align-self-end"
+      type="submit"
+      [disabled]="submitLoading | async"
+    >
+      {{ 'submit' | translate }}
+      @if (submitLoading | async) {
+        <mat-icon>
+          <mat-spinner color="white" diameter="20" />
+        </mat-icon>
+      }
+    </button>
   </div>
 </form>
-
-<div mat-dialog-actions>
-  <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="submitForm()">
-    {{ 'save' | translate }}
-  </button>
-</div>

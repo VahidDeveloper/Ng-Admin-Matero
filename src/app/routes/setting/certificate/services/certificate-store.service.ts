@@ -95,7 +95,7 @@ export class CertificateStore extends ComponentStore<CACertificateState> {
                 tap(() => {
                   this.toast.open(
                     this.tr.instant('toast.create', {
-                      title: this.tr.instant('pages.settign.certificate.title'),
+                      title: this.tr.instant('pages.setting.certificate.title'),
                       name: newCert.name,
                     }),
                     'success'

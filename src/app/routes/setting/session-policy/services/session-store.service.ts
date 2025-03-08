@@ -2,12 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ComponentStore } from '@ngrx/component-store';
 import { TranslateService } from '@ngx-translate/core';
-import { EMPTY, tap, switchMap, catchError, finalize, Observable, of } from 'rxjs';
+import { tap, switchMap, finalize, Observable } from 'rxjs';
 
-import { ConfirmDialogService, SessionTimeoutPolicy, ToastService } from '@shared';
-import { LoginConstraintConfigService } from './login-constraint-config.service';
-import { SessionTimoutPolicyService } from './session-timout-policy.service';
 import { LoginConstraint } from '../types/login-constraint';
+import { SessionTimoutPolicyService } from './session-timout-policy.service';
+import { LoginConstraintConfigService } from './login-constraint-config.service';
+import { ConfirmDialogService, SessionTimeoutPolicy, ToastService } from '@shared';
 
 export interface SessionState {
   loginConfig: LoginConstraint | undefined;
@@ -24,6 +24,7 @@ export class SessionStore extends ComponentStore<SessionState> {
   toast = inject(ToastService);
   tr = inject(TranslateService);
   dialog = inject(MatDialog);
+
   constructor() {
     super({
       loginConfig: undefined,
@@ -38,44 +39,29 @@ export class SessionStore extends ComponentStore<SessionState> {
       tap(() => this.patchState({ isLoading: true })),
       switchMap(() =>
         this.loginConfigApi.getConstraint().pipe(
-          tap({
-            next: (res: LoginConstraint) => {
-              this.patchState({ loginConfig: res, isLoading: false });
-            },
+          tap((res: LoginConstraint) => {
+            this.patchState({ loginConfig: res, isLoading: false });
           }),
-          catchError(() => EMPTY)
+          finalize(() => {
+            this.patchState({ isLoading: false });
+          })
         )
-      ),
-      catchError(() => EMPTY),
-      finalize(() => {
-        this.patchState({ isLoading: false });
-      })
+      )
     )
   );
 
   readonly setLoginConfig = this.effect((trigger$: Observable<LoginConstraint>) => {
     return trigger$.pipe(
       switchMap((config: LoginConstraint) => {
-        if (config) {
-          // If the user submits the form, proceed with the update
-          this.patchState({ isLoading: true });
-          return this.loginConfigApi.saveConstraint(config).pipe(
-            tap(() => {
-              this.toast.open(
-                this.tr.instant('toast.create', {
-                  title: this.tr.instant('pages.settign.certificate.title'),
-                }),
-                'success'
-              );
-            }),
-            catchError(e => {
-              this.patchState({ isLoading: false });
-              return EMPTY;
-            })
-          );
-        } else {
-          return EMPTY; // If the user cancels the dialog, do nothing
-        }
+        this.patchState({ postLoading: true });
+        return this.loginConfigApi.saveConstraint(config).pipe(
+          tap(() => {
+            this.toast.open(this.tr.instant('pages.setting.session.login_submit'), 'success');
+          }),
+          finalize(() => {
+            this.patchState({ postLoading: false });
+          })
+        );
       })
     );
   });
@@ -85,18 +71,14 @@ export class SessionStore extends ComponentStore<SessionState> {
       tap(() => this.patchState({ isLoading: true })),
       switchMap(() =>
         this.sessionApi.getSetting().pipe(
-          tap({
-            next: (res: SessionTimeoutPolicy) => {
-              this.patchState({ sessionConfig: res });
-            },
+          tap((res: SessionTimeoutPolicy) => {
+            this.patchState({ sessionConfig: res });
           }),
-          catchError(() => EMPTY)
+          finalize(() => {
+            this.patchState({ isLoading: false });
+          })
         )
-      ),
-      catchError(() => EMPTY),
-      finalize(() => {
-        this.patchState({ isLoading: false });
-      })
+      )
     )
   );
 
@@ -107,18 +89,11 @@ export class SessionStore extends ComponentStore<SessionState> {
           this.patchState({ postLoading: true });
 
           return this.sessionApi.updateSetting(formValue).pipe(
-            tap({
-              next: () => {
-                this.toast.open(
-                  this.tr.instant('toast.submit', {
-                    title: this.tr.instant('pages.settign.certificate.self_signed'),
-                  }),
-                  'success'
-                );
-              },
+            tap(() => {
+              this.toast.open(this.tr.instant('pages.setting.session.session_submit'), 'success');
             }),
             finalize(() => {
-              this.patchState({ postLoading: false }); // Stop loading after the API call completes
+              this.patchState({ postLoading: false });
             })
           );
         })

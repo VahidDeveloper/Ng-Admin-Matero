@@ -1,41 +1,49 @@
-<!-- <lib-card
-  [headerTitle]="'SESSION_TIMEOUT_MENU' | translator"
-  headerIcon="icon-User-11"
-  class="lib-card-reset"
->
-  <div class="row px-2" libScrollableElement [topOffset]="50">
-    <div *ngFor="let error of _allPossibleErrors | keyvalue">
-      <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
-    </div>
-    <form class="col-md-12" [formGroup]="_form" [libLoading]="_isLoading">
-      <lib-form-element-container
-        [label]="'WebTimeout' | translator"
-        [help]="'WebTimeoutHelp' | translator"
-      >
-        <input libTextBox libOnlyNumber formControlName="webTimeoutMinutes" />
-      </lib-form-element-container>
-      <lib-form-element-container
-        [label]="'ConnectionTimeout' | translator"
-        [help]="'ConnectionTimeoutHelp' | translator"
-      >
-        <input libTextBox libOnlyNumber formControlName="connectionTimeoutMinutes" />
-      </lib-form-element-container>
-      <lib-form-element-container
-        [label]="'EnableConnectionTimeout' | translator"
-        [help]="'EnableConnectionTimeoutHelp' | translator"
-      >
-        <lib-checkbox formControlName="connectionTimeoutEnabled"></lib-checkbox>
-      </lib-form-element-container>
-
-      <lib-button
-        type="button"
-        [color]="_color.Success"
-        (click)="saveChanges()"
-        [disabled]="_form?.invalid"
-        [loading]="_updateLoading"
-      >
-        {{ 'SaveChanges' | translator }}
-      </lib-button>
-    </form>
+@if (fetchLoading$ | async) {
+  <mat-progress-bar mode="indeterminate" />
+}
+<form class="d-flex flex-col p-32" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div>
+    <mat-form-field appearance="outline" class="w-50">
+      <mat-label>{{ 'pages.setting.session.web_timeout' | translate }}</mat-label>
+      <input matInput type="number" formControlName="webTimeoutMinutes" />
+      <mat-error *ngIf="form.controls.webTimeoutMinutes.hasError('required')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+    <mat-icon [matTooltip]="'pages.setting.session.web_timeout_help' | translate">
+      help_outline
+    </mat-icon>
   </div>
-</lib-card> -->
+  <div>
+    <mat-form-field appearance="outline" class="w-50">
+      <mat-label>{{ 'pages.setting.session.connection_timeout' | translate }}</mat-label>
+      <input matInput type="number" formControlName="connectionTimeoutMinutes" />
+      <mat-error *ngIf="form.controls.connectionTimeoutMinutes.hasError('required')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+    <mat-icon [matTooltip]="'pages.setting.session.connection_timeout_help' | translate">
+      help_outline
+    </mat-icon>
+  </div>
+  <div class="d-flex gap-12 align-items-center">
+    <mat-checkbox formControlName="connectionTimeoutEnabled">
+      {{ 'pages.setting.session.enable_connection_timeout' | translate }}
+    </mat-checkbox>
+    <mat-icon
+      color="warning"
+      [matTooltip]="'pages.setting.session.enable_connection_timeout_help' | translate"
+    >
+      help_outline
+    </mat-icon>
+  </div>
+
+  <button mat-fab extended class="align-self-end" type="submit" [disabled]="submitLoading | async">
+    {{ 'submit' | translate }}
+    @if (submitLoading | async) {
+      <mat-icon>
+        <mat-spinner color="white" diameter="20" />
+      </mat-icon>
+    }
+  </button>
+</form>
