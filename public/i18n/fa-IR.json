@@ -3,13 +3,21 @@
     "dashboard": "داشبورد",
     "remoteMachine": "ماشین های راه دور",
     "setting": "تنظیمات",
-    "setting.general": "تنظیمات عمومی وینا",
     "setting.login_policy": "سیاست های نشست",
     "setting.password": "سرویس گذرواژه",
     "setting.command": "گروه فرامین",
     "setting.account_lock": "قفل حساب کاربری",
     "setting.certificate": "گواهی",
     "setting.monitoring": "پایش",
+    "wina_setting": "تنظیمات وینا",
+    "wina_setting.storage": "مدیریت حافظه",
+    "wina_setting.email": "ارسال ایمیل",
+    "wina_setting.sms": "ارسال پیامک",
+    "wina_setting.video_conversion": "زمان تبدیل ویدیوها",
+    "wina_setting.ldap": "مدیریت Ldap",
+    "wina_setting.syslog": "مدیریت Syslog",
+    "wina_setting.license": "مجوز وینا",
+    "wina_setting.banner": "تنظیمات بنر",
     "design": "طراحی",
     "design.colors": "سیستم رنگ‌ها",
     "design.icons": "آیکون‌های متریال",
@@ -169,6 +177,16 @@
         "strengthen_tLs_settings_help": "غیرفعال کردن الگوریتم های رمزنگاری ضعیف",
         "crl_update_interval_days_help": "فاصله زمانی هر به روزرسانی فایل «لیست گواهی‌های باطل شده (CRL)» و دانلود از سرورهای صادرکننده گواهی"
       }
+    },
+    "wina_setting": {
+      "storage_description": "در این بخش تنظیمات مربوط به سیاست‌های حذف فایل‌های نشست از دیسک، بر اساس میزان حافظه مصرفی و عمر فایل‌ها تعیین می شود",
+      "email_description": "در این بخش تنظیمات ارسال‌کننده‌ی ایمیل را مدیریت می کنید",
+      "sms_description": "در این بخش تنظیمات در رابطه با ارسال پیامک را مدیریت می‌کنید",
+      "video_conversion_description": "در این بخش تنظیمات در رابطه با زمان تبدیل ویدیو ها را مدیریت می‌کنید",
+      "ldap_description": "در این بخش سرور‌های احراز هویت جهت ورود کاربران مشخص می‌شوند",
+      "syslog_description": "در این بخش اطلاعات سرور‌های لاگ مشخص می‌شوند تا وینا لاگ‌های خود را به آنها ارسال کند",
+      "license_description": "در این بخش می توانید مجوز وینا را به روز کنید",
+      "banner_description": "در این بخش می‌توانید تنظیمات نمایش بنر را مشخص کنید تا در هنگام ورود به سیستم نشان داده شود"
     }
   },
   "validation": {

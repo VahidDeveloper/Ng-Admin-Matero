@@ -1,18 +1,21 @@
 import { Routes } from '@angular/router';
 
-import { WinaGeneralSettingComponent } from './general-setting.component';
+import { WinaSettingComponent } from './wina-setting.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: WinaGeneralSettingComponent,
+    component: WinaSettingComponent,
     children: [
       {
-        path: 'clear-storage',
-        loadChildren: () => import('./clear-storage/clear-storage.routes').then(m => m.routes),
+        path: 'storage',
+        loadComponent: () =>
+          import('./clear-storage/clear-storage-policy.component').then(
+            m => m.ClearStoragePolicyComponent
+          ),
       },
       {
-        path: 'vide-conversion-time',
+        path: 'video-conversion',
         loadComponent: () =>
           import('./video-conversion-time/video-conversion-time.component').then(
             m => m.VideoConversionTimeComponent
@@ -25,16 +28,16 @@ export const routes: Routes = [
       },
       {
         path: 'ldap',
-        loadChildren: () => import('./ldap/ldap.routes').then(m => m.routes),
+        loadComponent: () => import('./ldap/ldap.component').then(m => m.LdapComponent),
       },
       {
         path: 'sms',
-        loadChildren: () =>
+        loadComponent: () =>
           import('./sms-setting/sms-setting.component').then(m => m.SmsSettingComponent),
       },
       {
         path: 'syslog',
-        loadChildren: () => import('./syslog/syslog.routes').then(m => m.routes),
+        loadComponent: () => import('./syslog/syslog.component').then(m => m.SyslogComponent),
       },
       {
         path: 'license',
@@ -45,7 +48,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./banner/banner-setting.component').then(m => m.BannerComponent),
       },
-      { path: '', redirectTo: 'clear-storage', pathMatch: 'full' },
+      { path: '', redirectTo: 'storage', pathMatch: 'full' },
     ],
   },
 ];

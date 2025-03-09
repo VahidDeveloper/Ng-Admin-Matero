@@ -31,6 +31,10 @@ export const routes: Routes = [
         loadChildren: () => import('./routes/setting/setting.routes').then(m => m.routes),
       },
       {
+        path: 'wina-setting',
+        loadChildren: () => import('./routes/setting/wina-setting/routes').then(m => m.routes),
+      },
+      {
         path: 'design',
         loadChildren: () => import('./routes/design/design.routes').then(m => m.routes),
       },

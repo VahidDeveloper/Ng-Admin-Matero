@@ -29,49 +29,86 @@
       },
       "children": [
         {
-          "route": "general",
-          "name": "general",
-          "type": "link",
-          "icon": "colorize"
-        },
-        {
           "route": "login-policy",
           "name": "login_policy",
-          "type": "link",
-          "icon": "colorize"
+          "type": "link"
         },
         {
           "route": "password",
           "name": "password",
-          "type": "link",
-          "icon": "colorize"
+          "type": "link"
         },
         {
           "route": "command",
           "name": "command",
-          "type": "link",
-          "icon": "colorize"
+          "type": "link"
         },
         {
           "route": "account-lock",
           "name": "account_lock",
-          "type": "link",
-          "icon": "colorize"
+          "type": "link"
         },
         {
           "route": "certificate",
           "name": "certificate",
-          "type": "link",
-          "icon": "flag"
+          "type": "link"
         },
         {
           "route": "monitoring",
           "name": "monitoring",
-          "type": "link",
-          "icon": "flag"
+          "type": "link"
         }
       ]
     },
+    {
+      "route": "wina-setting",
+      "name": "wina_setting",
+      "type": "sub",
+      "icon": "build",
+      "children": [
+        {
+          "route": "storage",
+          "name": "storage",
+          "type": "link"
+        },
+        {
+          "route": "video-conversion",
+          "name": "video_conversion",
+          "type": "link"
+        },
+        {
+          "route": "email",
+          "name": "email",
+          "type": "link"
+        },
+        {
+          "route": "sms",
+          "name": "sms",
+          "type": "link"
+        },
+        {
+          "route": "ldap",
+          "name": "ldap",
+          "type": "link"
+        },
+        {
+          "route": "syslog",
+          "name": "syslog",
+          "type": "link"
+        },
+        {
+          "route": "license",
+          "name": "license",
+          "type": "link"
+        },
+        {
+          "route": "banner",
+          "name": "banner",
+          "type": "link"
+        }
+      ]
+    },
+
     {
       "route": "design",
       "name": "design",

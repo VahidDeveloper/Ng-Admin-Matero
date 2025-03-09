@@ -19,7 +19,6 @@ import { ErrorDisplay, KeyWithCustomTemplate } from '@shared';
  * component to show list of storage elimination policy
  */
 @Component({
-  selector: 'app-clear-storage-policy',
   templateUrl: './clear-storage-policy.component.html',
   styleUrls: ['./clear-storage-policy.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

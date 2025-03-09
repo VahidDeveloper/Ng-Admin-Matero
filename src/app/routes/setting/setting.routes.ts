@@ -7,10 +7,6 @@ export const routes: Routes = [
     component: SettingComponent,
     children: [
       {
-        path: 'general',
-        loadChildren: () => import('./general-setting/general-setting.routes').then(m => m.routes),
-      },
-      {
         path: 'login-policy',
         loadComponent: () =>
           import('./session-policy/components/session-policy.component').then(
