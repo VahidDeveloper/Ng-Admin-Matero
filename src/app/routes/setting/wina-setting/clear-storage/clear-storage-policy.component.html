@@ -1,42 +1,208 @@
-<!-- <div [libLoading]="_isLoading" class="policy-container h-100">
-  <lib-card [headerTitle]="'STORAGE_SETTING_MENU' | translator" headerIcon="icon-Big-data-00" libScrollableElement [topOffset]="50">
-    <header libCardHeader>
-      <div class="edit-icon">
-        <lib-button type="button" icon="icon-Write-00" [color]="color.Primary" (click)="goToEditPage()"
-          >{{ 'Edit' | translator }}
-        </lib-button>
-      </div>
-    </header>
-    <div *ngFor="let error of _allPossibleErrors | keyvalue">
-      <lib-error-alert [errorKey]="error.key" [locationDisplay]="error.value"></lib-error-alert>
-    </div>
-    <div *ngIf="diskBaseElimination">
-      <lib-key-value-list [row]="diskBaseElimination" [listOfKeys]="listOfKeys"></lib-key-value-list>
-      <div class="list-group-item desc">
-        <span
-          >{{ 'AfterReaching' | translator }} {{ diskBaseElimination.warning.startThreshold }}
-          {{ 'percentFirstWarningWillBeSentAndForEvery' | translator }} {{ diskBaseElimination.warning.step }}
-          {{ 'NewAlarmBaseValueHelp' | translator }}
-        </span>
-      </div>
-      <lib-key-value-list [row]="timeBaseElimination" [listOfKeys]="listOfKeysNext"></lib-key-value-list>
-      <div class="list-group-item desc bottom-border">
-        <span>
-          {{ 'FilesAgeWillBeCheckedEvery' | translator }} {{ timeBaseElimination.elapsedInSeconds }}
-          {{ 'daysAndAfter' | translator }} {{ timeBaseElimination.warning.startThreshold }}
-          {{ 'daysOfStartOfPeriodReminderWillBeSend' | translator }}
-        </span>
-      </div>
-    </div>
-  </lib-card>
-</div>
+@if (fetchLoading$ | async) {
+  <mat-progress-bar mode="indeterminate" />
+}
+<mat-card class="page-container">
+  <mat-card-header>
+    <mat-card-title>{{ 'menu.wina_setting.storage' | translate }}</mat-card-title>
+    <mat-icon [matTooltip]="'pages.wina_setting.storage.description' | translate">
+      help_outline
+    </mat-icon>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="d-flex p-32" [formGroup]="form" (ngSubmit)="submitForm()">
+      <div class="d-flex flex-col gap-32 col-6" formGroupName="diskBaseElimination">
+        <div class="diskBaseElimination_mountPoint">
+          <mat-form-field appearance="outline" class="w-50">
+            <mat-label>{{ 'pages.wina_setting.storage.mount_point' | translate }}</mat-label>
+            <input matInput type="number" formControlName="mountPoint" [disableControl]="true" />
+          </mat-form-field>
+          <mat-icon [matTooltip]="'pages.wina_setting.storage.mount_point_help' | translate">
+            help_outline
+          </mat-icon>
+        </div>
+        <div class="d-flex flex-col gap-32">
+          <div class="diskBaseElimination_enable d-flex flex-col">
+            <mat-label>{{ 'pages.wina_setting.storage.delete_file' | translate }}</mat-label>
+            <div>
+              <mat-slide-toggle formControlName="enabled"></mat-slide-toggle>
+              <mat-icon [matTooltip]="'pages.wina_setting.storage.delete_file_help' | translate">
+                help_outline
+              </mat-icon>
+            </div>
+          </div>
 
-<ng-template #deleteFile let-value="value">
-  <span class="badge badge-light badge-pill description bg-warning">
-    <span *ngIf="value">
-      <em class="icon-Checkbox-00"></em>
-      <span>{{ 'Yes' | translator }}</span>
-    </span>
-    <span *ngIf="!value">{{ 'No' | translator }}</span>
-  </span>
-</ng-template> -->
+          <div class="diskBaseElimination_lowerBound">
+            <mat-form-field appearance="outline" class="w-50">
+              <mat-label>{{ 'pages.wina_setting.storage.lower_bound' | translate }}</mat-label>
+              <input matInput type="number" formControlName="lowerBound" />
+              <mat-error *ngIf="diskBaseElimination.controls.lowerBound.hasError('required')">
+                {{ 'validation.required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="diskBaseElimination.controls.lowerBound.hasError('min')">
+                {{ 'validation.min' | translate: { value: 0 } }}
+              </mat-error>
+              <mat-error *ngIf="diskBaseElimination.controls.lowerBound.hasError('max')">
+                {{ 'validation.max' | translate: { value: 1000 } }}
+              </mat-error>
+            </mat-form-field>
+            <mat-icon [matTooltip]="'pages.wina_setting.storage.lower_bound_help' | translate">
+              help_outline
+            </mat-icon>
+          </div>
+
+          <div class="diskBaseElimination_upperBound">
+            <mat-form-field appearance="outline" class="w-50">
+              <mat-label>{{ 'pages.wina_setting.storage.upper_bound' | translate }}</mat-label>
+              <input matInput formControlName="upperBound" />
+              <mat-error *ngIf="diskBaseElimination.controls.upperBound.hasError('required')">
+                {{ 'validation.required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="diskBaseElimination.controls.upperBound.hasError('min')">
+                {{ 'validation.min' | translate: { value: 0 } }}
+              </mat-error>
+              <mat-error *ngIf="diskBaseElimination.controls.upperBound.hasError('max')">
+                {{ 'validation.max' | translate: { value: 100 } }}
+              </mat-error>
+            </mat-form-field>
+            <mat-icon [matTooltip]="'pages.wina_setting.storage.upper_bound_help' | translate">
+              help_outline
+            </mat-icon>
+          </div>
+        </div>
+        <div class="warning_form d-flex flex-col gap-32" formGroupName="warning">
+          <div class="warning_enabled d-flex flex-col">
+            <mat-label>{{ 'pages.wina_setting.storage.warning' | translate }}</mat-label>
+            <mat-slide-toggle formControlName="enabled"></mat-slide-toggle>
+          </div>
+
+          <div class="warning_startThreshold">
+            <mat-form-field appearance="outline" class="w-50">
+              <mat-label>{{ 'pages.wina_setting.storage.threshold' | translate }}</mat-label>
+              <input matInput formControlName="startThreshold" />
+              <mat-error *ngIf="diskBaseWarning.controls.startThreshold.hasError('required')">
+                {{ 'validation.required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="diskBaseWarning.controls.startThreshold.hasError('min')">
+                {{ 'validation.min' | translate: { value: 0 } }}
+              </mat-error>
+              <mat-error *ngIf="diskBaseWarning.controls.startThreshold.hasError('max')">
+                {{ 'validation.max' | translate: { value: 100 } }}
+              </mat-error>
+            </mat-form-field>
+            <mat-icon [matTooltip]="'pages.wina_setting.storage.threshold_help' | translate">
+              help_outline
+            </mat-icon>
+          </div>
+          <div class="warning_step">
+            <mat-form-field appearance="outline" class="w-50">
+              <mat-label>{{ 'pages.wina_setting.storage.warning_interval' | translate }}</mat-label>
+              <input matInput formControlName="step" />
+              <mat-error *ngIf="diskBaseWarning.controls.step.hasError('required')">
+                {{ 'validation.required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="diskBaseWarning.controls.step.hasError('min')">
+                {{ 'validation.min' | translate: { value: 0 } }}
+              </mat-error>
+              <mat-error *ngIf="diskBaseWarning.controls.step.hasError('max')">
+                {{ 'validation.max' | translate: { value: 100 } }}
+              </mat-error>
+            </mat-form-field>
+            <mat-icon [matTooltip]="'pages.wina_setting.storage.warning_interval_help' | translate">
+              help_outline
+            </mat-icon>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-col gap-32 col-6" formGroupName="timeBaseElimination">
+        <div class="timeBaseElimination_enable d-flex flex-col">
+          <mat-label>{{ 'pages.wina_setting.storage.delete_file_by_time' | translate }}</mat-label>
+          <mat-slide-toggle formControlName="enabled"></mat-slide-toggle>
+        </div>
+
+        <div class="timeBaseElimination_elapsedInSeconds">
+          <mat-form-field appearance="outline" class="w-50">
+            <mat-label>{{ 'pages.wina_setting.storage.elapsed_in_seconds' | translate }}</mat-label>
+            <input matInput formControlName="elapsedInSeconds" />
+            <mat-error *ngIf="timeBaseElimination.controls.elapsedInSeconds.hasError('required')">
+              {{ 'validation.required' | translate }}
+            </mat-error>
+            <mat-error *ngIf="timeBaseElimination.controls.elapsedInSeconds.hasError('min')">
+              {{ 'validation.min' | translate: { value: 2 } }}
+            </mat-error>
+          </mat-form-field>
+          <mat-icon [matTooltip]="'pages.wina_setting.storage.elapsed_in_seconds_help' | translate">
+            help_outline
+          </mat-icon>
+        </div>
+
+        <div class="warning_form d-flex flex-col gap-32" formGroupName="warning">
+          <div class="warning_enabled d-flex flex-col">
+            <mat-label>{{ 'pages.wina_setting.storage.reminder' | translate }}</mat-label>
+            <mat-slide-toggle formControlName="enabled"></mat-slide-toggle>
+          </div>
+          <div class="warning_startThreshold">
+            <mat-form-field appearance="outline" class="w-50">
+              <mat-label>
+                {{ 'pages.wina_setting.storage.reminding_period_by_day' | translate }}
+              </mat-label>
+              <input matInput formControlName="startThreshold" />
+              <mat-error *ngIf="timeBaseWarning.controls.startThreshold.hasError('required')">
+                {{ 'validation.required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="timeBaseWarning.controls.startThreshold.hasError('min')">
+                {{ 'validation.min' | translate: { value: 1 } }}
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  timeBaseWarning.controls.startThreshold.hasError(
+                    'startThresholdGreaterThanElapsed'
+                  )
+                "
+              >
+                {{ 'pages.wina_setting.storage.reminding_less_than_kept_days' | translate }}
+              </mat-error>
+            </mat-form-field>
+            <mat-icon
+              [matTooltip]="'pages.wina_setting.storage.reminding_period_by_day_help' | translate"
+            >
+              help_outline
+            </mat-icon>
+          </div>
+          <div class="warning_step">
+            <mat-form-field appearance="outline" class="w-50">
+              <mat-label>{{ 'pages.wina_setting.storage.warning_interval' | translate }}</mat-label>
+              <input matInput formControlName="step" />
+              <mat-error *ngIf="timeBaseWarning.controls.step.hasError('required')">
+                {{ 'validation.required' | translate }}
+              </mat-error>
+              <mat-error *ngIf="timeBaseWarning.controls.step.hasError('min')">
+                {{ 'validation.min' | translate: { value: 1 } }}
+              </mat-error>
+            </mat-form-field>
+            <mat-icon
+              [matTooltip]="'pages.wina_setting.storage.warning_interval_time_help' | translate"
+            >
+              help_outline
+            </mat-icon>
+          </div>
+        </div>
+
+        <button
+          mat-fab
+          extended
+          class="align-self-end"
+          type="submit"
+          [disabled]="submitLoading | async"
+        >
+          {{ 'submit' | translate }}
+          @if (submitLoading | async) {
+            <mat-icon>
+              <mat-spinner color="white" diameter="20" />
+            </mat-icon>
+          }
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { WinaRestUrls } from '@shared/models';
-import { ClearStorageResponse } from '../_models/clear-storage-response';
+import { ClearStorageResponse } from '../types/clear-storage-response';
 
 /**
  * To get data of elimination of storage
