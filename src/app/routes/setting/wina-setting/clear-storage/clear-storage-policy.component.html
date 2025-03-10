@@ -1,37 +1,43 @@
-@if (fetchLoading$ | async) {
-  <mat-progress-bar mode="indeterminate" />
-}
 <mat-card class="page-container">
+  @if (fetchLoading$ | async) {
+    <mat-progress-bar mode="indeterminate" />
+  }
   <mat-card-header>
     <mat-card-title>{{ 'menu.wina_setting.storage' | translate }}</mat-card-title>
-    <mat-icon [matTooltip]="'pages.wina_setting.storage.description' | translate">
+    <mat-icon class="m-b-24" [matTooltip]="'pages.wina_setting.storage.description' | translate">
       help_outline
     </mat-icon>
   </mat-card-header>
   <mat-card-content>
     <form class="d-flex p-32" [formGroup]="form" (ngSubmit)="submitForm()">
       <div class="d-flex flex-col gap-32 col-6" formGroupName="diskBaseElimination">
-        <div class="diskBaseElimination_mountPoint">
+        <div class="diskBaseElimination_mountPoint d-flex align-items-center">
           <mat-form-field appearance="outline" class="w-50">
             <mat-label>{{ 'pages.wina_setting.storage.mount_point' | translate }}</mat-label>
             <input matInput type="number" formControlName="mountPoint" [disableControl]="true" />
           </mat-form-field>
-          <mat-icon [matTooltip]="'pages.wina_setting.storage.mount_point_help' | translate">
+          <mat-icon
+            class="m-b-24"
+            [matTooltip]="'pages.wina_setting.storage.mount_point_help' | translate"
+          >
             help_outline
           </mat-icon>
         </div>
         <div class="d-flex flex-col gap-32">
           <div class="diskBaseElimination_enable d-flex flex-col">
             <mat-label>{{ 'pages.wina_setting.storage.delete_file' | translate }}</mat-label>
-            <div>
+            <div class="d-flex align-items-center gap-16">
               <mat-slide-toggle formControlName="enabled"></mat-slide-toggle>
-              <mat-icon [matTooltip]="'pages.wina_setting.storage.delete_file_help' | translate">
+              <mat-icon
+                class=""
+                [matTooltip]="'pages.wina_setting.storage.delete_file_help' | translate"
+              >
                 help_outline
               </mat-icon>
             </div>
           </div>
 
-          <div class="diskBaseElimination_lowerBound">
+          <div class="diskBaseElimination_lowerBound d-flex align-items-center">
             <mat-form-field appearance="outline" class="w-50">
               <mat-label>{{ 'pages.wina_setting.storage.lower_bound' | translate }}</mat-label>
               <input matInput type="number" formControlName="lowerBound" />
@@ -45,12 +51,15 @@
                 {{ 'validation.max' | translate: { value: 1000 } }}
               </mat-error>
             </mat-form-field>
-            <mat-icon [matTooltip]="'pages.wina_setting.storage.lower_bound_help' | translate">
+            <mat-icon
+              class="m-b-24"
+              [matTooltip]="'pages.wina_setting.storage.lower_bound_help' | translate"
+            >
               help_outline
             </mat-icon>
           </div>
 
-          <div class="diskBaseElimination_upperBound">
+          <div class="diskBaseElimination_upperBound d-flex align-items-center">
             <mat-form-field appearance="outline" class="w-50">
               <mat-label>{{ 'pages.wina_setting.storage.upper_bound' | translate }}</mat-label>
               <input matInput formControlName="upperBound" />
@@ -64,7 +73,10 @@
                 {{ 'validation.max' | translate: { value: 100 } }}
               </mat-error>
             </mat-form-field>
-            <mat-icon [matTooltip]="'pages.wina_setting.storage.upper_bound_help' | translate">
+            <mat-icon
+              class="m-b-24"
+              [matTooltip]="'pages.wina_setting.storage.upper_bound_help' | translate"
+            >
               help_outline
             </mat-icon>
           </div>
@@ -74,8 +86,7 @@
             <mat-label>{{ 'pages.wina_setting.storage.warning' | translate }}</mat-label>
             <mat-slide-toggle formControlName="enabled"></mat-slide-toggle>
           </div>
-
-          <div class="warning_startThreshold">
+          <div class="warning_startThreshold d-flex align-items-center">
             <mat-form-field appearance="outline" class="w-50">
               <mat-label>{{ 'pages.wina_setting.storage.threshold' | translate }}</mat-label>
               <input matInput formControlName="startThreshold" />
@@ -89,11 +100,14 @@
                 {{ 'validation.max' | translate: { value: 100 } }}
               </mat-error>
             </mat-form-field>
-            <mat-icon [matTooltip]="'pages.wina_setting.storage.threshold_help' | translate">
+            <mat-icon
+              class="m-b-24"
+              [matTooltip]="'pages.wina_setting.storage.threshold_help' | translate"
+            >
               help_outline
             </mat-icon>
           </div>
-          <div class="warning_step">
+          <div class="warning_step d-flex align-items-center">
             <mat-form-field appearance="outline" class="w-50">
               <mat-label>{{ 'pages.wina_setting.storage.warning_interval' | translate }}</mat-label>
               <input matInput formControlName="step" />
@@ -107,7 +121,10 @@
                 {{ 'validation.max' | translate: { value: 100 } }}
               </mat-error>
             </mat-form-field>
-            <mat-icon [matTooltip]="'pages.wina_setting.storage.warning_interval_help' | translate">
+            <mat-icon
+              class="m-b-24"
+              [matTooltip]="'pages.wina_setting.storage.warning_interval_help' | translate"
+            >
               help_outline
             </mat-icon>
           </div>
@@ -120,7 +137,7 @@
           <mat-slide-toggle formControlName="enabled"></mat-slide-toggle>
         </div>
 
-        <div class="timeBaseElimination_elapsedInSeconds">
+        <div class="timeBaseElimination_elapsedInSeconds d-flex align-items-center">
           <mat-form-field appearance="outline" class="w-50">
             <mat-label>{{ 'pages.wina_setting.storage.elapsed_in_seconds' | translate }}</mat-label>
             <input matInput formControlName="elapsedInSeconds" />
@@ -131,7 +148,10 @@
               {{ 'validation.min' | translate: { value: 2 } }}
             </mat-error>
           </mat-form-field>
-          <mat-icon [matTooltip]="'pages.wina_setting.storage.elapsed_in_seconds_help' | translate">
+          <mat-icon
+            class="m-b-24"
+            [matTooltip]="'pages.wina_setting.storage.elapsed_in_seconds_help' | translate"
+          >
             help_outline
           </mat-icon>
         </div>
@@ -141,7 +161,7 @@
             <mat-label>{{ 'pages.wina_setting.storage.reminder' | translate }}</mat-label>
             <mat-slide-toggle formControlName="enabled"></mat-slide-toggle>
           </div>
-          <div class="warning_startThreshold">
+          <div class="warning_startThreshold d-flex align-items-center">
             <mat-form-field appearance="outline" class="w-50">
               <mat-label>
                 {{ 'pages.wina_setting.storage.reminding_period_by_day' | translate }}
@@ -164,12 +184,13 @@
               </mat-error>
             </mat-form-field>
             <mat-icon
+              class="m-b-24"
               [matTooltip]="'pages.wina_setting.storage.reminding_period_by_day_help' | translate"
             >
               help_outline
             </mat-icon>
           </div>
-          <div class="warning_step">
+          <div class="warning_step d-flex align-items-center">
             <mat-form-field appearance="outline" class="w-50">
               <mat-label>{{ 'pages.wina_setting.storage.warning_interval' | translate }}</mat-label>
               <input matInput formControlName="step" />
@@ -181,6 +202,7 @@
               </mat-error>
             </mat-form-field>
             <mat-icon
+              class="m-b-24"
               [matTooltip]="'pages.wina_setting.storage.warning_interval_time_help' | translate"
             >
               help_outline
@@ -197,7 +219,7 @@
         >
           {{ 'submit' | translate }}
           @if (submitLoading | async) {
-            <mat-icon>
+            <mat-icon class="m-b-24">
               <mat-spinner color="white" diameter="20" />
             </mat-icon>
           }

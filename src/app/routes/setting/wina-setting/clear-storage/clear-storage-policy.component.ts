@@ -12,18 +12,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { StorageStore } from './services/storage-store.service';
 import { DisableControlDirective } from '@shared';
+import { timeBaseEliminationValidator } from './types/validation';
 
 /**
  * component to show list of storage elimination policy
@@ -97,7 +90,7 @@ export class ClearStoragePolicyComponent implements OnInit {
             step: [null, [Validators.required, Validators.min(1)]],
           }),
         },
-        { validators: this.timeBaseEliminationValidator }
+        { validators: timeBaseEliminationValidator }
       ),
     });
     this.store.getConfig();
@@ -112,113 +105,54 @@ export class ClearStoragePolicyComponent implements OnInit {
     this.submitLoading = this.store.select(state => state.postLoading);
 
     this.diskBaseElimination.controls.enabled.valueChanges
-      .pipe(
-        tap(value => {
-          this.toggleDiskBaseEliminationControls(value);
-        })
-      )
+      .pipe(tap(value => this.toggleDiskBaseEliminationControls(value)))
       .subscribe();
 
-    // Toggle controls based on the 'enabled' field for warning (inside diskBaseElimination)
     this.diskBaseWarning.controls.enabled.valueChanges
-      .pipe(
-        tap(value => {
-          this.toggleDiskBaseWarningControls(value);
-        })
-      )
+      .pipe(tap(value => this.toggleWarningControls(this.diskBaseWarning, value)))
       .subscribe();
 
     this.timeBaseElimination.controls.enabled.valueChanges
-      .pipe(
-        tap(value => {
-          this.toggleTimeBaseEliminationControls(value);
-        })
-      )
+      .pipe(tap(value => this.toggleTimeBaseEliminationControls(value)))
       .subscribe();
 
     this.timeBaseWarning.controls.enabled.valueChanges
-      .pipe(
-        tap(value => {
-          this.toggleTimeBaseWarningControls(value);
-        })
-      )
+      .pipe(tap(value => this.toggleWarningControls(this.timeBaseWarning, value)))
       .subscribe();
   }
 
   toggleDiskBaseEliminationControls(isEnabled: boolean): void {
     Object.keys(this.diskBaseElimination.controls).forEach(key => {
       const control = this.diskBaseElimination.get(key);
-
       if (key !== 'enabled' && key !== 'mountPoint') {
         isEnabled ? control?.enable() : control?.disable();
       }
     });
-    if (!isEnabled) {
-      this.toggleDiskBaseWarningControls(false);
+    this.toggleWarningControls(this.diskBaseWarning, false);
+    if (isEnabled) {
+      this.diskBaseWarning.get('enabled')?.enable();
     }
   }
-
-  // Toggle controls inside the warning form group based on the enabled field inside warning
-  toggleDiskBaseWarningControls(isEnabled: boolean): void {
-    // Enable or disable the controls inside the warning group based on the 'enabled' toggle
-    Object.keys(this.diskBaseWarning.controls).forEach(key => {
-      const control = this.diskBaseWarning.get(key);
-
-      // Enable or disable based on the toggle
-      if (key !== 'enabled') {
-        isEnabled ? control?.enable() : control?.disable();
-      }
-    });
-  }
-
-  private timeBaseEliminationValidator: ValidatorFn = (
-    control: AbstractControl
-  ): ValidationErrors | null => {
-    const elapsedInSeconds = control.get('elapsedInSeconds')?.value;
-    const startThresholdControl = control.get('warning')?.get('startThreshold');
-
-    if (!startThresholdControl) {
-      return null; // Ensure the control exists
-    }
-
-    const startThreshold = startThresholdControl.value;
-
-    if (elapsedInSeconds && startThreshold !== null) {
-      if (startThreshold >= elapsedInSeconds) {
-        startThresholdControl.setErrors({ startThresholdGreaterThanElapsed: true });
-      } else {
-        // Remove only 'startThresholdGreaterThanElapsed' error while keeping others
-        if (startThresholdControl.hasError('startThresholdGreaterThanElapsed')) {
-          const errors = { ...startThresholdControl.errors };
-          delete errors.startThresholdGreaterThanElapsed;
-          startThresholdControl.setErrors(Object.keys(errors).length ? errors : null);
-        }
-      }
-    }
-    return null;
-  };
 
   toggleTimeBaseEliminationControls(isEnabled: boolean): void {
-    Object.keys(this.timeBaseElimination.controls).forEach(key => {
-      const control = this.timeBaseElimination.get(key);
-
-      if (key !== 'enabled') {
-        isEnabled ? control?.enable() : control?.disable();
-      }
-    });
-    if (!isEnabled) {
-      this.toggleTimeBaseWarningControls(false);
+    Object.keys(this.timeBaseElimination.controls)
+      .filter(key => key !== 'enabled')
+      .forEach(key => {
+        isEnabled
+          ? this.timeBaseElimination.get(key)?.enable()
+          : this.timeBaseElimination.get(key)?.disable();
+      });
+    this.toggleWarningControls(this.timeBaseWarning, false);
+    if (isEnabled) {
+      this.timeBaseWarning.get('enabled')?.enable();
     }
   }
 
-  toggleTimeBaseWarningControls(isEnabled: boolean): void {
+  toggleWarningControls(warningGroup: FormGroup, isEnabled: boolean): void {
     // Enable or disable the controls inside the warning group based on the 'enabled' toggle
-    Object.keys(this.timeBaseWarning.controls).forEach(key => {
-      const control = this.timeBaseWarning.get(key);
-
-      // Enable or disable based on the toggle
+    Object.keys(warningGroup.controls).forEach(key => {
       if (key !== 'enabled') {
-        isEnabled ? control?.enable() : control?.disable();
+        isEnabled ? warningGroup.get(key)?.enable() : warningGroup.get(key)?.disable();
       }
     });
   }
