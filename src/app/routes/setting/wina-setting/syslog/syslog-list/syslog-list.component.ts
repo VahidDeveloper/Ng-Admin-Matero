@@ -1,10 +1,10 @@
+import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
+import { ConfirmDialogService } from '@shared/services';
 import { SyslogService } from '../_services/syslog.service';
 import { SyslogServerModel } from '../_models/syslog-server';
-import { TranslateService } from '@ngx-translate/core';
-import { ConfirmDialogService } from '@shared';
 
 /** a component for show all syslog server in datatable and management them
  * deleting and edit by syslog id

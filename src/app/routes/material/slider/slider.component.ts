@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
 
-import { BreadcrumbComponent } from '@shared';
+import { BreadcrumbComponent } from '@shared/components';
 
 @Component({
   selector: 'app-slider',

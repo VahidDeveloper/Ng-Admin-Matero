@@ -3,7 +3,7 @@ import { MatLineModule } from '@angular/material/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MtxPhotoviewerModule } from '@ng-matero/extensions/photoviewer';
 
-import { PageHeaderComponent } from '@shared';
+import { PageHeaderComponent } from '@shared/components';
 
 @Component({
   selector: 'app-media-gallery',

@@ -4,7 +4,7 @@ import { ComponentStore } from '@ngrx/component-store';
 import { TranslateService } from '@ngx-translate/core';
 import { tap, switchMap, finalize, Observable } from 'rxjs';
 
-import { ConfirmDialogService, ToastService } from '@shared';
+import { ConfirmDialogService, ToastService } from '@shared/services';
 import { ClearStorageResponse } from '../types/clear-storage-response';
 import { ClearStoragePolicyService } from './clear-storage-policy.service';
 

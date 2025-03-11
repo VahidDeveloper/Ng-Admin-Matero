@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
+import { MatRadioModule } from '@angular/material/radio';
 
-import { BreadcrumbComponent } from '@shared';
+import { BreadcrumbComponent } from '@shared/components';
 
 @Component({
   selector: 'app-radio-button',

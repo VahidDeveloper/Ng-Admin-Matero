@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
 
-import { PageHeaderComponent } from '@shared';
+import { PageHeaderComponent } from '@shared/components';
 
 @Component({
   selector: 'app-utilities-css-grid',

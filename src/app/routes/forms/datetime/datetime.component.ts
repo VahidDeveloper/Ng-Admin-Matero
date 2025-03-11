@@ -1,5 +1,3 @@
-import { tr } from 'date-fns/locale';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,18 +5,20 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { DateAdapter } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { Subscription } from 'rxjs';
+import { addDays, set } from 'date-fns';
 import {
   MtxDatetimepickerFilterType,
   MtxDatetimepickerModule,
 } from '@ng-matero/extensions/datetimepicker';
+import { DateAdapter } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
-import { PageHeaderComponent } from '@shared';
-import { addDays, set } from 'date-fns';
-import { Subscription } from 'rxjs';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+
+import { PageHeaderComponent } from '@shared/components';
 
 @Component({
   selector: 'app-forms-datetime',

@@ -1,8 +1,9 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommandSettingModel } from '@shared/interfaces';
+
 import { WinaRestUrls } from '@shared/models';
+import { CommandSetting } from '@shared/interfaces';
 
 /**
  * this service is created for operations of command-groups.
@@ -14,8 +15,8 @@ export class CommandSettingService {
   constructor(private _http: HttpClient) {}
 
   /** get all commands */
-  getCommandList(): Observable<CommandSettingModel[]> {
-    return this._http.get<CommandSettingModel[]>(WinaRestUrls.getCommands(), {});
+  getCommandList(): Observable<CommandSetting[]> {
+    return this._http.get<CommandSetting[]>(WinaRestUrls.getCommands(), {});
   }
 
   /** delete selected command */
@@ -24,7 +25,7 @@ export class CommandSettingService {
   }
 
   /** update selected command*/
-  addOrEditCommand(model: CommandSettingModel): Observable<CommandSettingModel> {
-    return this._http.post<CommandSettingModel>(WinaRestUrls.addOrEditCommand(), model);
+  addOrEditCommand(model: CommandSetting): Observable<CommandSetting> {
+    return this._http.post<CommandSetting>(WinaRestUrls.addOrEditCommand(), model);
   }
 }

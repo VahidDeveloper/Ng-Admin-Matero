@@ -1,13 +1,13 @@
-import { Directionality } from '@angular/cdk/bidi';
-import { Component, TemplateRef, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { Directionality } from '@angular/cdk/bidi';
 import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { Component, TemplateRef, ViewChild, inject } from '@angular/core';
 import {
   MatSnackBar,
   MatSnackBarConfig,
@@ -15,7 +15,7 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 
-import { BreadcrumbComponent } from '@shared';
+import { BreadcrumbComponent } from '@shared/components';
 
 @Component({
   selector: 'app-snack-bar',

@@ -1,3 +1,9 @@
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  inject,
+  provideAppInitializer,
+} from '@angular/core';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { MAT_CARD_CONFIG } from '@angular/material/card';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
@@ -9,12 +15,6 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideDateFnsDatetimeAdapter } from '@ng-matero/extensions-date-fns-adapter';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
-import {
-  ApplicationConfig,
-  importProvidersFrom,
-  inject,
-  provideAppInitializer,
-} from '@angular/core';
 
 import {
   restInterceptor,
@@ -28,10 +28,10 @@ import {
   tokenInterceptor,
   TranslateLangService,
 } from '@core';
-import { environment } from '@env/environment';
-import { PaginatorI18nService } from '@shared';
 import { routes } from './app.routes';
+import { environment } from '@env/environment';
 import { FormlyConfigModule } from './formly-config';
+import { PaginatorI18nService } from '@shared/services';
 
 // Required for AOT compilation
 function TranslateHttpLoaderFactory(http: HttpClient) {

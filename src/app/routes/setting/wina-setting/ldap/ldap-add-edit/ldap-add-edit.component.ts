@@ -1,20 +1,20 @@
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
   OnInit,
-  TemplateRef,
+  Component,
   ViewChild,
+  TemplateRef,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
-
 import { Location } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { LdapService } from '../_services/ldap.service';
+import { ErrorDisplay, InputRegex } from '@shared/models';
 import { LdapServerModel } from '../_models/ldap-server-model';
-import { TranslateService } from '@ngx-translate/core';
-import { ToastService, ErrorDisplay, ConfirmDialogService, InputRegex } from '@shared';
+import { ToastService, ConfirmDialogService } from '@shared/services';
 
 /** a component for add new ldap server or update them */
 @Component({

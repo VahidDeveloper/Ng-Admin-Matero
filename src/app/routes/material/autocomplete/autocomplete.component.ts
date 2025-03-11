@@ -1,14 +1,14 @@
+import { Observable, map, startWith } from 'rxjs';
 import { AsyncPipe, JsonPipe } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCardModule } from '@angular/material/card';
 import { MatOptionModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Observable, map, startWith } from 'rxjs';
+import { Component, OnInit, inject } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { BreadcrumbComponent } from '@shared';
+import { BreadcrumbComponent } from '@shared/components';
 
 export interface StateGroup {
   letter: string;
@@ -89,6 +89,7 @@ export class AutocompleteComponent implements OnInit {
   ];
   value = '';
   filteredStates = this.states;
+
   filter(value: string) {
     if (value) {
       return this.states.filter(state => state.name.toLowerCase().startsWith(value.toLowerCase()));

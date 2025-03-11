@@ -3,7 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 
-import { PageHeaderComponent } from '@shared';
+import { PageHeaderComponent } from '@shared/components';
 
 @Component({
   selector: 'app-utilities-css-helpers',

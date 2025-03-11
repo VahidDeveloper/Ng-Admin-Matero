@@ -1,17 +1,17 @@
-import { ActivatedRoute, Router } from '@angular/router';
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
   OnInit,
-  TemplateRef,
+  Component,
   ViewChild,
+  TemplateRef,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { LdapService } from '../_services/ldap.service';
 import { LdapServerModel } from '../_models/ldap-server-model';
-import { TranslateService } from '@ngx-translate/core';
-import { ConfirmDialogService, ToastService } from '@shared';
+import { ConfirmDialogService, ToastService } from '@shared/services';
 
 /** a component for show all ldap server in datatable and management them
  * deleting and edit by ldap id

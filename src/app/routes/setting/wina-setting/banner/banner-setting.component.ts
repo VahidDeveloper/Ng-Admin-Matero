@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { ToastService, BannerSettingService, BannerSetting } from '@shared';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ToastService, BannerSettingService } from '@shared/services';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+
+import { BannerSetting } from '@shared/interfaces';
 
 /**
- * a component to configure banner-display which would be shown whenever the user log into the systme.
+ * a component to configure banner-display which would be shown whenever the user log into the system.
  */
 @Component({
   selector: 'app-banner-setting',

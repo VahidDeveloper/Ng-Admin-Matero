@@ -35,9 +35,10 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 
+import { ErrorDisplay, InputRegex } from '@shared/models';
 import { IdentityErrorComponent } from '@shared/components';
 import { EmailSettingService } from './services/email-setting.service';
-import { ToastService, ErrorDisplay, InputRegex, ConfirmDialogService } from '@shared';
+import { ToastService, ConfirmDialogService } from '@shared/services';
 
 /**
  * a class for set and update email config

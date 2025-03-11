@@ -1,10 +1,10 @@
-import { EMPTY, throwError, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { EmailConfig } from '../types/email-config';
-import { WinaRestUrls, ErrorDisplay, RestApiErrorCodes, RestApiError } from '@shared';
+import { WinaRestUrls, RestApiErrorCodes, RestApiError } from '@shared/models';
 
 /**  a service class for set and test otp email configs */
 @Injectable({

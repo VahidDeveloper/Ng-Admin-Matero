@@ -3,7 +3,7 @@ import { ComponentStore } from '@ngrx/component-store';
 import { TranslateService } from '@ngx-translate/core';
 import { EMPTY, tap, switchMap, catchError, finalize } from 'rxjs';
 
-import { ToastService } from '@shared';
+import { ToastService } from '@shared/services';
 import { LockPolicy } from '../_models/lock-policy';
 import { LockedUser } from '../_models/locked-user';
 import { AccountLockService } from './account-lock.service';

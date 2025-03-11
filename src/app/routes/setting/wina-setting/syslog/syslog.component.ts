@@ -1,6 +1,7 @@
-import { RouterModule } from '@angular/router';
 import { Component } from '@angular/core';
-import { BreadcrumbComponent } from '@shared';
+import { RouterModule } from '@angular/router';
+
+import { BreadcrumbComponent } from '@shared/components';
 
 @Component({
   selector: 'app-syslog',

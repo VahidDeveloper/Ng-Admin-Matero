@@ -8,12 +8,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { LicenseService } from './_services/license.service';
+import { ToastService } from '@shared/services';
 import { LicenseInfo } from './_models/license-info';
-import { TranslateService } from '@ngx-translate/core';
-import { ToastService } from '@shared';
+import { LicenseService } from './_services/license.service';
 
 /**
  * a component for wina license management

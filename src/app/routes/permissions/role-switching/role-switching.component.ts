@@ -1,13 +1,13 @@
-import { JsonPipe } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCardModule } from '@angular/material/card';
-import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { JsonPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 
-import { PageHeaderComponent } from '@shared';
+import { PageHeaderComponent } from '@shared/components';
 
 @Component({
   selector: 'app-permissions-role-switching',

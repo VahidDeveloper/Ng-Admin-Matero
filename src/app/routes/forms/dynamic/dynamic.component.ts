@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { PageHeaderComponent, ToastService } from '@shared';
+import { ToastService } from '@shared/services';
+import { PageHeaderComponent } from '@shared/components';
 
 @Component({
   selector: 'app-forms-dynamic',

@@ -1,4 +1,3 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,18 +5,21 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { Subscription } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
-import { DateAdapter, MatOptionModule } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { DateAdapter, MatOptionModule } from '@angular/material/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
 
-import { ControlsOf, IProfile, PageHeaderComponent } from '@shared';
+import { ControlsOf } from '@shared/types';
+import { IProfile } from '@shared/interfaces';
+import { PageHeaderComponent } from '@shared/components';
 
 @Component({
   selector: 'app-forms-elements',

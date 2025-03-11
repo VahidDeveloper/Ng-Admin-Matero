@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MtxAlertModule } from '@ng-matero/extensions/alert';
 import { NgxPermissionsModule, NgxPermissionsService } from 'ngx-permissions';
 
-import { PageHeaderComponent } from '@shared';
+import { PageHeaderComponent } from '@shared/components';
 
 @Component({
   selector: 'app-permissions-test',

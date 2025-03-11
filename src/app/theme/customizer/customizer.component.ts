@@ -1,4 +1,3 @@
-import { CdkDrag, CdkDragStart } from '@angular/cdk/drag-drop';
 import {
   Component,
   EventEmitter,
@@ -7,18 +6,18 @@ import {
   ViewEncapsulation,
   inject,
 } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
+import { Subscription } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CdkDrag, CdkDragStart } from '@angular/cdk/drag-drop';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MtxDrawer, MtxDrawerModule, MtxDrawerRef } from '@ng-matero/extensions/drawer';
-import { Subscription } from 'rxjs';
 
 import { AppSettings, SettingsService } from '@core';
-import { DisableControlDirective } from '@shared';
 
 @Component({
   selector: 'app-customizer',

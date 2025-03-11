@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { AuthService } from '@core/authentication';
 import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 
-import { UserBriefInfo } from '@shared';
+import { UserBriefInfo } from '@shared/models';
 import { Menu, MenuService } from './menu.service';
 
 @Injectable({

@@ -1,9 +1,9 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { CACertificate } from '../types/CA-certificate';
+
 import { WinaRestUrls } from '@shared/models';
-import { GenericCrudService } from '@shared';
+import { CACertificate } from '../types/CA-certificate';
 
 /**
  * this class is create to do some action to

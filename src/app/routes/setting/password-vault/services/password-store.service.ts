@@ -4,10 +4,10 @@ import { ComponentStore } from '@ngrx/component-store';
 import { TranslateService } from '@ngx-translate/core';
 import { EMPTY, tap, switchMap, catchError, finalize, Observable } from 'rxjs';
 
-import { AddEditPasswordVaultComponent } from '../components/add-edit/add-edit-password-vault.component';
-import { ConfirmDialogService, ToastService } from '@shared';
-import { PasswordVaultService } from './password-vault.service';
 import { PasswordVault } from '../types/type';
+import { PasswordVaultService } from './password-vault.service';
+import { ConfirmDialogService, ToastService } from '@shared/services';
+import { AddEditPasswordVaultComponent } from '../components/add-edit/add-edit-password-vault.component';
 
 export interface PasswordState {
   list: PasswordVault[];

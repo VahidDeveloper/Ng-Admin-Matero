@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { GenericCrudService } from '@shared';
 import { PasswordVault } from '../types/type';
+import { GenericCrudService } from '@shared/services';
 
 @Injectable({
   providedIn: 'root',

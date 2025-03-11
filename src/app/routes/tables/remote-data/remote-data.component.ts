@@ -1,15 +1,15 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatOptionModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { PageEvent } from '@angular/material/paginator';
-import { MatSelectModule } from '@angular/material/select';
-import { MtxGridColumn, MtxGridModule } from '@ng-matero/extensions/grid';
 import { finalize } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
+import { MatOptionModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { Component, OnInit, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MtxGridColumn, MtxGridModule } from '@ng-matero/extensions/grid';
 
-import { PageHeaderComponent } from '@shared';
+import { PageHeaderComponent } from '@shared/components';
 import { TablesRemoteDataService } from './remote-data.service';
 
 @Component({

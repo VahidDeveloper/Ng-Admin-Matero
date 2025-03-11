@@ -1,7 +1,7 @@
-import { KeyValue, KeyValuePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { KeyValue, KeyValuePipe } from '@angular/common';
 
-import { M3_COLORS } from '@shared';
+import { M3_COLORS } from '@shared/utils';
 
 @Component({
   selector: 'app-design-colors',

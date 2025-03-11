@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { GenericCrudService } from '@shared';
+import { GenericCrudService } from '@shared/services';
 import { VideoConversionTime } from '../types/video-conversion-time';
 
 @Injectable({

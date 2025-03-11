@@ -2,9 +2,10 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { WinaRestUrls } from '@shared/models';
 import { LockedUser } from '../_models/locked-user';
 import { LockPolicy } from '../_models/lock-policy';
-import { GenericCrudService, WinaRestUrls } from '@shared';
+import { GenericCrudService } from '@shared/services';
 
 /**
  * this service is created to do some action in locked users in connection module

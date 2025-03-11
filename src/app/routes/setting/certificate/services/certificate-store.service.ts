@@ -2,14 +2,14 @@ import { inject, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ComponentStore } from '@ngrx/component-store';
 import { TranslateService } from '@ngx-translate/core';
-import { EMPTY, tap, switchMap, catchError, finalize, Observable, of } from 'rxjs';
+import { EMPTY, tap, switchMap, catchError, finalize, Observable } from 'rxjs';
 
 import { SslPolicy } from '../types/ssl-policy';
 import { CACertificate } from '../types/CA-certificate';
-import { ConfirmDialogService, ToastService } from '@shared';
 import { CaCertificateService } from './ca-certificate.service';
 import { SslCertificateService } from './ssl-certificate.service';
 import { AddCAComponent } from '../components/ca/add/add.component';
+import { ConfirmDialogService, ToastService } from '@shared/services';
 
 export interface CACertificateState {
   list: CACertificate[];
@@ -29,6 +29,7 @@ export class CertificateStore extends ComponentStore<CACertificateState> {
   toast = inject(ToastService);
   tr = inject(TranslateService);
   dialog = inject(MatDialog);
+
   constructor() {
     super({
       list: [],

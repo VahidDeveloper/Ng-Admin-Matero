@@ -1,7 +1,7 @@
 /**
  * class ForbiddenRemoteCommand for manage type of commands and commandGroups
  */
-import { CommandSettingModel } from './command-setting';
+import { CommandSetting } from './command-setting';
 
 export interface ForbiddenRemoteCommand {
   /**
@@ -11,5 +11,5 @@ export interface ForbiddenRemoteCommand {
   /**
    * forbidden command groups
    */
-  commandGroups: CommandSettingModel[];
+  commandGroups: CommandSetting[];
 }

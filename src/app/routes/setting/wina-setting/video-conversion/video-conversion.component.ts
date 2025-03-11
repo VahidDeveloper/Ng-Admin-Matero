@@ -11,7 +11,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 
-import { ToastService } from '@shared';
+import { ToastService } from '@shared/services';
 import { VideoConversionTime } from './types/video-conversion-time';
 import { VideoConversionTimeService } from './services/video-conversion-time.service';
 

@@ -4,12 +4,12 @@ import { MatInput } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormField } from '@angular/material/form-field';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { MtxGrid, MtxGridColumn } from '@ng-matero/extensions/grid';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 
-import { CommandSettingModel } from '@shared';
+import { CommandSetting } from '@shared/interfaces';
 import { CommandStore } from '../../services/command-store.service';
 
 /**
@@ -38,7 +38,7 @@ export class CommandListComponent implements OnInit {
   count$: Observable<number> = of(0);
   searchTerm$: Observable<string> = of('');
   fetchLoading$: Observable<boolean> = of(false);
-  columns: MtxGridColumn<CommandSettingModel>[] = [
+  columns: MtxGridColumn<CommandSetting>[] = [
     {
       field: 'id',
       header: this.tr.instant('id'),

@@ -6,7 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 
-import { UserBriefInfo } from '@shared';
+import { UserBriefInfo } from '@shared/models';
 import { AuthService, SettingsService } from '@core';
 
 @Component({

@@ -1,13 +1,13 @@
-import { CdkTableModule, DataSource } from '@angular/cdk/table';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { MatCardModule } from '@angular/material/card';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { BehaviorSubject, Observable, merge } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { CdkTableModule, DataSource } from '@angular/cdk/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
-import { BreadcrumbComponent } from '@shared';
+import { BreadcrumbComponent } from '@shared/components';
 
 export interface UserData {
   name: string;

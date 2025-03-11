@@ -7,7 +7,7 @@ import { enUS, Locale, faIR } from 'date-fns/locale';
 import { TranslateService } from '@ngx-translate/core';
 
 import { AppSettings, AppTheme, defaults } from '../settings';
-import { AppDirectionality, LocalStorageService } from '@shared';
+import { AppDirectionality, LocalStorageService } from '@shared/services';
 
 @Injectable({
   providedIn: 'root',

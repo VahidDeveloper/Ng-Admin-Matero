@@ -1,7 +1,8 @@
-import { HttpHandlerFn, HttpRequest, HttpResponse } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { MessageService } from '@shared';
 import { finalize, tap } from 'rxjs';
+import { inject } from '@angular/core';
+import { HttpHandlerFn, HttpRequest, HttpResponse } from '@angular/common/http';
+
+import { MessageService } from '@shared/services';
 
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   const messenger = inject(MessageService);

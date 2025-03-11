@@ -6,13 +6,14 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { ToastService } from '@shared/services';
+import { ErrorDisplay, InputRegex } from '@shared/models';
 import { SyslogService } from '../_services/syslog.service';
 import { SyslogServerModel } from '../_models/syslog-server';
-import { TranslateService } from '@ngx-translate/core';
-import { ToastService, ErrorDisplay, InputRegex } from '@shared';
 
 /** a component for add new syslog server or update them */
 @Component({

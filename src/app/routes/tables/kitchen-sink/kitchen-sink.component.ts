@@ -1,14 +1,14 @@
-import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TranslateService } from '@ngx-translate/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MtxDialog } from '@ng-matero/extensions/dialog';
+import { Component, OnInit, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MtxGridColumn, MtxGridModule } from '@ng-matero/extensions/grid';
-import { TranslateService } from '@ngx-translate/core';
 
-import { PageHeaderComponent } from '@shared';
 import { TablesDataService } from '../data.service';
+import { PageHeaderComponent } from '@shared/components';
 import { TablesKitchenSinkEditComponent } from './edit/edit.component';
 
 @Component({

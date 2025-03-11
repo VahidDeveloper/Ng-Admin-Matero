@@ -12,7 +12,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 
-import { ConfirmDialogService, ToastService } from '@shared';
+import { ConfirmDialogService, ToastService } from '@shared/services';
 import { CertificateStore } from '../../services/certificate-store.service';
 
 /**

@@ -3,8 +3,8 @@ import { ComponentStore } from '@ngrx/component-store';
 import { TranslateService } from '@ngx-translate/core';
 import { tap, switchMap, finalize, Observable } from 'rxjs';
 
-import { LoginConstraint } from '@shared/interfaces/login-constraint';
-import { SessionTimeoutPolicy, ToastService } from '@shared';
+import { ToastService } from '@shared/services';
+import { LoginConstraint, SessionTimeoutPolicy } from '@shared/interfaces';
 import { SessionTimoutPolicyService } from './session-timout-policy.service';
 import { LoginConstraintConfigService } from './login-constraint-config.service';
 

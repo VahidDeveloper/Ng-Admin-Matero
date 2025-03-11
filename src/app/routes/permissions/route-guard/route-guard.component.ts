@@ -1,12 +1,12 @@
-import { JsonPipe } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
+import { JsonPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { Component, OnInit, inject } from '@angular/core';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
 
-import { PageHeaderComponent } from '@shared';
+import { PageHeaderComponent } from '@shared/components';
 
 @Component({
   selector: 'app-permissions-route-guard',

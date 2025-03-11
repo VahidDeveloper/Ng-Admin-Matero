@@ -1,9 +1,3 @@
-import { NgIf } from '@angular/common';
-import { MatInput } from '@angular/material/input';
-import { isArray, TranslatePipe } from '@ngx-translate/core';
-import { MatButton } from '@angular/material/button';
-import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
-import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -18,8 +12,14 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { NgIf } from '@angular/common';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { isArray, TranslatePipe } from '@ngx-translate/core';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
 
-import { CommandSettingModel } from '@shared';
+import { CommandSetting } from '@shared/interfaces';
 
 /**
  * this component is created for add or edit command
@@ -47,7 +47,7 @@ export class AddEditCommandComponent {
   readonly dialogRef = inject(MatDialogRef<AddEditCommandComponent>);
   form: FormGroup;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: CommandSettingModel | undefined) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: CommandSetting | undefined) {
     this.form = this.fb.group({
       id: [data?.id],
       name: [data?.name, Validators.required],

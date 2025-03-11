@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SmsSettingService } from './_services/sms-setting.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ToastService, ErrorDisplay, InputRegex } from '@shared';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+
+import { ToastService } from '@shared/services';
+import { ErrorDisplay, InputRegex } from '@shared/models';
+import { SmsSettingService } from './_services/sms-setting.service';
 
 /**
  * this component is created for test sms
@@ -17,7 +19,7 @@ export class SmsSettingComponent implements OnInit {
   /**
    * create form for test sms
    */
-  _form: FormGroup | undefined;
+  _form: FormGroup;
 
   /**
    * for showing alert for each possible error on test sms setting
@@ -28,19 +30,20 @@ export class SmsSettingComponent implements OnInit {
    * show loading on submit form
    */
   _isLoading = false;
+
   constructor(
     private _fb: FormBuilder,
     private _smsSettingService: SmsSettingService,
     private _toastService: ToastService,
     private _cdr: ChangeDetectorRef,
     private _translatorService: TranslateService
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this._form = this._fb.group({
       phoneNumber: [null, [Validators.required, Validators.pattern(InputRegex.phoneNumber)]],
     });
   }
+
+  ngOnInit(): void {}
 
   /**
    * submit form value to server
@@ -54,7 +57,7 @@ export class SmsSettingComponent implements OnInit {
     this._smsSettingService.smsTest(this._form?.value).subscribe(
       () => {
         this._toastService.open(
-          `${this._translatorService.instant('testSmsSuccess')} ${this._form?.value.phoneNumber}.`,
+          `${this._translatorService.instant('testSmsSuccess')} ${this._form.value.phoneNumber}.`,
           'success'
         );
         this._isLoading = false;

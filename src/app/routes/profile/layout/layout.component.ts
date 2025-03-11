@@ -1,14 +1,15 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { Component, OnInit, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 import { AuthService } from '@core';
-import { TranslateModule } from '@ngx-translate/core';
-import { PageHeaderComponent, UserBriefInfo } from '@shared';
+import { UserBriefInfo } from '@shared/models';
+import { PageHeaderComponent } from '@shared/components';
 
 @Component({
   selector: 'app-profile-layout',

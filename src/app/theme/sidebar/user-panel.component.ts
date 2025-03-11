@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@core/authentication';
 import { TranslateModule } from '@ngx-translate/core';
-import { UserBriefInfo } from '@shared';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
+
+import { UserBriefInfo } from '@shared/models';
 
 @Component({
   selector: 'app-user-panel',

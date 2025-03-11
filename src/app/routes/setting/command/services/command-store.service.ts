@@ -4,12 +4,13 @@ import { ComponentStore } from '@ngrx/component-store';
 import { TranslateService } from '@ngx-translate/core';
 import { EMPTY, tap, switchMap, catchError, finalize, Observable } from 'rxjs';
 
-import { AddEditCommandComponent } from '../components/add-edit/add-edit-command.component';
-import { CommandSettingModel, ConfirmDialogService, ToastService } from '@shared';
+import { CommandSetting } from '@shared/interfaces';
 import { CommandSettingService } from './command-setting.service';
+import { ConfirmDialogService, ToastService } from '@shared/services';
+import { AddEditCommandComponent } from '../components/add-edit/add-edit-command.component';
 
 export interface CommandState {
-  list: CommandSettingModel[];
+  list: CommandSetting[];
   count: number;
   isLoading: boolean;
   postLoading: boolean;
@@ -53,7 +54,7 @@ export class CommandStore extends ComponentStore<CommandState> {
       switchMap(() =>
         this.service.getCommandList().pipe(
           tap({
-            next: (res: CommandSettingModel[]) => {
+            next: (res: CommandSetting[]) => {
               this.patchState({ list: res, count: res.length, isLoading: false });
             },
           }),
@@ -67,8 +68,8 @@ export class CommandStore extends ComponentStore<CommandState> {
     )
   );
 
-  readonly upsertCommand = this.effect<CommandSettingModel | void>(
-    (trigger$: Observable<CommandSettingModel | void>) =>
+  readonly upsertCommand = this.effect<CommandSetting | void>(
+    (trigger$: Observable<CommandSetting | void>) =>
       trigger$.pipe(
         switchMap(command => {
           const dialogRef = this.dialog.open(AddEditCommandComponent, {
@@ -79,7 +80,7 @@ export class CommandStore extends ComponentStore<CommandState> {
 
           return dialogRef.afterClosed();
         }),
-        switchMap((formValue: CommandSettingModel | undefined) => {
+        switchMap((formValue: CommandSetting | undefined) => {
           if (formValue) {
             this.patchState({ isLoading: true });
 

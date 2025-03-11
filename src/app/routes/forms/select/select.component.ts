@@ -1,16 +1,16 @@
-import { AsyncPipe, JsonPipe } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MtxSelectModule } from '@ng-matero/extensions/select';
 import { Observable } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { AsyncPipe, JsonPipe } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { Component, OnInit, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MtxSelectModule } from '@ng-matero/extensions/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
-import { PageHeaderComponent } from '@shared';
 import { DataService, Person } from '../data.service';
+import { PageHeaderComponent } from '@shared/components';
 import { FormsSelectEditComponent } from './edit/edit.component';
 
 @Component({
