@@ -1,13 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ComponentStore } from '@ngrx/component-store';
 import { TranslateService } from '@ngx-translate/core';
 import { tap, switchMap, finalize, Observable } from 'rxjs';
 
-import { LoginConstraint } from '../types/login-constraint';
+import { LoginConstraint } from '@shared/interfaces/login-constraint';
+import { SessionTimeoutPolicy, ToastService } from '@shared';
 import { SessionTimoutPolicyService } from './session-timout-policy.service';
 import { LoginConstraintConfigService } from './login-constraint-config.service';
-import { ConfirmDialogService, SessionTimeoutPolicy, ToastService } from '@shared';
 
 export interface SessionState {
   loginConfig: LoginConstraint | undefined;
@@ -20,10 +19,8 @@ export interface SessionState {
 export class SessionStore extends ComponentStore<SessionState> {
   loginConfigApi = inject(LoginConstraintConfigService);
   sessionApi = inject(SessionTimoutPolicyService);
-  confirm = inject(ConfirmDialogService);
   toast = inject(ToastService);
   tr = inject(TranslateService);
-  dialog = inject(MatDialog);
 
   constructor() {
     super({

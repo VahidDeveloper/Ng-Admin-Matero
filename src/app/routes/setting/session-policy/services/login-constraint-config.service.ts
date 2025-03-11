@@ -4,7 +4,7 @@ import { shareReplay } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { WinaRestUrls } from '@shared/models';
-import { LoginConstraint } from '../types/login-constraint';
+import { LoginConstraint } from '@shared/interfaces/login-constraint';
 
 /**
  * login constraint config service

@@ -1,4 +1,3 @@
-export * from '../../routes/setting/command/services/command-setting.service';
 export * from './connection/connection-application.service';
 export * from './connection/connection-setting.service';
 export * from './banner-setting.service';
@@ -21,7 +20,6 @@ export * from './stored-password.service';
 export * from './ticket.service';
 export * from './time.service';
 export * from './toast.service';
-export * from './user-password.service';
 export * from './user-preferences.service';
 export * from './user-public-key.service';
 export * from './wina-user-identity.service';

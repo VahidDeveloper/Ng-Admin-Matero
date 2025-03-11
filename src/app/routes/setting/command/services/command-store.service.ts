@@ -5,13 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { EMPTY, tap, switchMap, catchError, finalize, Observable } from 'rxjs';
 
 import { AddEditCommandComponent } from '../components/add-edit/add-edit-command.component';
-import {
-  CommandSettingModel,
-  CommandSettingService,
-  ConfirmDialogService,
-  ToastService,
-} from '@shared';
-import { CACertificate } from '../../certificate/types/CA-certificate';
+import { CommandSettingModel, ConfirmDialogService, ToastService } from '@shared';
+import { CommandSettingService } from './command-setting.service';
 
 export interface CommandState {
   list: CommandSettingModel[];

@@ -1,0 +1,152 @@
+<mat-card class="page-container">
+  @if (fetchLoading) {
+    <mat-progress-bar mode="indeterminate" />
+  }
+  <mat-card-header>
+    <mat-card-title>{{ 'pages.wina_setting.email.title' | translate }}</mat-card-title>
+    <mat-icon class="m-b-24" [matTooltip]="'pages.wina_setting.email.description' | translate">
+      help_outline
+    </mat-icon>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="d-flex gap-32 p-32" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="d-flex flex-col gap-32 col-6">
+        <mat-form-field appearance="outline" class="w-50">
+          <mat-label>
+            {{ 'pages.wina_setting.email.address' | translate }}
+          </mat-label>
+          <input matInput formControlName="address" />
+          <mat-error *ngIf="form.controls.address.hasError('required')">
+            {{ 'validation.required' | translate }}
+          </mat-error>
+          <mat-error *ngIf="form.controls.address.hasError('pattern')">
+            {{ 'validation.pattern' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-50">
+          <mat-label>{{ 'username' | translate }}</mat-label>
+          <input matInput formControlName="username" />
+          <mat-error *ngIf="form.controls.username.hasError('required')">
+            {{ 'validation.required' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-50">
+          {{ 'pages.wina_setting.email.connection_security' | translate }}
+          <mat-select formControlName="connectionSecurity" required>
+            @for (method of _connectionSecurityValues; track method) {
+              <mat-option [value]="method">{{ method }}</mat-option>
+            }
+          </mat-select>
+          <mat-error *ngIf="form.controls.connectionSecurity.hasError('required')">
+            {{ 'validation.required' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-checkbox formControlName="ignoreCert">
+          {{ 'pages.wina_setting.email.ignore_certificate' | translate }}
+        </mat-checkbox>
+      </div>
+
+      <div class="d-flex flex-col gap-32 col-6">
+        <mat-form-field appearance="outline" class="w-50">
+          <mat-label>{{ 'share.port' | translate }}</mat-label>
+          <input matInput type="number" formControlName="port" />
+          <mat-error *ngIf="form.controls.port.hasError('required')">
+            {{ 'validation.required' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-50">
+          <mat-label>{{ 'password' | translate }}</mat-label>
+          <input matInput formControlName="password" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-50">
+          {{ 'pages.wina_setting.email.authentication_method' | translate }}
+          <mat-select formControlName="authenticationMethod" required>
+            @for (auth of _authenticationValues; track auth) {
+              <mat-option [value]="auth">{{ auth }}</mat-option>
+            }
+          </mat-select>
+          <mat-error *ngIf="form.controls.authenticationMethod.hasError('required')">
+            {{ 'validation.required' | translate }}
+          </mat-error>
+        </mat-form-field>
+        <div class="d-flex align-self-end gap-16 m-t-auto">
+          <button
+            mat-fab
+            extended
+            [disabled]="testEmailLoading()"
+            (click)="openTestMailDialog(testMailDialog)"
+          >
+            {{ 'pages.wina_setting.email.test_send_email' | translate }}
+            @if (testEmailLoading()) {
+              <mat-icon>
+                <mat-spinner color="white" diameter="20" />
+              </mat-icon>
+            }
+          </button>
+
+          <button mat-fab extended type="submit" [disabled]="submitLoading()">
+            {{ 'submit' | translate }}
+            @if (submitLoading()) {
+              <mat-icon>
+                <mat-spinner color="white" diameter="20" />
+              </mat-icon>
+            }
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #testMailDialog>
+  <h3 mat-dialog-title>{{ 'pages.wina_setting.email.email_connection_test_form' | translate }}</h3>
+
+  <form
+    mat-dialog-content
+    class="d-flex flex-col p-16 gap-32"
+    [formGroup]="testEmailForm"
+    (ngSubmit)="testEmailAddress()"
+  >
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'pages.wina_setting.email.test_send_email' | translate }}</mat-label>
+      <input matInput formControlName="email" />
+      <mat-error *ngIf="testEmailForm.controls.email.hasError('required')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+      <mat-error *ngIf="testEmailForm.controls.email.hasError('email')">
+        {{ 'validation.email' | translate }}
+      </mat-error>
+    </mat-form-field>
+    <div mat-dialog-actions>
+      <button mat-button matDialogClose>{{ 'close' | translate }}</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="testEmailForm.invalid">
+        {{ 'test' | translate }}
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #certModal>
+  <h3 mat-dialog-title>{{ 'pages.wina_setting.email.connection_test_form' | translate }}</h3>
+
+  <div mat-dialog-content class="p-16">
+    <identity-error
+      *ngIf="_certificateInfo"
+      [certificateInfo]="_certificateInfo"
+      [previousCertificateInfo]="_previousCertificate"
+      [isCertificateError]="true"
+    ></identity-error>
+    <div mat-dialog-actions>
+      <button mat-button matDialogClose>{{ 'close' | translate }}</button>
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        [disabled]="testEmailForm.invalid"
+        (click)="_acceptCertificate()"
+      >
+        {{ 'email_connection_test' | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>

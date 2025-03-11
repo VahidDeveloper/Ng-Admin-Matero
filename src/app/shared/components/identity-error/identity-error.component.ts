@@ -18,7 +18,7 @@ import { KeyWithCustomTemplate } from '@shared/models';
  * so when changing this component, take all these places into consideration.
  */
 @Component({
-  selector: 'app-identity-error',
+  selector: 'identity-error',
   templateUrl: './identity-error.component.html',
   styleUrls: ['./identity-error.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,7 +39,7 @@ export class IdentityErrorComponent implements OnInit {
    * whether to accept certificate or key-hash.
    * in ldap form, email config and the like, it should be true.
    */
-  @Input() readonly isCertificateError: boolean | undefined;
+  @Input() isCertificateError: boolean | undefined;
   /**
    * list of keys to be shown via key-value-list component.
    */

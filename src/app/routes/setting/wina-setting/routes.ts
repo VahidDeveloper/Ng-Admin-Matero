@@ -24,7 +24,7 @@ export const routes: Routes = [
       {
         path: 'email',
         loadComponent: () =>
-          import('./email-setting/email-setting.component').then(m => m.EmailSettingComponent),
+          import('./email/email-setting.component').then(m => m.EmailSettingComponent),
       },
       {
         path: 'ldap',
