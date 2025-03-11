@@ -17,8 +17,8 @@ export const routes: Routes = [
       {
         path: 'video-conversion',
         loadComponent: () =>
-          import('./video-conversion-time/video-conversion-time.component').then(
-            m => m.VideoConversionTimeComponent
+          import('./video-conversion/video-conversion.component').then(
+            m => m.VideoConversionComponent
           ),
       },
       {
