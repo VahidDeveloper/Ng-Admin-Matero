@@ -44,15 +44,18 @@ export class ClearStoragePolicyService {
    * to update elimination config
    */
   putStoragePolicyConfig(body: ClearStorageResponse) {
-    body.timeBaseElimination.elapsedInSeconds = Math.floor(
-      body.timeBaseElimination.elapsedInSeconds * this._secondInDay
-    );
-    body.timeBaseElimination.warning.startThreshold = Math.floor(
-      body.timeBaseElimination.warning.startThreshold * this._secondInDay
-    );
-    body.timeBaseElimination.warning.step = Math.floor(
-      body.timeBaseElimination.warning.step * this._secondInDay
-    );
+    if (body.timeBaseElimination.elapsedInSeconds)
+      body.timeBaseElimination.elapsedInSeconds = Math.floor(
+        body.timeBaseElimination.elapsedInSeconds * this._secondInDay
+      );
+    if (body.timeBaseElimination.warning?.startThreshold)
+      body.timeBaseElimination.warning.startThreshold = Math.floor(
+        body.timeBaseElimination.warning.startThreshold * this._secondInDay
+      );
+    if (body.timeBaseElimination.warning?.step)
+      body.timeBaseElimination.warning.step = Math.floor(
+        body.timeBaseElimination.warning.step * this._secondInDay
+      );
     return this._http.post(WinaRestUrls.putEliminationSession(), body);
   }
 }

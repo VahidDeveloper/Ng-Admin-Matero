@@ -1,11 +1,12 @@
+import { FormGroup } from '@angular/forms';
 import { inject, Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { TranslateService } from '@ngx-translate/core';
 import { tap, switchMap, finalize, Observable } from 'rxjs';
 
 import { ConfirmDialogService, ToastService } from '@shared';
-import { ClearStoragePolicyService } from './clear-storage-policy.service';
 import { ClearStorageResponse } from '../types/clear-storage-response';
+import { ClearStoragePolicyService } from './clear-storage-policy.service';
 
 export interface StorageState {
   config: ClearStorageResponse | undefined;
@@ -50,7 +51,12 @@ export class StorageStore extends ComponentStore<StorageState> {
         this.patchState({ postLoading: true });
         return this.apiService.putStoragePolicyConfig(config).pipe(
           tap(() => {
-            this.toast.open(this.tr.instant('pages.setting.session.login_submit'), 'success');
+            this.toast.open(
+              this.tr.instant('toast.save', {
+                title: this.tr.instant('menu.wina_setting.storage'),
+              }),
+              'success'
+            );
           }),
           finalize(() => {
             this.patchState({ postLoading: false });
@@ -59,4 +65,40 @@ export class StorageStore extends ComponentStore<StorageState> {
       })
     );
   });
+
+  readonly toggleEliminationControls = this.effect<{
+    formGroup: FormGroup;
+    warningGroup: FormGroup;
+    isEnabled: boolean;
+  }>(trigger$ =>
+    trigger$.pipe(
+      tap(({ formGroup, warningGroup, isEnabled }) => {
+        Object.keys(formGroup.controls).forEach(key => {
+          const control = formGroup.get(key);
+          if (key !== 'enabled' && key !== 'mountPoint') {
+            isEnabled ? control?.enable() : control?.disable();
+          }
+        });
+
+        this.toggleWarningControls({ warningGroup, isEnabled: false });
+
+        if (isEnabled) {
+          warningGroup.get('enabled')?.enable();
+        }
+      })
+    )
+  );
+
+  readonly toggleWarningControls = this.effect<{ warningGroup: FormGroup; isEnabled: boolean }>(
+    trigger$ =>
+      trigger$.pipe(
+        tap(({ warningGroup, isEnabled }) => {
+          Object.keys(warningGroup.controls).forEach(key => {
+            if (key !== 'enabled') {
+              isEnabled ? warningGroup.get(key)?.enable() : warningGroup.get(key)?.disable();
+            }
+          });
+        })
+      )
+  );
 }

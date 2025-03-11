@@ -227,6 +227,7 @@
   "toast": {
     "create": "{{title}} با موفقیت ایجاد شد",
     "update": "{{title}} با موفقیت ویرایش شد",
+    "save": "تنظیمات {{title}} با موفقیت ثبت شد.",
     "submit": "{{title}} {{name}} با موفقیت ثبت شد"
   },
   "confirms": {

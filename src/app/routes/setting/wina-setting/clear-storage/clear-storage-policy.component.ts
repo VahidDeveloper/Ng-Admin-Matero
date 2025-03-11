@@ -15,7 +15,6 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { StorageStore } from './services/storage-store.service';
-import { DisableControlDirective } from '@shared';
 import { timeBaseEliminationValidator } from './types/validation';
 
 /**
@@ -39,7 +38,6 @@ import { timeBaseEliminationValidator } from './types/validation';
     MatSlideToggle,
     MatProgressSpinner,
     MatCardModule,
-    DisableControlDirective,
   ],
 })
 export class ClearStoragePolicyComponent implements OnInit {
@@ -68,6 +66,7 @@ export class ClearStoragePolicyComponent implements OnInit {
   }
 
   constructor() {
+    this.store.getConfig();
     this.form = this.fb.group({
       diskBaseElimination: this.fb.group({
         mountPoint: [{ value: '/', disabled: true }],
@@ -93,7 +92,6 @@ export class ClearStoragePolicyComponent implements OnInit {
         { validators: timeBaseEliminationValidator }
       ),
     });
-    this.store.getConfig();
   }
 
   ngOnInit(): void {
@@ -105,57 +103,50 @@ export class ClearStoragePolicyComponent implements OnInit {
     this.submitLoading = this.store.select(state => state.postLoading);
 
     this.diskBaseElimination.controls.enabled.valueChanges
-      .pipe(tap(value => this.toggleDiskBaseEliminationControls(value)))
+      .pipe(
+        tap(value =>
+          this.store.toggleEliminationControls({
+            formGroup: this.diskBaseElimination,
+            warningGroup: this.diskBaseWarning,
+            isEnabled: value,
+          })
+        )
+      )
       .subscribe();
 
     this.diskBaseWarning.controls.enabled.valueChanges
-      .pipe(tap(value => this.toggleWarningControls(this.diskBaseWarning, value)))
+      .pipe(
+        tap(value =>
+          this.store.toggleWarningControls({ warningGroup: this.diskBaseWarning, isEnabled: value })
+        )
+      )
       .subscribe();
 
     this.timeBaseElimination.controls.enabled.valueChanges
-      .pipe(tap(value => this.toggleTimeBaseEliminationControls(value)))
+      .pipe(
+        tap(value =>
+          this.store.toggleEliminationControls({
+            formGroup: this.timeBaseElimination,
+            warningGroup: this.timeBaseWarning,
+            isEnabled: value,
+          })
+        )
+      )
       .subscribe();
 
     this.timeBaseWarning.controls.enabled.valueChanges
-      .pipe(tap(value => this.toggleWarningControls(this.timeBaseWarning, value)))
+      .pipe(
+        tap(value =>
+          this.store.toggleWarningControls({ warningGroup: this.timeBaseWarning, isEnabled: value })
+        )
+      )
       .subscribe();
   }
 
-  toggleDiskBaseEliminationControls(isEnabled: boolean): void {
-    Object.keys(this.diskBaseElimination.controls).forEach(key => {
-      const control = this.diskBaseElimination.get(key);
-      if (key !== 'enabled' && key !== 'mountPoint') {
-        isEnabled ? control?.enable() : control?.disable();
-      }
-    });
-    this.toggleWarningControls(this.diskBaseWarning, false);
-    if (isEnabled) {
-      this.diskBaseWarning.get('enabled')?.enable();
+  submitForm() {
+    if (this.form.valid) {
+      const formData = this.form.getRawValue();
+      this.store.setConfig(formData);
     }
   }
-
-  toggleTimeBaseEliminationControls(isEnabled: boolean): void {
-    Object.keys(this.timeBaseElimination.controls)
-      .filter(key => key !== 'enabled')
-      .forEach(key => {
-        isEnabled
-          ? this.timeBaseElimination.get(key)?.enable()
-          : this.timeBaseElimination.get(key)?.disable();
-      });
-    this.toggleWarningControls(this.timeBaseWarning, false);
-    if (isEnabled) {
-      this.timeBaseWarning.get('enabled')?.enable();
-    }
-  }
-
-  toggleWarningControls(warningGroup: FormGroup, isEnabled: boolean): void {
-    // Enable or disable the controls inside the warning group based on the 'enabled' toggle
-    Object.keys(warningGroup.controls).forEach(key => {
-      if (key !== 'enabled') {
-        isEnabled ? warningGroup.get(key)?.enable() : warningGroup.get(key)?.disable();
-      }
-    });
-  }
-
-  submitForm() {}
 }

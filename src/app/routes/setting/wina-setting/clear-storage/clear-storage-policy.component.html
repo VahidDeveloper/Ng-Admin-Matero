@@ -14,7 +14,7 @@
         <div class="diskBaseElimination_mountPoint d-flex align-items-center">
           <mat-form-field appearance="outline" class="w-50">
             <mat-label>{{ 'pages.wina_setting.storage.mount_point' | translate }}</mat-label>
-            <input matInput type="number" formControlName="mountPoint" [disableControl]="true" />
+            <input matInput formControlName="mountPoint" />
           </mat-form-field>
           <mat-icon
             class="m-b-24"
@@ -211,9 +211,9 @@
         </div>
 
         <button
+          class="align-self-end m-t-auto"
           mat-fab
           extended
-          class="align-self-end"
           type="submit"
           [disabled]="submitLoading | async"
         >
