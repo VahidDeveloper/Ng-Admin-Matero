@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 @use '../style/badge';
 
-.matero-sidemenu {
+.sidemenu {
   padding: 0;
   margin: 0;
   list-style: none;
@@ -11,7 +11,7 @@
     border-radius: 1.5rem;
     will-change: transform; // fix expansion in Safari
 
-    >.menu-heading {
+    > .menu-heading {
       &:hover,
       &:focus {
         background-color: var(--sidemenu-heading-hover-background-color);
@@ -19,7 +19,7 @@
     }
 
     &.active {
-      >.menu-heading {
+      > .menu-heading {
         color: var(--sidemenu-active-heading-text-color);
         background-color: var(--sidemenu-active-heading-background-color);
 
@@ -33,12 +33,12 @@
     &.expanded {
       background-color: var(--sidemenu-expanded-background-color);
 
-      >.menu-toggle>.menu-caret {
+      > .menu-toggle > .menu-caret {
         transform: rotate(-180deg);
       }
     }
 
-    &:has(.active)>.menu-heading {
+    &:has(.active) > .menu-heading {
       color: var(--sidemenu-active-heading-text-color);
     }
   }
@@ -95,7 +95,8 @@
     font-size: 1.5rem;
     line-height: 1.5rem;
     text-align: center;
-    transition: transform mat.$private-swift-ease-out-duration mat.$private-swift-ease-out-timing-function;
+    transition: transform mat.$private-swift-ease-out-duration
+      mat.$private-swift-ease-out-timing-function;
   }
 
   .menu-name {
@@ -109,7 +110,8 @@
   .menu-name,
   .menu-label,
   .menu-badge {
-    transition: opacity mat.$private-swift-ease-out-duration mat.$private-swift-ease-out-timing-function;
+    transition: opacity mat.$private-swift-ease-out-duration
+      mat.$private-swift-ease-out-timing-function;
   }
 
   .menu-label,
@@ -121,7 +123,7 @@
     border-radius: 50rem;
   }
 
-  &.level-1>li>.menu-heading {
+  &.level-1 > li > .menu-heading {
     padding-left: 3rem;
 
     [dir='rtl'] & {
@@ -130,7 +132,7 @@
     }
   }
 
-  &.level-2>li>.menu-heading {
+  &.level-2 > li > .menu-heading {
     padding-left: 4rem;
 
     [dir='rtl'] & {
@@ -139,7 +141,7 @@
     }
   }
 
-  &.level-2 [class^='level-']>li>.menu-heading {
+  &.level-2 [class^='level-'] > li > .menu-heading {
     padding-left: 5rem;
 
     [dir='rtl'] & {

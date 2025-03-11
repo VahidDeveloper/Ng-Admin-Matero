@@ -29,7 +29,7 @@ export interface TopmenuState {
   templateUrl: './topmenu.component.html',
   styleUrl: './topmenu.component.scss',
   host: {
-    class: 'matero-topmenu',
+    class: 'topmenu',
   },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

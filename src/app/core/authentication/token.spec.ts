@@ -6,7 +6,7 @@ describe('Token', () => {
       return [
         base64.encode(JSON.stringify({ typ, alg: 'HS256' })),
         base64.encode(JSON.stringify(params)),
-        base64.encode('ng-matero'),
+        base64.encode('wina'),
       ].join('.');
     }
 

@@ -17,7 +17,7 @@ import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
   templateUrl: './page-header.component.html',
   styleUrl: './page-header.component.scss',
   host: {
-    class: 'matero-page-header',
+    class: 'page-header',
   },
   encapsulation: ViewEncapsulation.None,
   imports: [BreadcrumbComponent, TranslateModule],

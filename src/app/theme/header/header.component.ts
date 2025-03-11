@@ -13,7 +13,7 @@ import { BrandingComponent } from '../widgets/branding.component';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   host: {
-    class: 'matero-header',
+    class: 'header',
   },
   encapsulation: ViewEncapsulation.None,
   imports: [

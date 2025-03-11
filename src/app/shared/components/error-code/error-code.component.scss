@@ -1,10 +1,10 @@
 @use 'long-shadow';
 
-.matero-error-wrap {
+.error-wrap {
   text-align: center;
 }
 
-.matero-error-code {
+.error-code {
   padding: 1.25rem 0;
   font-size: 10rem;
   text-shadow: long-shadow.long-shadow(
@@ -16,14 +16,14 @@
   );
 }
 
-.matero-error-title {
+.error-title {
   margin: 0 0 1rem;
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 2rem;
 }
 
-.matero-error-message {
+.error-message {
   margin: 0 0 1rem;
   font-size: 1rem;
   font-weight: 400;

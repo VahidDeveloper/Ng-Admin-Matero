@@ -47,7 +47,7 @@ class JWT {
     return [
       base64.encode(JSON.stringify({ typ: 'JWT', alg: 'HS256' })),
       base64.encode(JSON.stringify(filterObject(Object.assign({ exp, user })))),
-      base64.encode('ng-matero'),
+      base64.encode('wina'),
     ].join('.');
   }
 
@@ -87,8 +87,8 @@ export class InMemDataService implements InMemoryDbService {
   private users: User[] = [
     {
       id: 1,
-      username: 'ng-matero',
-      password: 'ng-matero',
+      username: 'adminwina',
+      password: 'adminwina',
       name: 'Zongbin',
       email: 'nzb329@163.com',
       avatar: 'images/avatar.jpg',

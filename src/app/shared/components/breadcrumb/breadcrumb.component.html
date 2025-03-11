@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb">
-  <ol class="matero-breadcrumb">
+  <ol class="breadcrumb">
     @for (item of navItems; track trackByNavItem($index, item); let isFirst = $first) {
-      <li class="matero-breadcrumb-item">
+      <li class="breadcrumb-item">
         @if (isFirst) {
           <a href="#" class="link">{{ item }}</a>
         }

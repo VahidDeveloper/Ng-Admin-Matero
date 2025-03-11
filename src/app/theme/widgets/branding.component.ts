@@ -6,7 +6,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   imports: [TranslatePipe],
   template: `
     <a class="branding" href="/">
-      <img src="images/matero.png" class="branding-logo" alt="logo" />
+      <img src="images/wina-logo.png" class="branding-logo" alt="logo" />
       @if (showName) {
         <span class="branding-name">{{ 'wina' | translate }}</span>
       }
@@ -26,7 +26,6 @@ import { TranslatePipe } from '@ngx-translate/core';
     .branding-logo {
       width: 2rem;
       height: 2rem;
-      border-radius: 50rem;
     }
 
     .branding-name {

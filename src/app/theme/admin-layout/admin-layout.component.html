@@ -1,10 +1,10 @@
 <div
-  class="matero-container-wrap"
-  [class.matero-sidenav-collapsed]="options.sidenavCollapsed && options.navPos !== 'top'"
-  [class.matero-navbar-side]="options.navPos === 'side'"
-  [class.matero-navbar-top]="options.navPos === 'top'"
-  [class.matero-header-above]="options.headerPos === 'above'"
-  [class.matero-header-fixed]="options.headerPos === 'fixed'"
+  class="container-wrap"
+  [class.sidenav-collapsed]="options.sidenavCollapsed && options.navPos !== 'top'"
+  [class.navbar-side]="options.navPos === 'side'"
+  [class.navbar-top]="options.navPos === 'top'"
+  [class.header-above]="options.headerPos === 'above'"
+  [class.header-fixed]="options.headerPos === 'fixed'"
   [dir]="options.dir"
 >
   <ng-progress ngProgressRouter />
@@ -18,10 +18,10 @@
     />
   }
 
-  <mat-sidenav-container class="matero-container" autosize autoFocus>
+  <mat-sidenav-container class="container" autosize autoFocus>
     <mat-sidenav
       #sidenav
-      class="matero-sidenav"
+      class="sidenav"
       [mode]="isOver ? 'over' : 'side'"
       [opened]="options.navPos === 'side' && options.sidenavOpened && !isOver"
       (openedChange)="onSidenavOpenedChange($event)"
@@ -41,7 +41,7 @@
       <app-sidebar-notice />
     </mat-sidenav>
 
-    <mat-sidenav-content #content class="matero-content">
+    <mat-sidenav-content #content class="content">
       @if (options.showHeader && options.headerPos !== 'above') {
         <app-header
           [showToggle]="!options.sidenavCollapsed && options.navPos !== 'top'"
@@ -55,7 +55,7 @@
         <app-topmenu />
       }
 
-      <main class="matero-page-content">
+      <main class="page-content">
         <router-outlet />
       </main>
     </mat-sidenav-content>

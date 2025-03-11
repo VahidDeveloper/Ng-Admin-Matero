@@ -11,14 +11,14 @@ import { UserBriefInfo } from '@shared/models';
 @Component({
   selector: 'app-user-panel',
   template: `
-    <div class="matero-user-panel" routerLink="/profile/overview">
+    <div class="user-panel" routerLink="/profile/overview">
       <img
-        class="matero-user-panel-avatar"
+        class="user-panel-avatar"
         [src]="user.userImage || 'images/avatar.jpg'"
         alt="avatar"
         width="64"
       />
-      <div class="matero-user-panel-info">
+      <div class="user-panel-info">
         <h4>{{ user.displayName }}</h4>
         <h5>{{ user.username }}</h5>
       </div>

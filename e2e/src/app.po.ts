@@ -6,6 +6,6 @@ export class AppPage {
   }
 
   getTitleText(): Promise<string> {
-    return element(by.css('app-root .matero-branding span')).getText() as Promise<string>;
+    return element(by.css('app-root .branding span')).getText() as Promise<string>;
   }
 }

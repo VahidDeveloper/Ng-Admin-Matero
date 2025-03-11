@@ -1,14 +1,14 @@
 @use '@angular/material' as mat;
 @use '../style/breakpoints';
 
-.matero-container-wrap,
-.matero-container {
+.container-wrap,
+.container {
   --mat-sidenav-content-background-color: transparent;
 
   height: 100%;
 }
 
-.matero-sidenav {
+.sidenav {
   position: absolute;
   overflow-x: hidden;
   border-width: 0 !important;
@@ -16,8 +16,8 @@
 }
 
 // Layout control
-.matero-header-above {
-  .matero-container {
+.header-above {
+  .container {
     height: calc(100% - var(--mat-toolbar-standard-height)) !important;
 
     @include breakpoints.bp-lt(small) {
@@ -27,60 +27,59 @@
     }
   }
 
-  .matero-sidebar-main {
+  .sidebar-main {
     height: 100% !important;
     padding-top: 0.5rem;
   }
 }
 
 // Layout control
-.matero-sidenav-collapsed,
-.matero-sidenav-collapsed-fix {
-  .matero-sidenav {
+.sidenav-collapsed,
+.sidenav-collapsed-fix {
+  .sidenav {
     width: var(--sidenav-collapsed-width);
 
     .menu-name,
     .menu-label,
     .menu-badge,
     .menu-caret,
-    .matero-user-panel-info,
-    {
-    opacity: 0;
-  }
-
-  .menu-icon.submenu-icon {
-    opacity: 1;
-  }
-
-  .matero-user-panel-avatar {
-    transform: scale(.5);
-  }
-
-  &:hover {
-    width: var(--sidenav-width);
-
-    .menu-name,
-    .menu-label,
-    .menu-badge,
-    .menu-caret,
-    .matero-user-panel-info {
-      opacity: 1;
-    }
-
-    .menu-icon.submenu-icon {
+    .user-panel-info {
       opacity: 0;
     }
 
-    .matero-user-panel-avatar {
-      transform: scale(1);
+    .menu-icon.submenu-icon {
+      opacity: 1;
+    }
+
+    .user-panel-avatar {
+      transform: scale(0.5);
+    }
+
+    &:hover {
+      width: var(--sidenav-width);
+
+      .menu-name,
+      .menu-label,
+      .menu-badge,
+      .menu-caret,
+      .user-panel-info {
+        opacity: 1;
+      }
+
+      .menu-icon.submenu-icon {
+        opacity: 0;
+      }
+
+      .user-panel-avatar {
+        transform: scale(1);
+      }
     }
   }
 }
-}
 
 // Layout control
-.matero-sidenav-collapsed {
-  .matero-content {
+.sidenav-collapsed {
+  .content {
     margin-left: var(--sidenav-collapsed-width) !important;
 
     [dir='rtl'] & {
@@ -89,19 +88,19 @@
     }
   }
 
-  &[dir='rtl'] .matero-content {
+  &[dir='rtl'] .content {
     margin-right: var(--sidenav-collapsed-width) !important;
     margin-left: auto !important;
   }
 }
 
 // Layout control
-.matero-navbar-top {
-  .matero-topmenu {
+.navbar-top {
+  .topmenu {
     top: 0;
   }
 
-  .matero-branding {
+  .branding {
     margin-left: 1rem;
 
     [dir='rtl'] & {
@@ -112,13 +111,13 @@
 }
 
 // Layout control
-.matero-header-fixed {
-  .matero-header {
+.header-fixed {
+  .header {
     position: sticky;
     top: 0;
   }
 
-  .matero-topmenu {
+  .topmenu {
     top: var(--mat-toolbar-standard-height);
 
     @include breakpoints.bp-lt(small) {
@@ -130,8 +129,8 @@
 }
 
 // Fix the init content width
-.matero-content-width-fix {
-  .matero-content {
+.content-width-fix {
+  .content {
     margin-left: var(--sidenav-width) !important;
 
     [dir='rtl'] & {
@@ -141,13 +140,13 @@
   }
 }
 
-.matero-page-content {
+.page-content {
   position: relative;
   padding: var(--gutter);
 
-  .matero-header+&,
-  .matero-header-above &,
-  .matero-navbar-top & {
+  .header + &,
+  .header-above &,
+  .navbar-top & {
     padding-top: 0;
   }
 }
