@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { WinaRestUrls } from '@shared/models';
-import { SmsSetting } from '../_models/sms-setting';
+import { SmsSetting } from '../types/sms-setting';
 
 /** a service class for test sms */
 @Injectable({

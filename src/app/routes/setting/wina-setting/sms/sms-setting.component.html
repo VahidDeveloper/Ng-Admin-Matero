@@ -1,0 +1,38 @@
+<mat-card class="page-container">
+  <mat-card-header>
+    <mat-card-title>{{ 'menu.wina_setting.sms' | translate }}</mat-card-title>
+    <mat-icon class="m-b-24" [matTooltip]="'pages.wina_setting.sms.description' | translate">
+      help_outline
+    </mat-icon>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="d-flex flex-col gap-32 p-32" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="d-flex align-items-center">
+        <mat-form-field appearance="outline" class="w-50">
+          <mat-label>{{ 'mobile' | translate }}</mat-label>
+          <input matInput formControlName="phoneNumber" placeholder="09111111111" />
+          <mat-error *ngIf="form.controls.phoneNumber.hasError('required')">
+            {{ 'validation.required' | translate }}
+          </mat-error>
+          <mat-error *ngIf="form.controls.phoneNumber.hasError('pattern')">
+            {{ 'validation.pattern' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <button
+        class="align-self-end m-t-auto"
+        mat-fab
+        extended
+        type="submit"
+        [disabled]="submitLoading()"
+      >
+        {{ 'pages.wina_setting.sms.send' | translate }}
+        @if (submitLoading()) {
+          <mat-icon>
+            <mat-spinner color="white" diameter="20" />
+          </mat-icon>
+        }
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

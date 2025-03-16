@@ -3,24 +3,24 @@ import { NgIf } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { MatTooltip } from '@angular/material/tooltip';
-import { MatFabButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatProgressBar } from '@angular/material/progress-bar';
+import { MatFabButton } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+
+import { InputRegex } from '@shared/models';
 import { ToastService } from '@shared/services';
-import { VideoConversionTime } from './types/video-conversion-time';
-import { VideoConversionTimeService } from './services/video-conversion-time.service';
+import { SmsSettingService } from './services/sms-setting.service';
 
 /**
  * this component is created for test sms
  */
 @Component({
-  templateUrl: './video-conversion.component.html',
+  selector: 'app-sms',
+  templateUrl: './sms-setting.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
@@ -31,40 +31,29 @@ import { VideoConversionTimeService } from './services/video-conversion-time.ser
     MatInput,
     MatIcon,
     MatTooltip,
-    MatProgressBar,
     MatFabButton,
     MatProgressSpinner,
   ],
 })
-export class VideoConversionComponent implements OnInit {
+export class SmsSettingComponent implements OnInit {
   tr = inject(TranslateService);
   fb = inject(FormBuilder);
   toast = inject(ToastService);
-  service = inject(VideoConversionTimeService);
+  service = inject(SmsSettingService);
   form: FormGroup;
-  isLoading = false;
-  /** using signal for detect changes and update UI */
   submitLoading = signal(false);
 
   constructor() {
     this.form = this.fb.group({
-      cronExpression: [null, [Validators.required]],
-      maxDurationMinutes: [null, [Validators.required, Validators.min(1)]],
+      phoneNumber: [null, [Validators.required, Validators.pattern(InputRegex.phoneNumber)]],
     });
   }
 
-  ngOnInit(): void {
-    this.isLoading = true;
-    this.service.getData().subscribe({
-      next: (res: VideoConversionTime) => {
-        this.form.patchValue(res);
-      },
-      complete: () => {
-        this.isLoading = false;
-      },
-    });
-  }
+  ngOnInit(): void {}
 
+  /**
+   * submit form value to server
+   */
   submit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -72,7 +61,7 @@ export class VideoConversionComponent implements OnInit {
     }
     this.submitLoading.set(true);
     this.service
-      .save(this.form?.value)
+      .smsTest(this.form?.value)
       .pipe(finalize(() => this.submitLoading.set(false)))
       .subscribe({
         next: () => {

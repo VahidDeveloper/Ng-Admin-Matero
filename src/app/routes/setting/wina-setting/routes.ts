@@ -32,8 +32,7 @@ export const routes: Routes = [
       },
       {
         path: 'sms',
-        loadComponent: () =>
-          import('./sms-setting/sms-setting.component').then(m => m.SmsSettingComponent),
+        loadComponent: () => import('./sms/sms-setting.component').then(m => m.SmsSettingComponent),
       },
       {
         path: 'syslog',
