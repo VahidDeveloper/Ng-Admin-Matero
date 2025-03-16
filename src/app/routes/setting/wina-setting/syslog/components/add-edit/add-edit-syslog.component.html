@@ -1,0 +1,112 @@
+<div class="d-flex justify-content-between align-items-center">
+  <h3 mat-dialog-title>
+    {{
+      form.value.id
+        ? ('pages.setting.password_vault.edit' | translate)
+        : ('pages.setting.password_vault.add' | translate)
+    }}
+  </h3>
+  <button mat-icon-button mat-dialog-close style="left: 4px">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<form mat-dialog-content class="d-flex" [formGroup]="form" (ngSubmit)="submitForm()">
+  <div class="d-flex flex-col gap-32 col-6">
+    <mat-form-field appearance="outline" class="">
+      <mat-label>
+        {{ 'pages.wina_setting.email.address' | translate }}
+      </mat-label>
+      <input matInput formControlName="address" />
+      <mat-error *ngIf="form.controls.address.hasError('required')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+      <mat-error *ngIf="form.controls.address.hasError('pattern')">
+        {{ 'validation.pattern' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="">
+      {{ 'pages.wina_setting.syslog.log_type' | translate }}
+      <mat-select formControlName="syslogRfc">
+        @for (method of logTypes; track method) {
+          <mat-option [value]="method">{{ method }}</mat-option>
+        }
+      </mat-select>
+      <mat-error *ngIf="form.controls.syslogRfc.hasError('required')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <div class="d-flex gap-8 flex-col align-items-start">
+      <mat-label>{{ 'pages.setting.session.default_otp_media' | translate }}</mat-label>
+      <mat-button-toggle-group formControlName="protocol" aria-label="Font Style">
+        <mat-button-toggle value="tcp">TCP</mat-button-toggle>
+        <mat-button-toggle value="udp">UDP</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+
+  <div class="d-flex flex-col gap-32 col-6">
+    <mat-form-field appearance="outline" class="">
+      <mat-label>{{ 'share.port' | translate }}</mat-label>
+      <input matInput type="number" formControlName="port" />
+      <mat-error *ngIf="form.controls.port.hasError('required')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="">
+      {{ 'pages.wina_setting.syslog.categories' | translate }}
+      <mat-select formControlName="subCategories" multiple>
+        @for (method of list$ | async; track method) {
+          <mat-option [value]="method">{{ method }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <div class="d-flex flex-col">
+      <mat-checkbox formControlName="ssl">
+        {{ 'pages.wina_setting.syslog.self_signed_cert' | translate }}
+      </mat-checkbox>
+      <mat-checkbox formControlName="ignoreCert">
+        {{ 'pages.wina_setting.email.ignore_certificate' | translate }}
+      </mat-checkbox>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-fab extended [disabled]="testEmailLoading()" (click)="_testConnection()">
+        {{ 'pages.wina_setting.email.test_send_email' | translate }}
+        @if (testEmailLoading()) {
+          <mat-icon>
+            <mat-spinner color="white" diameter="20" />
+          </mat-icon>
+        }
+      </button>
+
+      <button mat-fab extended type="submit" [disabled]="submitLoading$ | async">
+        {{ 'submit' | translate }}
+        @if (submitLoading$ | async) {
+          <mat-icon>
+            <mat-spinner color="white" diameter="20" />
+          </mat-icon>
+        }
+      </button>
+    </div>
+  </div>
+</form>
+
+<ng-template #testConnectionModal>
+  <div mat-dialog-title>{{ 'TestConnection' | translate }}</div>
+  <identity-error
+    *ngIf="_certificateInfo"
+    [certificateInfo]="_certificateInfo"
+    [previousCertificateInfo]="_previousCertificate"
+    [isCertificateError]="true"
+  />
+  <div mat-dialog-actions>
+    <button mat-button matDialogClose>{{ 'close' | translate }}</button>
+    <button mat-flat-button color="primary" type="submit" (click)="_tryTestConnection()">
+      {{ 'email_connection_test' | translate }}
+    </button>
+  </div>
+</ng-template>

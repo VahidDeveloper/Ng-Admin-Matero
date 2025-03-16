@@ -2,7 +2,8 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { SyslogServerModel } from '../_models/syslog-server';
+
+import { SyslogServerModel } from '../types/type';
 import { ErrorDisplay, RestApiErrorCodes, WinaRestUrls } from '@shared/models';
 
 /** a service for syslog servers management */

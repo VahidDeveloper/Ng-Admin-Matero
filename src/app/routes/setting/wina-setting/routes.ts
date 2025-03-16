@@ -36,7 +36,8 @@ export const routes: Routes = [
       },
       {
         path: 'syslog',
-        loadComponent: () => import('./syslog/syslog.component').then(m => m.SyslogComponent),
+        loadComponent: () =>
+          import('./syslog/components/list/syslog-list.component').then(m => m.SyslogListComponent),
       },
       {
         path: 'license',
