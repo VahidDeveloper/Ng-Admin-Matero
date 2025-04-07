@@ -109,6 +109,7 @@ export class SyslogStore extends ComponentStore<SyslogState> {
   readonly upsertServer = this.effect<SyslogServerModel | void>(
     (trigger$: Observable<SyslogServerModel | void>) => {
       return trigger$.pipe(
+        tap(() => (this.get().isLoading = false)),
         switchMap(formValue => {
           if (formValue) {
             this.patchState({ postLoading: true });
