@@ -60,7 +60,7 @@ export class SyslogListComponent implements OnInit {
     },
     {
       field: 'ignoreCert',
-      header: this.tr.instant('pages.wina_setting.email.ignore_certificate'),
+      header: this.tr.instant('share.ignore_certificate'),
     },
     {
       field: 'subCategories',

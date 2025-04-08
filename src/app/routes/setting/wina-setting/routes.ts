@@ -28,7 +28,8 @@ export const routes: Routes = [
       },
       {
         path: 'ldap',
-        loadComponent: () => import('./ldap/ldap.component').then(m => m.LdapComponent),
+        loadComponent: () =>
+          import('./ldap/components/list/ldap-list.component').then(m => m.LdapListComponent),
       },
       {
         path: 'sms',

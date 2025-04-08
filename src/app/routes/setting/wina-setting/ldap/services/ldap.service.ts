@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
-import { LdapServerModel } from '../_models/ldap-server-model';
+import { LdapServerModel } from '../types/ldap-server-model';
 import { WinaRestUrls, ErrorDisplay, RestApiErrorCodes } from '@shared/models';
 
 /** a service for ldap servers management */
