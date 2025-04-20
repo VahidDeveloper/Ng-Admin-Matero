@@ -1,0 +1,49 @@
+<ng-container *ngTemplateOutlet="_readerResult ? uploadedPreviewTemplate : UploadTemplate" />
+
+<ng-template #UploadTemplate>
+  <div class="uploader-container">
+    <label
+      (click)="$event.preventDefault(); fileReader.click()"
+      class="uploader-pointer"
+      (dragenter)="handleDragEnter()"
+      (dragleave)="handleDragLeave()"
+      (drop)="handleDrop($event)"
+    >
+      <mat-icon class="upload-icon">cloud_upload</mat-icon>
+    </label>
+    <input
+      #fileReader
+      type="file"
+      name="file"
+      [accept]="acceptExtension ? acceptExtension : '*/*'"
+      (change)="handleInputChange($event)"
+      hidden
+    />
+
+    <p *ngIf="_errorMessage" class="text-danger px-2 mt-2">{{ _errorMessage }}</p>
+  </div>
+</ng-template>
+
+<ng-template #uploadedPreviewTemplate>
+  <div class="uploaded-preview">
+    <div class="file-details">
+      <div class="file-icon">
+        <img *ngIf="_isImage; else iconTemplate" [src]="_readerResult" alt="Preview" />
+        <ng-template #iconTemplate>
+          <mat-icon>attach_file</mat-icon>
+        </ng-template>
+      </div>
+      <div class="file-name" *ngIf="_file">
+        <span>{{ _file.name }}</span>
+      </div>
+    </div>
+
+    <div class="progress-container">
+      <mat-progress-bar mode="indeterminate" color="accent" *ngIf="!_loaded" />
+      <mat-progress-bar mode="determinate" [value]="100" color="primary" *ngIf="_loaded" />
+      <button mat-icon-button color="warn" (click)="cancel($event)">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
+  </div>
+</ng-template>

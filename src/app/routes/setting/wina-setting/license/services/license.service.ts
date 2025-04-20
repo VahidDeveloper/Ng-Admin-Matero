@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { LicenseInfo } from '../_models/license-info';
+import { LicenseInfo } from '../types/license-info';
 import { WinaRestUrls } from '@shared/models';
 
 /** a service for manage wina licenses */

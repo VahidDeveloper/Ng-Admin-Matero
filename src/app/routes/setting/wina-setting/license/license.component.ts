@@ -1,19 +1,35 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
+  inject,
   Inject,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { TranslateService } from '@ngx-translate/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatInputModule } from '@angular/material/input';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { ToastService } from '@shared/services';
-import { LicenseInfo } from './_models/license-info';
-import { LicenseService } from './_services/license.service';
+import { FileUploadComponent } from '@components';
+import { LicenseInfo } from './types/license-info';
+import { LicenseService } from './services/license.service';
+import { BreadcrumbComponent } from '@shared/components';
+import { BehaviorSubject } from 'rxjs';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatProgressBar } from '@angular/material/progress-bar';
 
 /**
  * a component for wina license management
@@ -23,22 +39,40 @@ import { LicenseService } from './_services/license.service';
   templateUrl: './license.component.html',
   styleUrls: ['./license.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TranslatePipe,
+    MatCardModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatSnackBarModule,
+    MatGridListModule,
+    MatChipsModule,
+    FileUploadComponent,
+    BreadcrumbComponent,
+    MatProgressSpinner,
+    MatProgressBar,
+  ],
 })
-export class LicenseComponent implements OnInit {
+export class LicenseComponent implements AfterViewInit {
+  fb = inject(FormBuilder);
+  toast = inject(ToastService);
+  tr = inject(TranslateService);
+  service = inject(LicenseService);
+
   @ViewChild('inputBox') private _inputBox: ElementRef | undefined;
-  /** shown activation code filed when the license has been registered once */
-  hasActivationCode = false;
+
   /** license inputs form */
   form: FormGroup;
-  /**
-   * for showing alert for each possible error on this page
-   * the keys will be gotten from service
-   */
-  _allPossibleErrors = new Map<string, string>();
-  /** show loading bar when register new license */
-  _submitLoading = false;
-  /** show loading bar when get license information */
-  _isLoading = false;
+  /** Observable to track loading state of submit action */
+  submitLoading$ = new BehaviorSubject<boolean>(false);
+
+  /** Observable to track loading state for fetching license info */
+  isLoading$ = new BehaviorSubject<boolean>(false);
   /**
    * to get access to clipboard API.
    */
@@ -51,17 +85,10 @@ export class LicenseComponent implements OnInit {
   /**
    * CONSTRUCTOR
    */
-  constructor(
-    private _service: LicenseService,
-    private _fb: FormBuilder,
-    private _cdr: ChangeDetectorRef,
-    @Inject(DOCUMENT) private _document: Document,
-    private _toast: ToastService,
-    private _translatorService: TranslateService
-  ) {
+  constructor(@Inject(DOCUMENT) private _document: Document) {
     this._navigator = this._document.defaultView?.navigator;
     this._window = _document.defaultView;
-    this.form = _fb.group({
+    this.form = this.fb.group({
       activationCode: [{ value: null, disabled: true }],
       machineId: [{ value: null, disabled: true }],
       licenseText: [null, Validators.required],
@@ -69,17 +96,26 @@ export class LicenseComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this._getLicenseInfo();
+  ngAfterViewInit() {
+    this.isLoading$.next(true);
+    this.service
+      .getLicenceInfo()
+      .subscribe({
+        next: res => {
+          this.form.patchValue(res);
+          this._patchActivationCode(res.activationCode);
+        },
+      })
+      .add(() => {
+        this.isLoading$.next(false);
+      });
   }
 
   /**
    * it would change the local clipboard to the specified clipboard via clipboard service
    */
-  copyToClipboard(inputName?: string): void {
-    inputName
-      ? this._navigator?.clipboard.writeText(this.form.controls.activationCode.value).then()
-      : this._navigator?.clipboard.writeText(this.form.controls.machineId.value).then();
+  copyToClipboard(): void {
+    this._navigator?.clipboard.writeText(this.form.controls.activationCode.value).then();
   }
 
   /**
@@ -91,14 +127,24 @@ export class LicenseComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    this._updateLicense();
+    this.submitLoading$.next(true);
+    this.service
+      .registerLicense(this.form.value.licenseText)
+      .subscribe({
+        next: (res: LicenseInfo) => {
+          this._patchActivationCode(res.activationCode);
+          this.toast.open(
+            this.tr.instant('toast.save', { title: this.tr.instant('menu.wina_setting.license') }),
+            'success'
+          );
+        },
+      })
+      .add(() => {
+        this.submitLoading$.next(false);
+      });
   }
 
-  /**
-   * it get uploaded file content
-   * @param data:string
-   */
-  onUploadFile(data: string): void {
+  onUploadFile(data: any): void {
     let val = null;
     if (data) {
       val = this._base64ToString(data);
@@ -116,65 +162,11 @@ export class LicenseComponent implements OnInit {
     return this._window.atob(encodedStr)!;
   }
 
-  /**
-   * it get license information
-   */
-  private _getLicenseInfo(): void {
-    this._isLoading = true;
-    this._service
-      .getLicenceInfo()
-      .subscribe(
-        res => {
-          this.form.patchValue(res);
-          res.activationCode ? (this.hasActivationCode = true) : (this.hasActivationCode = false);
-          this._patchActivationCode(res.activationCode);
-        },
-        error => {
-          this._allPossibleErrors.set(
-            error.location,
-            this._translatorService.instant('licenseInfoError')
-          );
-        }
-      )
-      .add(() => {
-        this._isLoading = false;
-        this._cdr.markForCheck();
-      });
-  }
-
   /** patch activation code value to the input box */
   private _patchActivationCode(value: string): void {
-    setTimeout(() => {
-      const codes = value.split('-');
-      this._inputBox?.nativeElement.childNodes.forEach((input: any, index: number) => {
-        input.value = [codes[index - 1]];
-      });
+    const codes = value.split('-');
+    this._inputBox?.nativeElement.childNodes.forEach((input: any, index: number) => {
+      input.value = [codes[index]];
     });
-  }
-
-  /** update wina license */
-  private _updateLicense(): void {
-    this._submitLoading = true;
-    this._service
-      .registerLicense(this.form.value.licenseText)
-      .subscribe(
-        (res: LicenseInfo) => {
-          this._patchActivationCode(res.activationCode);
-          this._toast.open(
-            this._translatorService.instant('WinaLicenseSuccessfullyUpdated'),
-            'success'
-          );
-        },
-        error => {
-          this._allPossibleErrors.set(
-            error.location,
-            this._translatorService.instant('NewLicenseRegisterError')
-          );
-        }
-      )
-      .add(() => {
-        this._submitLoading = false;
-        this._cdr.markForCheck();
-      });
   }
 }

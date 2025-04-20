@@ -1,5 +1,8 @@
 .box {
-  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  direction: ltr;
   border-radius: 10px;
 
   strong {
@@ -18,4 +21,24 @@
     border-bottom: 3px solid #999;
     outline: none;
   }
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.code-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.file-upload {
+  margin: 20px 0;
+}
+
+mat-form-field {
+  margin-top: 10px;
 }
