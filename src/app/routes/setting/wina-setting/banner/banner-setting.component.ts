@@ -1,9 +1,27 @@
-import { TranslateService } from '@ngx-translate/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
+import { MatCard } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ToastService, BannerSettingService } from '@shared/services';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 
 import { BannerSetting } from '@shared/interfaces';
+import { BreadcrumbComponent } from '@shared/components';
 
 /**
  * a component to configure banner-display which would be shown whenever the user log into the system.
@@ -12,25 +30,41 @@ import { BannerSetting } from '@shared/interfaces';
   selector: 'app-banner-setting',
   templateUrl: './banner-setting.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    AsyncPipe,
+    BreadcrumbComponent,
+    FormsModule,
+    MatButton,
+    MatCard,
+    MatFormField,
+    MatIcon,
+    MatInput,
+    MatLabel,
+    MatProgressBar,
+    MatProgressSpinner,
+    ReactiveFormsModule,
+    TranslatePipe,
+    MatCheckbox,
+    MatError,
+    NgIf,
+    MatTooltip,
+  ],
 })
 export class BannerComponent implements OnInit {
-  /** list of all possible errors in the page */
-  _allPossibleErrors = new Map<string, string>();
-  /** create form for session timeout setting */
-  _form: FormGroup;
-  /** when true, loading would be shown on submit button */
-  _updateLoading = false;
-  /** when true, loading would be shown */
-  _isLoading = false;
+  fb = inject(FormBuilder);
+  toast = inject(ToastService);
+  tr = inject(TranslateService);
+  service = inject(BannerSettingService);
 
-  constructor(
-    private _toastService: ToastService,
-    private _fb: FormBuilder,
-    private _cdr: ChangeDetectorRef,
-    private _bannerSettingService: BannerSettingService,
-    private _translatorService: TranslateService
-  ) {
-    this._form = _fb.group({
+  form: FormGroup;
+  /** Observable to track loading state of submit action */
+  submitLoading$ = new BehaviorSubject<boolean>(false);
+
+  /** Observable to track loading state for fetching banner settings */
+  isLoading$ = new BehaviorSubject<boolean>(false);
+
+  constructor() {
+    this.form = this.fb.group({
       enabled: [null, Validators.required],
       title: [null, Validators.required],
       description: [null, Validators.required],
@@ -41,66 +75,41 @@ export class BannerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._getBannerSetting();
-  }
-
-  /**
-   * if session timeout form is valid
-   * update session timeout setting
-   */
-  saveChanges(): void {
-    if (this._form.valid) {
-      this._updateSetting();
-    } else {
-      this._form.markAllAsTouched();
-      this._toastService.open(this._translatorService.instant('InvalidForm'), 'warning');
-    }
-  }
-
-  /** it would get banner config from server to be shown on the form */
-  private _getBannerSetting(): void {
-    this._isLoading = true;
-    this._bannerSettingService
+    this.isLoading$.next(true);
+    this.service
       .getBannerSetting()
       .subscribe({
         next: (res: BannerSetting) => {
-          this._form.patchValue(res);
-        },
-        error: err => {
-          this._allPossibleErrors.set(
-            err.location,
-            this._translatorService.instant('AnErrorOccurredWhileGettingBannerDisplaySetting')
-          );
+          this.form.patchValue(res);
         },
       })
       .add(() => {
-        this._isLoading = false;
-        this._cdr.markForCheck();
+        this.isLoading$.next(false);
       });
   }
 
-  /** it would update banner-display setting based on the form */
+  submitChanges(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    this._updateSetting();
+  }
+
   private _updateSetting(): void {
-    this._updateLoading = true;
-    this._bannerSettingService
-      .updateBannerSetting(this._form.value)
+    this.submitLoading$.next(true);
+    this.service
+      .updateBannerSetting(this.form.value)
       .subscribe({
         next: () => {
-          this._toastService.open(
-            this._translatorService.instant('BannerDisplaySettingHasBeenUpdatedSuccessfully'),
+          this.toast.open(
+            this.tr.instant('toast.save', { title: this.tr.instant('menu.wina_setting.banner') }),
             'success'
-          );
-        },
-        error: error => {
-          this._allPossibleErrors.set(
-            error.location,
-            this._translatorService.instant('AnErrorOccurredWhileUpdatingBannerDisplaySetting')
           );
         },
       })
       .add(() => {
-        this._cdr.markForCheck();
-        this._updateLoading = false;
+        this.submitLoading$.next(false);
       });
   }
 }
