@@ -4,6 +4,7 @@ import {
   inject,
   provideAppInitializer,
 } from '@angular/core';
+import { provideQuillConfig } from 'ngx-quill/config';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { MAT_CARD_CONFIG } from '@angular/material/card';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
@@ -114,5 +115,6 @@ export const appConfig: ApplicationConfig = {
         popupHeaderDateLabel: 'MMM dd, E',
       },
     }),
+    provideQuillConfig({}),
   ],
 };

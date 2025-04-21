@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { QuillEditorComponent } from 'ngx-quill';
 import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { AsyncPipe, NgIf } from '@angular/common';
@@ -48,6 +49,7 @@ import { BreadcrumbComponent } from '@shared/components';
     MatError,
     NgIf,
     MatTooltip,
+    QuillEditorComponent,
   ],
 })
 export class BannerComponent implements OnInit {

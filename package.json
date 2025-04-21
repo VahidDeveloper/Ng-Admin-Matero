@@ -51,6 +51,7 @@
     "date-fns": "^4.1.0",
     "ngx-permissions": "^17.1.0",
     "ngx-progressbar": "^14.0.0",
+    "ngx-quill": "^27.0.2",
     "photoviewer": "^3.10.3",
     "rxjs": "~7.8.0",
     "screenfull": "^6.0.2",
