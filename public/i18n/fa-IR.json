@@ -2,6 +2,10 @@
   "menu": {
     "dashboard": "داشبورد",
     "remoteMachine": "ماشین های راه دور",
+    "users": "کاربران و دسترسی",
+    "users.management": "مدیریت کاربران",
+    "users.access": "دسترسی گروه کاربران",
+    "users.temp_access": "دسترسی موقت",
     "setting": "تنظیمات",
     "setting.login_policy": "سیاست های نشست",
     "setting.password": "سرویس گذرواژه",
@@ -98,6 +102,17 @@
     "remoteMachine": {
       "title": "ماشین های راه دور"
     },
+    "users": {
+      "display_name": "نام نمایشی",
+      "remote_admin": "کاربر عادی / مدیر",
+      "otp_state": "الزام ورود با OTP",
+      "lock_state": "وضعیت مسدود بودن",
+      "locked": "مسدود",
+      "locked_by_admin": "مسدود شده توسط مدیر",
+      "activated_by_admin": "فعال شده توسط مدیر",
+      "activated_by_user": "فعال شده توسط کاربر"
+    },
+
     "setting": {
       "title": "تنظیمات",
       "monitoring": {
@@ -344,6 +359,8 @@
     "commands": "گروه فرامین",
     "port": "پورت",
     "sms": "پیامک",
+    "admin": "ادمین",
+    "regular_user": "کاربر عادی",
     "ignore_certificate": "نادیده گرفتن گواهی",
     "accept_certificate": "تایید گواهی"
   }

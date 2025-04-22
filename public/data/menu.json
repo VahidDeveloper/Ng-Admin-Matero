@@ -20,6 +20,32 @@
       }
     },
     {
+      "route": "users",
+      "name": "users",
+      "type": "sub",
+      "icon": "people",
+      "permissions": {
+        "only": ["ADMIN", "MANAGER"]
+      },
+      "children": [
+        {
+          "route": "management",
+          "name": "management",
+          "type": "link"
+        },
+        {
+          "route": "access",
+          "name": "access",
+          "type": "link"
+        },
+        {
+          "route": "temp-access",
+          "name": "temp_access",
+          "type": "link"
+        }
+      ]
+    },
+    {
       "route": "setting",
       "name": "setting",
       "type": "sub",

@@ -27,6 +27,10 @@ export const routes: Routes = [
           import('./routes/connection-video/connection-video.routes').then(m => m.routes),
       },
       {
+        path: 'users',
+        loadChildren: () => import('./routes/users/users.routes').then(m => m.routes),
+      },
+      {
         path: 'setting',
         loadChildren: () => import('./routes/setting/setting.routes').then(m => m.routes),
       },

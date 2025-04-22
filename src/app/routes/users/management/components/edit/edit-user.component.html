@@ -1,0 +1,92 @@
+<div class="d-flex justify-content-between align-items-center">
+  <h3 mat-dialog-title>
+    {{
+      form.value.id
+        ? ('pages.setting.password_vault.edit' | translate)
+        : ('pages.setting.password_vault.add' | translate)
+    }}
+  </h3>
+  <button mat-icon-button mat-dialog-close style="left: 4px">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<form
+  mat-dialog-content
+  class="d-flex flex-col gap-32 p-16"
+  [formGroup]="form"
+  (ngSubmit)="submitForm()"
+>
+  <div class="d-flex flex-col gap-32 col-12">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>
+        {{ 'name' | translate }}
+      </mat-label>
+      <input matInput formControlName="username" />
+      <mat-error *ngIf="form.controls.username.hasError('required')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="">
+      <mat-label>
+        {{ 'pages.users.firstname' | translate }}
+      </mat-label>
+      <input matInput formControlName="firstname" />
+      <mat-error *ngIf="form.controls.firstname.hasError('required')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="">
+      {{ 'pages.users.lastname' | translate }}
+      <input matInput formControlName="lastname" />
+      <mat-error *ngIf="form.controls.lastname.hasError('required')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'email' | translate }}</mat-label>
+      <input matInput formControlName="email" />
+      <mat-error *ngIf="form.controls.email.hasError('required')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+      <mat-error *ngIf="form.controls.email.hasError('pattern')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'password' | translate }}</mat-label>
+      <input matInput formControlName="password" />
+      <mat-error *ngIf="form.controls.password.hasError('required')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+      <mat-error *ngIf="form.controls.password.hasError('pattern')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'repeatPassword' | translate }}</mat-label>
+      <input matInput formControlName="repeatPassword" />
+      <mat-error *ngIf="form.controls.repeatPassword.hasError('required')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+      <mat-error *ngIf="form.controls.repeatPassword.hasError('pattern')">
+        {{ 'validation.required' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <div class="p-8" mat-dialog-actions>
+      <button mat-fab extended type="submit" [disabled]="submitLoading$ | async">
+        {{ 'submit' | translate }}
+        @if (submitLoading$ | async) {
+          <mat-icon>
+            <mat-spinner color="white" diameter="20" />
+          </mat-icon>
+        }
+      </button>
+    </div>
+  </div>
+</form>

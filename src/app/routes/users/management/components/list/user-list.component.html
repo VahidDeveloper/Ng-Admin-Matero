@@ -1,0 +1,54 @@
+<mat-card class="p-16">
+  <mat-card-content>
+    <div class="d-flex justify-content-between">
+      <mat-form-field class="search-field" appearance="outline">
+        <input
+          matInput
+          [placeholder]="'search' | translate"
+          [value]="searchTerm$ | async"
+          (input)="updateSearch($event)"
+        />
+      </mat-form-field>
+      <button mat-flat-button color="primary" (click)="add()">
+        {{ 'add' | translate }}
+      </button>
+    </div>
+
+    <mtx-grid
+      [data]="(filteredRow$ | async)!"
+      [columns]="columns"
+      [length]="(count$ | async)!"
+      [loading]="fetchLoading$ | async"
+      [pageOnFront]="false"
+      [rowHover]="true"
+    />
+  </mat-card-content>
+</mat-card>
+
+<ng-template #remoteAdmin let-rowData="rowData" let-col="colDef">
+  @if (rowData[col.field]) {
+    <mat-icon
+      fontSet="material-symbols-outlined"
+      class="text-orange-50"
+      [matTooltip]="translation.userType.admin"
+    >
+      manage_accounts
+    </mat-icon>
+  } @else {
+    <mat-icon [matTooltip]="translation.userType.regularUser">perm_identity</mat-icon>
+  }
+</ng-template>
+
+<ng-template #lockState let-rowData="rowData" let-col="colDef">
+  @if (rowData[col.field] !== 'UNLOCK') {
+    <mat-icon class="text-red-50" [matTooltip]="translation.lockState[rowData[col.field]]">
+      lock
+    </mat-icon>
+  }
+</ng-template>
+
+<ng-template #otpState let-rowData="rowData" let-col="colDef">
+  @if (rowData[col.field] === 'ACTIVE') {
+    <mat-icon>verified_user</mat-icon>
+  }
+</ng-template>
