@@ -103,6 +103,7 @@
       "title": "ماشین های راه دور"
     },
     "users": {
+      "add": "افزودن کاربر",
       "display_name": "نام نمایشی",
       "remote_admin": "کاربر عادی / مدیر",
       "otp_state": "الزام ورود با OTP",
@@ -346,6 +347,7 @@
   "confirm_password": "تایید کلمه عبور",
   "repeat_password": "تکرار کلمه عبور",
   "share": {
+    "lastname": "نام خانوادگی",
     "ldap_server": "Ldap سرور",
     "connection_name": "نام اتصال",
     "ip_address": "IP آدرس",
@@ -362,6 +364,7 @@
     "admin": "ادمین",
     "regular_user": "کاربر عادی",
     "ignore_certificate": "نادیده گرفتن گواهی",
-    "accept_certificate": "تایید گواهی"
+    "accept_certificate": "تایید گواهی",
+    "repeat_password": "تکرار کلمه عبور"
   }
 }

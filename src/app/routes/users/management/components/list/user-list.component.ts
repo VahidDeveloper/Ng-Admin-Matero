@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -44,6 +45,8 @@ import { UserStore } from '../../services/store.service';
 export class UserListComponent implements OnInit, AfterViewInit {
   store = inject(UserStore);
   tr = inject(TranslateService);
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
 
   filteredRow$ = this.store.filteredList$;
   count$: Observable<number> = of(0);
@@ -69,6 +72,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
       LOCKED_BY_ADMIN: this.tr.instant('pages.users.locked_by_admin'),
     },
   };
+
   constructor() {
     this.store.getList();
   }
@@ -121,13 +125,16 @@ export class UserListComponent implements OnInit, AfterViewInit {
             type: 'icon',
             icon: 'edit',
             class: 'text-blue-50',
-            click: row => this.store.openDialog(row),
+            click: row =>
+              this.router.navigate([`edit/${row.username}`], {
+                relativeTo: this.activatedRoute,
+              }),
           },
           {
             type: 'icon',
             icon: 'delete',
             class: 'text-red-50',
-            click: row => this.store.deleteServer(row),
+            click: row => this.store.deleteUser(row),
           },
         ],
       },

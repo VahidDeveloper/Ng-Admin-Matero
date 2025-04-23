@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatInputModule } from '@angular/material/input';
-import { MatCheckbox } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatFabButton, MatIconButton } from '@angular/material/button';
@@ -12,7 +11,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { OnInit, Component, ChangeDetectionStrategy, inject, Inject } from '@angular/core';
 
-import { UserEntity } from '../../types/user';
 import { UserStore } from '../../services/store.service';
 
 /** a component for add new ldap server or update them */
@@ -31,7 +29,6 @@ import { UserStore } from '../../services/store.service';
     MatDialogModule,
     MatFormFieldModule,
     MatTooltipModule,
-    MatCheckbox,
     MatFabButton,
     MatIcon,
     MatProgressSpinner,
@@ -41,7 +38,6 @@ import { UserStore } from '../../services/store.service';
 })
 export class AddUserComponent implements OnInit {
   store = this.data.store;
-  value = this.data.value;
   fb = inject(FormBuilder);
   form: FormGroup;
   submitLoading$: Observable<boolean> = of(false);
@@ -50,25 +46,15 @@ export class AddUserComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { value: UserEntity | undefined; store: UserStore }
+    public data: { store: UserStore }
   ) {
     this.form = this.fb.group({
-      username: [data.value?.username, [Validators.required]],
-      firstname: [data.value?.firstName, [Validators.required]],
-      lastname: [data.value?.lastName, [Validators.required]],
-      password: [data.value?.password],
-      repeatPassword: [data.value?.repeatPassword],
-      email: [data.value?.email, Validators.required],
-      mobile: [data.value?.mobile],
-      homePhone: [data.value?.homePhone],
-      pager: [data.value?.pager],
-      homeAddress: [data.value?.homeAddress],
-      company: [data.value?.company],
-      department: [data.value?.department],
-      jobTitle: [data.value?.jobTitle],
-      employeeId: [data.value?.employeeId],
-      fax: [data.value?.fax],
-      officeAddress: [data.value?.officeAddress],
+      username: [null, [Validators.required]],
+      firstname: [null, [Validators.required]],
+      lastname: [null, [Validators.required]],
+      email: [null, Validators.required],
+      password: [null, Validators.required],
+      repeatPassword: [null, Validators.required],
     });
     this.submitLoading$ = this.store?.select(state => state.postLoading);
   }
@@ -81,6 +67,6 @@ export class AddUserComponent implements OnInit {
       return;
     }
     delete this.form.value.repeatPassword;
-    this.store.upsertServer(this.form.value); // Pass updated project back to the component
+    this.store.upsertUser(this.form.value); // Pass updated project back to the component
   }
 }

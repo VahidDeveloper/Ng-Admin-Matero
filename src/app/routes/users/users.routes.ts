@@ -3,15 +3,19 @@ import { UsersComponent } from './users.component';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'management',
     component: UsersComponent,
     children: [
       {
-        path: 'management',
+        path: '',
         loadComponent: () =>
           import('./management/components/list/user-list.component').then(m => m.UserListComponent),
       },
+      {
+        path: 'edit/:username',
+        loadComponent: () =>
+          import('./management/components/edit/edit-user.component').then(m => m.EditUserComponent),
+      },
     ],
   },
-  { path: '', redirectTo: 'general', pathMatch: 'full' },
 ];
